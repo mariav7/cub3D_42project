@@ -6,7 +6,7 @@
 #    By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:00:42 by mflores-          #+#    #+#              #
-#    Updated: 2023/03/31 15:46:55 by mflores-         ###   ########.fr        #
+#    Updated: 2023/03/31 16:47:59 by mflores-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,7 +80,7 @@ all:	header $(NAME)
 
 # Actual target of the binary - depends on all .o files
 $(NAME): lib $(HEADERS) $(OBJS)
-# Compile MLX
+# Compile Minilibx
 	@echo "$(YELLOW)\n. . . COMPILING MINILIBX OBJECTS. . . $(WHITE)\n"
 	@$(MAKE) --no-print-directory -sC $(MLX_PATH)
 	@echo "$(GREEN)[ ✔ ] MINILIBX$(WHITE)"
@@ -99,7 +99,7 @@ $(OBJS_PATH)%.o: $(SRCS_PATH)%.c
 
 lib:
 	@$(MAKE) --no-print-directory -C $(LIB_PATH)
-	@echo "\n$(GREEN)[ ✔ ] LIBFT$(DEF_COLOR)"
+	@echo "\n$(GREEN)[ ✔ ] LIBFT $(DEF_COLOR)"
 
 clean:
 ifeq ("$(shell test -d $(OBJS_PATH) && echo $$?)","0")
