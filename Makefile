@@ -1,0 +1,176 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/03/31 15:00:42 by mflores-          #+#    #+#              #
+#    Updated: 2023/03/31 15:46:55 by mflores-         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+#------------------------------------------------------------------------------#
+#								GENERAL		               				       #
+#------------------------------------------------------------------------------#
+
+NAME	= cub3d
+CC		= cc
+FLAGS	= -Wall -Wextra -Werror -g
+RM		= rm -f
+
+#------------------------------------------------------------------------------#
+#								HEADER FILES            				       #
+#------------------------------------------------------------------------------#
+
+HEADER_FILES	= cub3d
+HEADERS_PATH 	= includes/
+HEADERS			= $(addsuffix .h, $(addprefix $(HEADERS_PATH), $(HEADER_FILES)))
+HEADERS_INC		= $(addprefix -I, $(HEADERS_PATH) $(LIB_HEADER_PATH) $(MLX_HEADER_PATH))
+
+#------------------------------------------------------------------------------#
+#								LIBFT		           				   	   	   #
+#------------------------------------------------------------------------------#
+
+LIB_NAME 	= ft
+LIB_PATH	= libft/
+LIB			= -L$(LIB_PATH) -l$(LIB_NAME)
+LIB_HEADER_PATH = $(LIB_PATH)includes/
+
+#------------------------------------------------------------------------------#
+#								MINILIBX	           				   	   	   #
+#------------------------------------------------------------------------------#
+
+MLX_FILES	= mlx mlx_init
+MLX_HEADER_PATH	= $(addsuffix .h, $(addprefix $(MLX_PATH), $(MLX_FILES)))
+MLX_NAME	= mlx_Linux
+MLX_PATH 	= mlx/
+MLX_FLAGS	= -lXext -lX11 -lft -lm
+MLX			= -L$(MLX_PATH) -l$(MLX_NAME) $(MLX_FLAGS) 
+
+#------------------------------------------------------------------------------#
+#								CUB3D FILES          	 				   	   #
+#------------------------------------------------------------------------------#
+
+# List of all .c source files
+ROOT_FILES = main
+PARSING_FILES = parsing
+PARSING_FOLDER = parsing/
+
+SRCS_PATH = srcs/
+SRCS_NAMES 	= $(addsuffix .c, $(ROOT_FILES) \
+							$(addprefix $(PARSING_FOLDER), $(PARSING_FILES))) 
+
+# All .o files go to objs directory
+OBJS_NAMES	= $(SRCS_NAMES:.c=.o)
+OBJS_FOLDER = $(addprefix $(OBJS_PATH), $(PARSING_FOLDER)) 
+OBJS_PATH 	= objs/
+OBJS		= $(addprefix $(OBJS_PATH), $(OBJS_NAMES))
+
+# Gcc/Clang will create these .d files containing dependencies
+DEPS		= $(addprefix $(OBJS_PATH), $(SRCS_NAMES:.c=.d))
+
+#------------------------------------------------------------------------------#
+#								BASCIC RULES	        				       #
+#------------------------------------------------------------------------------#
+
+all:	header $(NAME)
+	@echo "\n$(GREEN)[ ✔ ] CUB3D$(WHITE)"
+	@echo "\033[1;39m\n▶ TO LAUNCH:\t./cub3d\n $(DEF_COLOR)"
+
+# Actual target of the binary - depends on all .o files
+$(NAME): lib $(HEADERS) $(OBJS)
+# Compile MLX
+	@echo "$(YELLOW)\n. . . COMPILING MINILIBX OBJECTS. . . $(WHITE)\n"
+	@$(MAKE) --no-print-directory -sC $(MLX_PATH)
+	@echo "$(GREEN)[ ✔ ] MINILIBX$(WHITE)"
+# Link all the object files
+	@$(CC) $(FLAGS) $(HEADERS_INC) $(OBJS) $(LIB) $(MLX) -o $(NAME)
+# Build target for every single object file
+# The potential dependency on header files is covered
+# by calling `-include $(DEPS)`
+$(OBJS_PATH)%.o: $(SRCS_PATH)%.c
+# Create objs directory
+	@mkdir -p $(OBJS_FOLDER)
+  # The -MMD flags additionaly creates a .d file with
+  # the same name as the .o file.
+	@$(CC) $(FLAGS) $(HEADERS_INC) -MMD -MP -o $@ -c $<
+	@printf "$(YELLOW). . . COMPILING Cub3D OBJECTS . . . $(GREY)%-33.33s\r$(DEF_COLOR)" $@
+
+lib:
+	@$(MAKE) --no-print-directory -C $(LIB_PATH)
+	@echo "\n$(GREEN)[ ✔ ] LIBFT$(DEF_COLOR)"
+
+clean:
+ifeq ("$(shell test -d $(OBJS_PATH) && echo $$?)","0")
+	@echo "$(YELLOW)\n. . . CLEANING OBJECTS . . .\n$(DEF_COLOR)"
+	@$(MAKE) --no-print-directory clean -C $(LIB_PATH)
+	@$(MAKE) --no-print-directory clean -sC $(MLX_PATH)
+	@$(RM) -rd $(OBJS_PATH)
+	@echo "$(GREEN)[ ✔ ] OBJECTS CLEANED$(DEF_COLOR)"
+else
+	@echo "$(GREEN)[ ✔ ] OBJECTS ALREADY CLEANED$(DEF_COLOR)"
+endif
+
+fclean:	clean
+ifeq ("$(shell test -e $(NAME) && echo $$?)","0")
+	@echo "$(YELLOW)\n. . . CLEANING REST . . .\n$(DEF_COLOR)"
+	@$(MAKE) --no-print-directory fclean -C $(LIB_PATH)
+	@$(RM) $(NAME)
+	@echo "$(GREEN)[ ✔ ] ALL CLEANED$(DEF_COLOR)"
+else
+	@echo "$(GREEN)[ ✔ ] EXECUTABLES ALREADY CLEANED$(DEF_COLOR)"
+endif
+
+re:	fclean all
+
+# Include all .d files
+-include $(DEPS)
+
+.PHONY:	all clean fclean re header norme check lib
+
+#------------------------------------------------------------------------------#
+#								CUSTOM RULES    					           #
+#------------------------------------------------------------------------------#
+
+define HEADER_PROJECT
+
+	  .oooooo.                .o8         .oooo.   oooooooooo.   
+	 d8P'  `Y8b              "888       .dP""Y88b  `888'   `Y8b  
+	888          oooo  oooo   888oooo.        ]8P'  888      888 
+	888          `888  `888   d88' `88b     <88b.   888      888 
+	888           888   888   888   888      `88b.  888      888 
+	`88b    ooo   888   888   888   888 o.   .88P   888     d88' 
+	 `Y8bood8P'   `V88V"V8P'  `Y8bod8P' `8bd88P'   o888bood8P'   
+                                                                                                 
+endef
+export HEADER_PROJECT
+
+header:
+		clear
+		@echo "$(CYAN)$$HEADER_PROJECT $(DEF_COLOR)"
+
+check:
+	@grep -qe ${USER} -e ${MAIL} srcs/* includes/* && \
+	echo "$(GREEN)[ ✔ ]$(WHITE)	Username and email" \
+	|| echo "$(RED)[ ✗ ]$(BLUE)	Username and email"
+	@ls | grep -q -U $(NAME) && \
+	echo "$(GREEN)[ ✔ ]$(WHITE)	Executable name" || \
+	echo "$(RED)[ ✗ ]$(BLUE)	Executable name"
+	@$(MAKE) norme | grep -B 1 Error && \
+	echo "$(RED)[ ✗ ]$(BLUE)	Norme" || \
+	echo "$(GREEN)[ ✔ ]$(WHITE)	Norme"
+
+norme:
+	norminette $(HEADERS) $(SRCS_PATH) $(LIB_PATH)
+
+#Colors
+DEF_COLOR = \033[0;39m
+GREY = \033[0;90m
+RED = \033[0;91m
+GREEN = \033[1;92m
+YELLOW = \033[0;93m
+BLUE = \033[0;94m
+MAGENTA = \033[1;95m
+CYAN = \033[1;96m
+WHITE = \033[0;97m
