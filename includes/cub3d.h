@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/03/31 15:37:20 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/03/31 23:33:14 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 /*                                                                            */
 /******************************************************************************/
 
-# include "../mlx/mlx.h"
+# include <mlx.h>
+//# include "../mlx/mlx.h"
 # include <libft.h>
 # include <ft_printf.h>
 # include <gnl.h>
@@ -37,11 +38,14 @@
 /* OTHER MACROS */
 #define	WIN1_SX		242
 #define	WIN1_SY		242
+# define FILE_TYPE ".cub"
+# define TITLE "Cub3D"
 
 /* ERROR MESSAGES */
-# define ERR_USAGE "Usage: ./cub3d"
-# define ERR_MSG "Error: "
-# define ERR_MALLOC "Could not allocate memory.\n"
+# define ERR_USAGE "\tusage: ./cub3d map.cub"
+# define ERR_MSG "Error:"
+# define ERR_MALLOC "\tmalloc: Could not allocate memory.\n"
+# define ERR_FILE "\tfile: invalid file type, [.cub] needed"
 
 /* Colors */
 # define DEFAULT "\001\e[00;39m\002"
@@ -71,5 +75,12 @@
 /*------------------------------ MAIN -------------------------------------*/
 void	coucou(void);
 /*----------------------------- END MAIN ----------------------------------*/
+
+/*------------------------------ UTILS -------------------------------------*/
+
+/* exit_utils.c */
+void	basic_error_message(char *err, void *free_this);
+
+/*----------------------------- END UTILS ----------------------------------*/
 
 #endif

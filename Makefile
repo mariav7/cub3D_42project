@@ -6,7 +6,7 @@
 #    By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:00:42 by mflores-          #+#    #+#              #
-#    Updated: 2023/03/31 16:47:59 by mflores-         ###   ########.fr        #
+#    Updated: 2023/03/31 23:34:22 by mflores-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ RM		= rm -f
 HEADER_FILES	= cub3d
 HEADERS_PATH 	= includes/
 HEADERS			= $(addsuffix .h, $(addprefix $(HEADERS_PATH), $(HEADER_FILES)))
-HEADERS_INC		= $(addprefix -I, $(HEADERS_PATH) $(LIB_HEADER_PATH) $(MLX_HEADER_PATH))
+HEADERS_INC		= $(addprefix -I, $(HEADERS_PATH) $(LIB_HEADER_PATH) /usr/include$(MLX_HEADER_PATH))
 
 #------------------------------------------------------------------------------#
 #								LIBFT		           				   	   	   #
@@ -56,14 +56,17 @@ MLX			= -L$(MLX_PATH) -l$(MLX_NAME) $(MLX_FLAGS)
 ROOT_FILES = main
 PARSING_FILES = parsing
 PARSING_FOLDER = parsing/
+UTILS_FILES = exit_utils
+UTILS_FOLDER = utils/
 
 SRCS_PATH = srcs/
 SRCS_NAMES 	= $(addsuffix .c, $(ROOT_FILES) \
-							$(addprefix $(PARSING_FOLDER), $(PARSING_FILES))) 
+							$(addprefix $(PARSING_FOLDER), $(PARSING_FILES)) \
+							$(addprefix $(UTILS_FOLDER), $(UTILS_FILES))) 
 
 # All .o files go to objs directory
 OBJS_NAMES	= $(SRCS_NAMES:.c=.o)
-OBJS_FOLDER = $(addprefix $(OBJS_PATH), $(PARSING_FOLDER)) 
+OBJS_FOLDER = $(addprefix $(OBJS_PATH), $(PARSING_FOLDER) $(UTILS_FOLDER)) 
 OBJS_PATH 	= objs/
 OBJS		= $(addprefix $(OBJS_PATH), $(OBJS_NAMES))
 
@@ -76,7 +79,7 @@ DEPS		= $(addprefix $(OBJS_PATH), $(SRCS_NAMES:.c=.d))
 
 all:	header $(NAME)
 	@echo "\n$(GREEN)[ ✔ ] CUB3D$(WHITE)"
-	@echo "\033[1;39m\n▶ TO LAUNCH:\t./cub3d\n $(DEF_COLOR)"
+	@echo "\033[1;39m\n▶ TO LAUNCH:\t./cub3d map_file.cub\n $(DEF_COLOR)"
 
 # Actual target of the binary - depends on all .o files
 $(NAME): lib $(HEADERS) $(OBJS)
