@@ -6,7 +6,7 @@
 #    By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:00:42 by mflores-          #+#    #+#              #
-#    Updated: 2023/04/03 12:41:29 by mflores-         ###   ########.fr        #
+#    Updated: 2023/04/04 12:27:54 by mflores-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,7 +78,7 @@ DEPS		= $(addprefix $(OBJS_PATH), $(SRCS_NAMES:.c=.d))
 #------------------------------------------------------------------------------#
 
 all:	header $(NAME)
-	@echo "\n$(GREEN)[ ✔ ] CUB3D$(WHITE)"
+	@echo "\n$(GREEN)[ ✔ ]\tCUB3D$(WHITE)"
 	@echo "\033[1;39m\n▶ TO LAUNCH:\t./cub3d map_file.cub\n $(DEF_COLOR)"
 
 # Actual target of the binary - depends on all .o files
@@ -86,7 +86,7 @@ $(NAME): lib $(HEADERS) $(OBJS)
 # Compile Minilibx
 	@echo "$(YELLOW)\n. . . COMPILING MINILIBX OBJECTS . . . $(WHITE)\n"
 	@$(MAKE) --no-print-directory -sC $(MLX_PATH)
-	@echo "$(GREEN)[ ✔ ] MINILIBX$(WHITE)"
+	@echo "$(GREEN)[ ✔ ]\tMINILIBX$(WHITE)"
 # Link all the object files
 	@$(CC) $(FLAGS) $(HEADERS_INC) $(OBJS) $(LIB) $(MLX) -o $(NAME)
 # Build target for every single object file
@@ -102,7 +102,7 @@ $(OBJS_PATH)%.o: $(SRCS_PATH)%.c
 
 lib:
 	@$(MAKE) --no-print-directory -C $(LIB_PATH)
-	@echo "\n$(GREEN)[ ✔ ] LIBFT $(DEF_COLOR)"
+	@echo "\n$(GREEN)[ ✔ ]\tLIBFT $(DEF_COLOR)"
 
 clean:
 ifeq ("$(shell test -d $(OBJS_PATH) && echo $$?)","0")
@@ -110,9 +110,9 @@ ifeq ("$(shell test -d $(OBJS_PATH) && echo $$?)","0")
 	@$(MAKE) --no-print-directory clean -C $(LIB_PATH)
 	@$(MAKE) --no-print-directory clean -sC $(MLX_PATH)
 	@$(RM) -rd $(OBJS_PATH)
-	@echo "$(GREEN)[ ✔ ] OBJECTS CLEANED$(DEF_COLOR)"
+	@echo "$(GREEN)[ ✔ ]\tOBJECTS CLEANED$(DEF_COLOR)"
 else
-	@echo "$(GREEN)[ ✔ ] NO OBJECTS TO CLEAN$(DEF_COLOR)"
+	@echo "$(BLUE)NO OBJECTS TO CLEAN$(DEF_COLOR)"
 endif
 
 fclean:	clean
@@ -120,9 +120,9 @@ ifeq ("$(shell test -e $(NAME) && echo $$?)","0")
 	@echo "$(YELLOW)\n. . . CLEANING REST . . .\n$(DEF_COLOR)"
 	@$(MAKE) --no-print-directory fclean -C $(LIB_PATH)
 	@$(RM) $(NAME)
-	@echo "$(GREEN)[ ✔ ] ALL CLEANED$(DEF_COLOR)"
+	@echo "$(GREEN)[ ✔ ]\tALL CLEANED$(DEF_COLOR)"
 else
-	@echo "$(GREEN)[ ✔ ] NOTHING TO CLEAN$(DEF_COLOR)"
+	@echo "$(BLUE)NOTHING TO CLEAN$(DEF_COLOR)"
 endif
 
 re:	fclean all
@@ -155,17 +155,21 @@ header:
 
 check:
 	@grep -qe ${USER} -e ${MAIL} srcs/* includes/* && \
-	echo "$(GREEN)[ ✔ ]$(WHITE)	Username and email" \
-	|| echo "$(RED)[ ✗ ]$(BLUE)	Username and email"
+	echo "$(GREEN)[ ✔ ]\tUsername and email$(DEF_COLOR)" \
+	|| echo "$(RED)[ ✗ ]\tUsername and email$(DEF_COLOR)"
 	@ls | grep -q -U $(NAME) && \
-	echo "$(GREEN)[ ✔ ]$(WHITE)	Executable name" || \
-	echo "$(RED)[ ✗ ]$(BLUE)	Executable name"
+	echo "$(GREEN)[ ✔ ]\tExecutable name$(DEF_COLOR)" || \
+	echo "$(RED)[ ✗ ]\tExecutable name$(DEF_COLOR)"
 	@$(MAKE) norme | grep -B 1 Error && \
-	echo "$(RED)[ ✗ ]$(BLUE)	Norme" || \
-	echo "$(GREEN)[ ✔ ]$(WHITE)	Norme"
+	echo "$(RED)[ ✗ ]\tNorme$(DEF_COLOR)" || \
+	echo "$(GREEN)[ ✔ ]\tNorme$(DEF_COLOR)"
 
 norme:
-	norminette $(HEADERS) $(SRCS_PATH) $(LIB_PATH)
+	@if norminette $(HEADERS) $(SRCS_PATH) $(LIB_PATH); then \
+	echo "$(GREEN)[ ✔ ]\tNORME$(DEF_COLOR)"; \
+	else \
+	echo "$(RED)[ ✗ ]\tNORME$(DEF_COLOR)"; \
+	fi
 
 #Colors
 DEF_COLOR = \033[0;39m
@@ -173,7 +177,7 @@ GREY = \033[0;90m
 RED = \033[0;91m
 GREEN = \033[1;92m
 YELLOW = \033[0;93m
-BLUE = \033[0;94m
+BLUE = \033[1;94m
 MAGENTA = \033[1;95m
 CYAN = \033[1;96m
 WHITE = \033[0;97m

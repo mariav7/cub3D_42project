@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 01:56:18 by mflores-          #+#    #+#             */
-/*   Updated: 2023/03/31 23:39:48 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/04 12:28:45 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,24 @@ int	main(int ac, char **av)
 {
 	void	*mlx;
 	void	*win1;
-	
+
 	if (ac != 2)
-					basic_error_message(ERR_USAGE, NULL);
+		basic_error_message(ERR_USAGE, NULL);
 	check_file(av[1]);
 	printf("MinilibX Test Program\n");
 	printf(" => Connection ...");
-	if (!(mlx = mlx_init()))
+	mlx = mlx_init();
+	//dfkdf;lg
+	if (!mlx)
 	{
 		printf("KO!\n");
 		exit(1);
 	}
-	printf(" => Window1 %dx%d "TITLE" ...",WIN1_SX,WIN1_SY);
-	if (!(win1 = mlx_new_window(mlx,WIN1_SX,WIN1_SY,TITLE)))
+	printf(" => Window1 %dx%d "TITLE" ...", WIN1_SX, WIN1_SY);
+	win1 = mlx_new_window(mlx, WIN1_SX, WIN1_SY, TITLE);
+	if (!win1)
 	{
-		printf("KO!\n");
+		printf ("KO!\n");
 		exit(1);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/03 12:19:55 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/04 11:51:08 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
+# include <math.h>
 
 /******************************************************************************/
 /*                                                                            */
@@ -37,8 +38,8 @@
 /******************************************************************************/
 
 /* OTHER MACROS */
-#define	WIN1_SX		242
-#define	WIN1_SY		242
+# define WIN1_SX 242
+# define WIN1_SY 242
 # define FILE_TYPE ".cub"
 # define TITLE "Cub3D"
 
