@@ -6,65 +6,55 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 01:56:18 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/04 12:28:45 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/04 14:58:25 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	find_extension(char *file, char *file_type)
+static int	key_event(int key_code, t_data *d)
 {
-	int	i;
-
-	i = 0;
-	while (file_type[i])
-	{
-		if (file_type[i] != file[i])
-			return (0);
-		i++;
-	}
-	if (file[i] == '\0')
-		return (1);
+	if (key_code == LOOK_LEFT)
+		printf("Looking left\n");
+	else if (key_code == LOOK_RIGHT)
+		printf("Looking right\n");
+	else if (key_code == MOVE_FORWARD)
+		printf("Moving forward\n");
+	else if (key_code == MOVE_BACKWARDS)
+		printf("Moving backwards\n");
+	else if (key_code == MOVE_LEFT)
+		printf("Moving left\n");
+	else if (key_code == MOVE_RIGHT)
+		printf("Moving right\n");
+	else if (key_code == ESCAPE)
+		free_n_exit_safe(d);
 	return (0);
 }
 
-static void	check_file(char *file)
+static int	close_window(t_data *d)
 {
-	while (*file)
-	{
-		if (*file == '.')
-		{
-			if (find_extension(file, FILE_TYPE))
-				return ;
-		}
-		file++;
-	}
-	basic_error_message(ERR_FILE, NULL);
+	free_n_exit_safe(d);
+	return (0);
 }
 
 int	main(int ac, char **av)
 {
-	void	*mlx;
-	void	*win1;
+	t_data	*mlx;
+	t_map	*fmap;
 
 	if (ac != 2)
 		basic_error_message(ERR_USAGE, NULL);
 	check_file(av[1]);
-	printf("MinilibX Test Program\n");
-	printf(" => Connection ...");
-	mlx = mlx_init();
-	//dfkdf;lg
-	if (!mlx)
-	{
-		printf("KO!\n");
-		exit(1);
-	}
-	printf(" => Window1 %dx%d "TITLE" ...", WIN1_SX, WIN1_SY);
-	win1 = mlx_new_window(mlx, WIN1_SX, WIN1_SY, TITLE);
-	if (!win1)
-	{
-		printf ("KO!\n");
-		exit(1);
-	}
+	init_structs(&mlx, &fmap);
+	printf("<====== Testing Program =====>\n");
+	mlx->mlx_ptr = mlx_init();
+	if (mlx->mlx_ptr == NULL)
+		error_exit(mlx, ERR_MLX, NULL);
+	printf(" => Connection ...\n");
+	init_game(mlx);
+	printf(" => Window1 %dx%d "TITLE"\n", WIN1_SX, WIN1_SY);
+	mlx_hook(mlx->window, 2, 1L << 0, key_event, mlx);
+	mlx_hook(mlx->window, 17, 1L << 17, close_window, mlx);
+	mlx_loop(mlx->mlx_ptr);
 	return (0);
 }
