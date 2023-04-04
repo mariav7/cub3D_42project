@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/04 15:37:01 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/04 17:40:59 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@
 /******************************************************************************/
 
 /* OTHER MACROS */
-# define WIN1_SX 242
-# define WIN1_SY 242
+# define WIN1_SX 1280
+# define WIN1_SY 720
 # define FILE_TYPE ".cub"
 # define TITLE "Cub3D"
 
@@ -80,18 +80,21 @@
 /*                                                                            */
 /******************************************************************************/
 
-typedef struct s_map
+typedef struct s_map t_map;
+typedef struct s_data t_data;
+
+struct s_map
 {
 	int		height;
 	int		width;
-}	t_map;
+};
 
-typedef struct s_data
+struct s_data
 {
 	void	*mlx_ptr;
 	void	*window;
 	t_map	*map;
-}	t_data;
+};
 
 /******************************************************************************/
 /*                                                                            */
