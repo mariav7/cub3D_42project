@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/04 15:02:00 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/04 15:37:01 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,13 @@
 /* COLORS */
 # define DEFAULT "\001\e[00;39m\002"
 # define GREY "\001\e[1;90m\002"
-# define RED "\001\e[1;91m\002"
-# define GREEN "\001\e[0;92m\002"
-# define YELLOW "\001\e[1;93m\002"
-# define BLUE "\001\e[1;94m\002"
-# define MAGENTA "\001\e[1;95m\002"
-# define PINK "\001\e[0;35m\002"
-# define PURPLE "\001\e[0;34m\002"
-# define CYAN "\001\e[1;96m\002"
-# define WHITE "\001\e[0;97m\002"
+# define RED "\001\e[1;31m\002"
+# define GREEN "\001\e[1;32m\002"
+# define YELLOW "\001\e[1;33m\002"
+# define BLUE "\001\e[1;34m\002"
+# define PURPLE "\001\e[1;35m\002"
+# define CYAN "\001\e[1;36m\002"
+# define WHITE "\001\e[1;37m\002"
 
 /******************************************************************************/
 /*                                                                            */
