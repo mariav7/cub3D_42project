@@ -6,7 +6,7 @@
 #    By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:00:42 by mflores-          #+#    #+#              #
-#    Updated: 2023/03/31 23:34:22 by mflores-         ###   ########.fr        #
+#    Updated: 2023/04/03 12:41:29 by mflores-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ RM		= rm -f
 HEADER_FILES	= cub3d
 HEADERS_PATH 	= includes/
 HEADERS			= $(addsuffix .h, $(addprefix $(HEADERS_PATH), $(HEADER_FILES)))
-HEADERS_INC		= $(addprefix -I, $(HEADERS_PATH) $(LIB_HEADER_PATH) /usr/include$(MLX_HEADER_PATH))
+HEADERS_INC		= $(addprefix -I, $(HEADERS_PATH) $(LIB_HEADER_PATH) $(MLX_HEADER_PATH))
 
 #------------------------------------------------------------------------------#
 #								LIBFT		           				   	   	   #
@@ -45,7 +45,7 @@ MLX_FILES	= mlx mlx_init
 MLX_HEADER_PATH	= $(addsuffix .h, $(addprefix $(MLX_PATH), $(MLX_FILES)))
 MLX_NAME	= mlx_Linux
 MLX_PATH 	= mlx/
-MLX_FLAGS	= -lXext -lX11 -lft -lm
+MLX_FLAGS	= -L/usr/lib -lXext -lX11 -lm -lz -O3
 MLX			= -L$(MLX_PATH) -l$(MLX_NAME) $(MLX_FLAGS) 
 
 #------------------------------------------------------------------------------#
@@ -84,7 +84,7 @@ all:	header $(NAME)
 # Actual target of the binary - depends on all .o files
 $(NAME): lib $(HEADERS) $(OBJS)
 # Compile Minilibx
-	@echo "$(YELLOW)\n. . . COMPILING MINILIBX OBJECTS. . . $(WHITE)\n"
+	@echo "$(YELLOW)\n. . . COMPILING MINILIBX OBJECTS . . . $(WHITE)\n"
 	@$(MAKE) --no-print-directory -sC $(MLX_PATH)
 	@echo "$(GREEN)[ ✔ ] MINILIBX$(WHITE)"
 # Link all the object files
@@ -112,7 +112,7 @@ ifeq ("$(shell test -d $(OBJS_PATH) && echo $$?)","0")
 	@$(RM) -rd $(OBJS_PATH)
 	@echo "$(GREEN)[ ✔ ] OBJECTS CLEANED$(DEF_COLOR)"
 else
-	@echo "$(GREEN)[ ✔ ] OBJECTS ALREADY CLEANED$(DEF_COLOR)"
+	@echo "$(GREEN)[ ✔ ] NO OBJECTS TO CLEAN$(DEF_COLOR)"
 endif
 
 fclean:	clean
@@ -122,7 +122,7 @@ ifeq ("$(shell test -e $(NAME) && echo $$?)","0")
 	@$(RM) $(NAME)
 	@echo "$(GREEN)[ ✔ ] ALL CLEANED$(DEF_COLOR)"
 else
-	@echo "$(GREEN)[ ✔ ] EXECUTABLES ALREADY CLEANED$(DEF_COLOR)"
+	@echo "$(GREEN)[ ✔ ] NOTHING TO CLEAN$(DEF_COLOR)"
 endif
 
 re:	fclean all

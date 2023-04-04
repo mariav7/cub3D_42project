@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/03/31 23:33:14 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/03 12:19:55 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@
 /*                                                                            */
 /******************************************************************************/
 
-# include <mlx.h>
-//# include "../mlx/mlx.h"
+// # include <mlx.h>
+# include "../mlx/mlx.h"
+# include <X11/X.h>
 # include <libft.h>
 # include <ft_printf.h>
 # include <gnl.h>
