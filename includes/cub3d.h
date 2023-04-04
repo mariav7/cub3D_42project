@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/04 14:57:44 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/04 15:02:00 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@
 # define ERR_USAGE "\tusage: ./cub3d map.cub"
 # define ERR_MSG "Error:"
 # define ERR_CALLOC "\tcalloc: structures"
-# define ERR_MALLOC "\tmalloc: Could not allocate memory.\n"
+# define ERR_MALLOC "\tmalloc: could not allocate memory\n"
 # define ERR_FILE "\tfile: invalid file type, [.cub] needed"
 # define ERR_MLX "Minilibx: initialization failed"
 # define ERR_MLX_WIN "Minilibx: new window failed"

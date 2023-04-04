@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 01:56:18 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/04 14:58:25 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/04 15:08:20 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int ac, char **av)
 	mlx->mlx_ptr = mlx_init();
 	if (mlx->mlx_ptr == NULL)
 		error_exit(mlx, ERR_MLX, NULL);
-	printf(" => Connection ...\n");
+	printf(" => Connection to Minilibx...\n");
 	init_game(mlx);
 	printf(" => Window1 %dx%d "TITLE"\n", WIN1_SX, WIN1_SY);
 	mlx_hook(mlx->window, 2, 1L << 0, key_event, mlx);

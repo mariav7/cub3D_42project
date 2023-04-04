@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 22:03:10 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/04 14:56:37 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/04 15:16:48 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	init_structs(t_data **d, t_map **m)
 	*m = ft_calloc(sizeof(t_map), 1);
 	if (*m == NULL)
 		basic_error_message(ERR_CALLOC, *d);
+	(*d)->map = *m;
 }
 
 void	init_game(t_data *d)
