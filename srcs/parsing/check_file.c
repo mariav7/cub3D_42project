@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 14:20:06 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/06 15:14:43 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/06 15:57:52 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ int	check_file(int ac, char **av)
 		return (basic_error_message(ERR_FILE, NULL, -1), -1);
 	fd = file_exists(av[1]);
 	if (fd < 0)
-		return (perror(ERR_FILE_NOTFOUND), -1);
+		return (ft_putendl_fd(ERR_MSG, 2), perror(ERR_FILE_NOTFOUND), -1);
 	return (fd);
 }
