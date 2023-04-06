@@ -6,7 +6,7 @@
 #    By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:00:42 by mflores-          #+#    #+#              #
-#    Updated: 2023/04/04 15:41:54 by mflores-         ###   ########.fr        #
+#    Updated: 2023/04/06 15:23:31 by mflores-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,24 +54,28 @@ MLX			= -L$(MLX_PATH) -l$(MLX_NAME) $(MLX_FLAGS)
 
 # List of all .c source files
 ROOT_FILES = main
-PARSING_FILES = parsing
+INIT_FILES = init
+INIT_FOLDER = init/
+PARSING_FILES = parsing check_file
 PARSING_FOLDER = parsing/
 UTILS_FILES = exit_utils
 UTILS_FOLDER = utils/
 
 SRCS_PATH = srcs/
-SRCS_NAMES 	= $(addsuffix .c, $(ROOT_FILES) \
+SRCS_FILES 	= $(addsuffix .c, $(ROOT_FILES) \
 							$(addprefix $(PARSING_FOLDER), $(PARSING_FILES)) \
-							$(addprefix $(UTILS_FOLDER), $(UTILS_FILES))) 
+							$(addprefix $(UTILS_FOLDER), $(UTILS_FILES)) \
+							$(addprefix $(INIT_FOLDER), $(INIT_FILES))) 
 
 # All .o files go to objs directory
-OBJS_NAMES	= $(SRCS_NAMES:.c=.o)
-OBJS_FOLDER = $(addprefix $(OBJS_PATH), $(PARSING_FOLDER) $(UTILS_FOLDER)) 
+OBJS_NAMES	= $(SRCS_FILES:.c=.o)
+OBJS_FOLDER = $(addprefix $(OBJS_PATH), $(PARSING_FOLDER) $(UTILS_FOLDER) \
+										$(INIT_FOLDER)) 
 OBJS_PATH 	= objs/
 OBJS		= $(addprefix $(OBJS_PATH), $(OBJS_NAMES))
 
 # Gcc/Clang will create these .d files containing dependencies
-DEPS		= $(addprefix $(OBJS_PATH), $(SRCS_NAMES:.c=.d))
+DEPS		= $(addprefix $(OBJS_PATH), $(SRCS_FILES:.c=.d))
 
 #------------------------------------------------------------------------------#
 #								BASCIC RULES	        				       #
@@ -150,11 +154,11 @@ endef
 export HEADER_PROJECT
 
 header:
-		clear
-		@echo "$(CYAN)$$HEADER_PROJECT $(DEF_COLOR)"
+	clear
+	@echo "$(CYAN)$$HEADER_PROJECT $(DEF_COLOR)"
 
 check:
-	@grep -qe ${USER} -e ${MAIL} srcs/* includes/* && \
+	@grep -qe ${USER} -e ${MAIL} $(SRCS_PATH)$(SRCS_FILES) $(HEADERS) && \
 	echo "$(GREEN)[ ✔ ]\tUsername and email$(DEF_COLOR)" \
 	|| echo "$(RED)[ ✗ ]\tUsername and email$(DEF_COLOR)"
 	@ls | grep -q -U $(NAME) && \

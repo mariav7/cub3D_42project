@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/04 17:40:59 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/06 15:14:11 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,10 @@
 /* ERROR MESSAGES */
 # define ERR_USAGE "\tusage: ./cub3d map.cub"
 # define ERR_MSG "Error:"
-# define ERR_CALLOC "\tcalloc: structures"
+# define ERR_CALLOC "\tcalloc: could not allocate memory"
 # define ERR_MALLOC "\tmalloc: could not allocate memory\n"
 # define ERR_FILE "\tfile: invalid file type, [.cub] needed"
+# define ERR_FILE_NOTFOUND "Error:\tfile"
 # define ERR_MLX "Minilibx: initialization failed"
 # define ERR_MLX_WIN "Minilibx: new window failed"
 
@@ -80,13 +81,14 @@
 /*                                                                            */
 /******************************************************************************/
 
-typedef struct s_map t_map;
-typedef struct s_data t_data;
+typedef struct s_map	t_map;
+typedef struct s_data	t_data;
 
 struct s_map
 {
 	int		height;
 	int		width;
+	int		fd;
 };
 
 struct s_data
@@ -102,18 +104,32 @@ struct s_data
 /*                                                                            */
 /******************************************************************************/
 
+/* main.c */
+int		key_event(int key_code, t_data *d);
+int		close_window(t_data *d);
+
+/*------------------------------ INIT ----------------------------------------*/
+
+/* init.c */
+void	init_structs(t_data **d, t_map **m, int fd);
+void	start_game(t_data *d);
+
+/*------------------------------ END INIT ------------------------------------*/
+
 /*------------------------------ PARSING -------------------------------------*/
 
-void	check_file(char *file);
-void	init_structs(t_data **d, t_map **m);
-void	init_game(t_data *d);
+/* check_file.c */
+int		check_file(int ac, char **av);
+
+/* parsing.c */
 
 /*------------------------------ END PARSING ---------------------------------*/
 
 /*------------------------------ UTILS ---------------------------------------*/
 
 /* exit_utils.c */
-void	basic_error_message(char *err, void *free_this);
+// void	basic_error_message(char *err, void *free_this);
+void	basic_error_message(char *err, void *free_this, int fd);
 void	error_exit(t_data *d, char *err, void *free_this);
 void	free_n_exit_safe(t_data *d);
 
