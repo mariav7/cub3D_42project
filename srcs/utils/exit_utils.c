@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 23:17:59 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/06 15:53:40 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/11 19:55:52 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,13 @@ void	error_exit(t_data *d, char *err, void *free_this)
 	{
 		if (d->map->fd >= 0)
 			close(d->map->fd);
+		if (d->map->file)
+			free(d->map->file);
 		free(d->map);
+	}
+	if (d->tex)
+	{
+		free(d->tex);
 	}
 	free(d);
 	basic_error_message(err, free_this, -1);
@@ -55,7 +61,13 @@ void	free_n_exit_safe(t_data *d)
 	{
 		if (d->map->fd >= 0)
 			close(d->map->fd);
+		if (d->map->file)
+			free(d->map->file);
 		free(d->map);
+	}
+	if (d->tex)
+	{
+		free(d->tex);
 	}
 	free(d);
 	exit(EXIT_SUCCESS);

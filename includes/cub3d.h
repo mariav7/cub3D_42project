@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/06 15:56:08 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/13 18:50:32 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <fcntl.h>
 # include <limits.h>
 # include <math.h>
 
@@ -37,7 +38,7 @@
 /*                                                                            */
 /******************************************************************************/
 
-/* OTHER MACROS */
+/* GENERAL MACROS */
 # define WIN1_SX 1280
 # define WIN1_SY 720
 # define FILE_TYPE ".cub"
@@ -51,8 +52,6 @@
 # define MOVE_FORWARD 119
 # define MOVE_BACKWARDS 115
 # define ESCAPE 65307
-// # define UP 65362
-// # define DOWN 65364
 
 /* ERROR MESSAGES */
 # define ERR_USAGE "Usage: ./cub3d map.cub"
@@ -60,7 +59,9 @@
 # define ERR_CALLOC "Calloc: could not allocate memory"
 # define ERR_MALLOC "Malloc: could not allocate memory"
 # define ERR_FILE "File: invalid file type, [.cub] needed"
+# define ERR_ISDIR "File: is a directory"
 # define ERR_FILE_NOTFOUND "File"
+# define ERR_FILE_EMPTY "File: is empty"
 # define ERR_MLX "Minilibx: initialization failed"
 # define ERR_MLX_WIN "Minilibx: new window failed"
 
@@ -82,6 +83,7 @@
 /******************************************************************************/
 
 typedef struct s_map	t_map;
+typedef struct s_tex	t_tex;
 typedef struct s_data	t_data;
 
 struct s_map
@@ -89,6 +91,18 @@ struct s_map
 	int		height;
 	int		width;
 	int		fd;
+	char	*path;
+	char	*file;
+};
+
+struct s_tex
+{
+	char	*no;
+	char	*so;
+	char	*ea;
+	char	*we;
+	//int		floor;
+	//int		ceiling;
 };
 
 struct s_data
@@ -96,6 +110,7 @@ struct s_data
 	void	*mlx_ptr;
 	void	*window;
 	t_map	*map;
+	t_tex	*tex;
 };
 
 /******************************************************************************/
@@ -111,7 +126,7 @@ int		close_window(t_data *d);
 /*------------------------------ INIT ----------------------------------------*/
 
 /* init.c */
-void	init_structs(t_data **d, t_map **m, int fd);
+void	init_structs(t_data **d, int fd, char *file);
 void	start_game(t_data *d);
 
 /*------------------------------ END INIT ------------------------------------*/
@@ -122,13 +137,13 @@ void	start_game(t_data *d);
 int		check_file(int ac, char **av);
 
 /* parsing.c */
+void	parse_file(t_data **d);
 
 /*------------------------------ END PARSING ---------------------------------*/
 
 /*------------------------------ UTILS ---------------------------------------*/
 
 /* exit_utils.c */
-// void	basic_error_message(char *err, void *free_this);
 void	basic_error_message(char *err, void *free_this, int fd);
 void	error_exit(t_data *d, char *err, void *free_this);
 void	free_n_exit_safe(t_data *d);

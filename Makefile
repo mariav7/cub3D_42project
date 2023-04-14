@@ -6,7 +6,7 @@
 #    By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:00:42 by mflores-          #+#    #+#              #
-#    Updated: 2023/04/06 15:23:31 by mflores-         ###   ########.fr        #
+#    Updated: 2023/04/11 11:19:09 by mflores-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 #								GENERAL		               				       #
 #------------------------------------------------------------------------------#
 
-NAME	= cub3d
+NAME	= cub3D
 CC		= cc
 FLAGS	= -Wall -Wextra -Werror -g
 RM		= rm -f
@@ -26,7 +26,7 @@ RM		= rm -f
 HEADER_FILES	= cub3d
 HEADERS_PATH 	= includes/
 HEADERS			= $(addsuffix .h, $(addprefix $(HEADERS_PATH), $(HEADER_FILES)))
-HEADERS_INC		= $(addprefix -I, $(HEADERS_PATH) $(LIB_HEADER_PATH) $(MLX_HEADER_PATH))
+HEADERS_INC		= $(addprefix -I, $(HEADERS_PATH) $(LIB_HEADER_PATH) /usr/include/$(MLX_HEADER_PATH))
 
 #------------------------------------------------------------------------------#
 #								LIBFT		           				   	   	   #
@@ -83,7 +83,7 @@ DEPS		= $(addprefix $(OBJS_PATH), $(SRCS_FILES:.c=.d))
 
 all:	header $(NAME)
 	@echo "\n$(GREEN)[ ✔ ]\tCUB3D$(WHITE)"
-	@echo "\033[1;39m\n▶ TO LAUNCH:\t./cub3d map_file.cub\n $(DEF_COLOR)"
+	@echo "\033[1;39m\n▶ TO LAUNCH:\t./$(NAME) map_file.cub\n $(DEF_COLOR)"
 
 # Actual target of the binary - depends on all .o files
 $(NAME): lib $(HEADERS) $(OBJS)

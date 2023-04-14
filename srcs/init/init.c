@@ -6,22 +6,31 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 14:21:25 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/06 15:09:43 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/11 19:20:40 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	init_structs(t_data **d, t_map **m, int fd)
+void	init_structs(t_data **d, int fd, char *file)
 {
+	t_map	*m;
+	t_tex	*t;
+
 	*d = ft_calloc(sizeof(t_data), 1);
 	if (*d == NULL)
 		basic_error_message(ERR_CALLOC, NULL, fd);
-	*m = ft_calloc(sizeof(t_map), 1);
-	if (*m == NULL)
+	m = ft_calloc(sizeof(t_map), 1);
+	if (m == NULL)
 		basic_error_message(ERR_CALLOC, *d, fd);
-	(*d)->map = *m;
-	(*m)->fd = fd;
+	t = ft_calloc(sizeof(t_tex), 1);
+	if (t == NULL)
+		basic_error_message(ERR_CALLOC, *d, fd);
+	(*d)->map = m;
+	(*d)->tex = t;
+	m->fd = fd;
+	m->path = file;
+	parse_file(d);
 }
 
 void	start_game(t_data *d)

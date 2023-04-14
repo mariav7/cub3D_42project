@@ -6,11 +6,26 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 14:20:06 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/06 15:57:52 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/13 18:57:19 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static int	file_is_dir(char *arg)
+{
+	int		fd;
+	int		ret;
+
+	ret = 0;
+	fd = open(arg, O_DIRECTORY);
+	if (fd >= 0)
+	{
+		close (fd);
+		ret = 1;
+	}
+	return (ret);
+}
 
 static int	check_filename(char *file)
 {
@@ -37,6 +52,8 @@ int	check_file(int ac, char **av)
 	fd = -1;
 	if (ac != 2)
 		return (basic_error_message(ERR_USAGE, NULL, -1), -1);
+	if (file_is_dir(av[1]))
+		return (basic_error_message(ERR_ISDIR, NULL, -1), -1);		
 	if (check_filename(av[1]) == 0)
 		return (basic_error_message(ERR_FILE, NULL, -1), -1);
 	fd = file_exists(av[1]);
