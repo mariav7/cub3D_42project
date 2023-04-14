@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/13 18:50:32 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/14 20:16:49 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@
 # define ERR_FILE_EMPTY "File: is empty"
 # define ERR_MLX "Minilibx: initialization failed"
 # define ERR_MLX_WIN "Minilibx: new window failed"
+# define ERR_TEX_INVALID "File: invalid texture(s)"
+# define ERR_COLOR_INVALID "File: invalid floor/ceiling RGB color(s)"
 
 /* COLORS */
 # define DEFAULT "\001\e[00;39m\002"
@@ -97,12 +99,12 @@ struct s_map
 
 struct s_tex
 {
-	char	*no;
-	char	*so;
-	char	*ea;
-	char	*we;
-	//int		floor;
-	//int		ceiling;
+	char			*no;
+	char			*so;
+	char			*ea;
+	char			*we;
+	int				*flo;
+	int				*ce;
 };
 
 struct s_data
@@ -119,34 +121,48 @@ struct s_data
 /*                                                                            */
 /******************************************************************************/
 
+/*------------------------------ DEBUG ---------------------------------------*/
+
+/* print_structs.c */
+void    	debug(t_data *d);
+
+/*------------------------------ END DEBUG -----------------------------------*/
+
 /* main.c */
-int		key_event(int key_code, t_data *d);
-int		close_window(t_data *d);
+int			key_event(int key_code, t_data *d);
+int			close_window(t_data *d);
 
 /*------------------------------ INIT ----------------------------------------*/
 
 /* init.c */
-void	init_structs(t_data **d, int fd, char *file);
-void	start_game(t_data *d);
+void		init_structs(t_data **d, int fd, char *file);
+void		start_game(t_data *d);
 
 /*------------------------------ END INIT ------------------------------------*/
 
 /*------------------------------ PARSING -------------------------------------*/
 
 /* check_file.c */
-int		check_file(int ac, char **av);
+int			check_file(int ac, char **av);
 
 /* parsing.c */
-void	parse_file(t_data **d);
+void		parse_file(t_data **d);
+
+/* fill_colors.c */
+int			fill_colors(t_tex *tex, char *line, int *j);
+
+/* parsing_utils.c */
+long long	ft_atoll(const char *str);
 
 /*------------------------------ END PARSING ---------------------------------*/
 
 /*------------------------------ UTILS ---------------------------------------*/
 
 /* exit_utils.c */
-void	basic_error_message(char *err, void *free_this, int fd);
-void	error_exit(t_data *d, char *err, void *free_this);
-void	free_n_exit_safe(t_data *d);
+void		free_tab(void **tab);
+void		basic_error_message(char *err, void *free_this, int fd);
+void		error_exit(t_data *d, char *err, void *free_this);
+void		free_n_exit_safe(t_data *d);
 
 /*------------------------------ END UTILS -----------------------------------*/
 

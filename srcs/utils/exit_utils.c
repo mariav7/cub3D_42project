@@ -6,11 +6,28 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 23:17:59 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/11 19:55:52 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/14 19:35:50 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	free_tab(void **tab)
+{
+	size_t	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	if (tab)
+	{
+		free(tab);
+		tab = NULL;
+	}
+}
 
 void	basic_error_message(char *err, void *free_this, int fd)
 {
@@ -42,6 +59,18 @@ void	error_exit(t_data *d, char *err, void *free_this)
 	}
 	if (d->tex)
 	{
+		if (d->tex->no)
+			free(d->tex->no);
+		if (d->tex->so)
+			free(d->tex->so);
+		if (d->tex->ea)
+			free(d->tex->ea);
+		if (d->tex->we)
+			free(d->tex->we);
+		if (d->tex->ce)
+			free(d->tex->ce);
+		if (d->tex->flo)
+			free(d->tex->flo);
 		free(d->tex);
 	}
 	free(d);
@@ -67,6 +96,18 @@ void	free_n_exit_safe(t_data *d)
 	}
 	if (d->tex)
 	{
+		if (d->tex->no)
+			free(d->tex->no);
+		if (d->tex->so)
+			free(d->tex->so);
+		if (d->tex->ea)
+			free(d->tex->ea);
+		if (d->tex->we)
+			free(d->tex->we);
+		if (d->tex->ce)
+			free(d->tex->ce);
+		if (d->tex->flo)
+			free(d->tex->flo);
 		free(d->tex);
 	}
 	free(d);

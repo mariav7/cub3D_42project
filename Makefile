@@ -6,7 +6,7 @@
 #    By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:00:42 by mflores-          #+#    #+#              #
-#    Updated: 2023/04/11 11:19:09 by mflores-         ###   ########.fr        #
+#    Updated: 2023/04/14 20:17:03 by mflores-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,21 +56,24 @@ MLX			= -L$(MLX_PATH) -l$(MLX_NAME) $(MLX_FLAGS)
 ROOT_FILES = main
 INIT_FILES = init
 INIT_FOLDER = init/
-PARSING_FILES = parsing check_file
+PARSING_FILES = parsing check_file fill_colors parsing_utils
 PARSING_FOLDER = parsing/
 UTILS_FILES = exit_utils
 UTILS_FOLDER = utils/
+DEBUG_FILES = print_structs
+DEBUG_FOLDER = debug/
 
 SRCS_PATH = srcs/
 SRCS_FILES 	= $(addsuffix .c, $(ROOT_FILES) \
 							$(addprefix $(PARSING_FOLDER), $(PARSING_FILES)) \
 							$(addprefix $(UTILS_FOLDER), $(UTILS_FILES)) \
-							$(addprefix $(INIT_FOLDER), $(INIT_FILES))) 
+							$(addprefix $(INIT_FOLDER), $(INIT_FILES)) \
+							$(addprefix $(DEBUG_FOLDER), $(DEBUG_FILES))) 
 
 # All .o files go to objs directory
 OBJS_NAMES	= $(SRCS_FILES:.c=.o)
 OBJS_FOLDER = $(addprefix $(OBJS_PATH), $(PARSING_FOLDER) $(UTILS_FOLDER) \
-										$(INIT_FOLDER)) 
+										$(INIT_FOLDER) $(DEBUG_FOLDER)) 
 OBJS_PATH 	= objs/
 OBJS		= $(addprefix $(OBJS_PATH), $(OBJS_NAMES))
 

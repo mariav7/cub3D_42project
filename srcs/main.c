@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 01:56:18 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/11 14:11:00 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/14 12:14:04 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,7 @@ int	main(int ac, char **av)
 	if (fd != -1)
 	{
 		init_structs(&d, fd, av[1]);
-		printf(PURPLE"<======\tTesting Program\t=====>\n"DEFAULT);
-		printf(WHITE" => Connection to Minilibx...\n"DEFAULT);
-		printf(WHITE" => Window %dx%d "TITLE"\n"DEFAULT, WIN1_SX, WIN1_SY);
+		debug(d);
 		start_game(d);
 		return (EXIT_SUCCESS);
 	}
