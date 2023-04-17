@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/14 20:16:49 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/17 14:37:39 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,13 @@
 # define ERR_ISDIR "File: is a directory"
 # define ERR_FILE_NOTFOUND "File"
 # define ERR_FILE_EMPTY "File: is empty"
+# define ERR_FILE_INVALID "File: element(s) missing"
 # define ERR_MLX "Minilibx: initialization failed"
 # define ERR_MLX_WIN "Minilibx: new window failed"
 # define ERR_TEX_INVALID "File: invalid texture(s)"
 # define ERR_COLOR_INVALID "File: invalid floor/ceiling RGB color(s)"
+# define ERR_MAP_ISFIRST "File: map content always has to be the last"
+# define ERR_MAP_INVALID "File: invalid map"
 
 /* COLORS */
 # define DEFAULT "\001\e[00;39m\002"
@@ -95,6 +98,7 @@ struct s_map
 	int		fd;
 	char	*path;
 	char	*file;
+	char	**map;
 };
 
 struct s_tex
@@ -149,7 +153,10 @@ int			check_file(int ac, char **av);
 void		parse_file(t_data **d);
 
 /* fill_colors.c */
-int			fill_colors(t_tex *tex, char *line, int *j);
+int			fill_colors(t_tex *tex, char *line, int *i);
+
+/* fill_map.c */
+int			fill_map(t_map *m, char *line, int *i);
 
 /* parsing_utils.c */
 long long	ft_atoll(const char *str);

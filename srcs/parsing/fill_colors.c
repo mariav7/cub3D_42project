@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 13:26:56 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/14 20:21:36 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/17 14:27:48 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,21 +81,21 @@ static int	*set_rgb_color(char *line, int *j)
     return (copy_into_rgb_array(rgb_to_convert, rgb));
 }
 
-int	fill_colors(t_tex *tex, char *line, int *j)
+int	fill_colors(t_tex *tex, char *line, int *i)
 {
-	if (!(tex->ce) && line[*j] == 'C')
+	if (!(tex->ce) && line[*i] == 'C')
 	{
-		tex->ce = set_rgb_color(line, j);
+		tex->ce = set_rgb_color(line, i);
 		if (tex->ce == 0)
 			return (0);
 	}
-	else if (!(tex->flo) && line[*j] == 'F')
+	else if (!(tex->flo) && line[*i] == 'F')
 	{
-		tex->flo = set_rgb_color(line, j);
+		tex->flo = set_rgb_color(line, i);
 		if (tex->flo == 0)
 			return (0);
 	}
-	else
-		return (0);
-    return (1);
+/* 	else
+		return (0); */
+	return (1);
 }
