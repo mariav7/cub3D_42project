@@ -38,6 +38,15 @@ LIB			= -L$(LIB_PATH) -l$(LIB_NAME)
 LIB_HEADER_PATH = $(LIB_PATH)includes/
 
 #------------------------------------------------------------------------------#
+#								LIST		           				   	   	   #
+#------------------------------------------------------------------------------#
+
+LIB_LIST_NAME 	= ftlist
+LIB_LIST_PATH	= list/
+LIB_LIST	= -L$(LIB_LIST_PATH) -l$(LIB_LIST_NAME)
+LIB_LIST_HEADER_PATH = $(LIB_LIST_PATH)./
+
+#------------------------------------------------------------------------------#
 #								MINILIBX	           				   	   	   #
 #------------------------------------------------------------------------------#
 
@@ -62,17 +71,21 @@ UTILS_FILES = exit_utils
 UTILS_FOLDER = utils/
 DEBUG_FILES = print_structs
 DEBUG_FOLDER = debug/
+VIEW_FILES = key_hooks player_utils view_init
+VIEW_FOLDER = view/
 
 SRCS_PATH = srcs/
 SRCS_FILES 	= $(addsuffix .c, $(ROOT_FILES) \
 							$(addprefix $(PARSING_FOLDER), $(PARSING_FILES)) \
 							$(addprefix $(UTILS_FOLDER), $(UTILS_FILES)) \
 							$(addprefix $(INIT_FOLDER), $(INIT_FILES)) \
-							$(addprefix $(DEBUG_FOLDER), $(DEBUG_FILES))) 
+							$(addprefix $(DEBUG_FOLDER), $(DEBUG_FILES)) \
+							$(addprefix $(VIEW_FOLDER), $(VIEW_FILES)))
 
 # All .o files go to objs directory
 OBJS_NAMES	= $(SRCS_FILES:.c=.o)
 OBJS_FOLDER = $(addprefix $(OBJS_PATH), $(PARSING_FOLDER) $(UTILS_FOLDER) \
+										$(VIEW_FOLDER) \
 										$(INIT_FOLDER) $(DEBUG_FOLDER)) 
 OBJS_PATH 	= objs/
 OBJS		= $(addprefix $(OBJS_PATH), $(OBJS_NAMES))
@@ -89,7 +102,7 @@ all:	header $(NAME)
 	@echo "\033[1;39m\n▶ TO LAUNCH:\t./$(NAME) map_file.cub\n $(DEF_COLOR)"
 
 # Actual target of the binary - depends on all .o files
-$(NAME): lib $(HEADERS) $(OBJS)
+$(NAME): lib liblist $(HEADERS) $(OBJS)
 # Compile Minilibx
 	@echo "$(YELLOW)\n. . . COMPILING MINILIBX OBJECTS . . . $(WHITE)\n"
 	@$(MAKE) --no-print-directory -sC $(MLX_PATH)
@@ -110,6 +123,10 @@ $(OBJS_PATH)%.o: $(SRCS_PATH)%.c
 lib:
 	@$(MAKE) --no-print-directory -C $(LIB_PATH)
 	@echo "\n$(GREEN)[ ✔ ]\tLIBFT $(DEF_COLOR)"
+	
+liblist:
+	@$(MAKE) --no-print-directory -C $(LIB_LIST_PATH)
+	@echo "\n$(GREEN)[ ✔ ]\tLIBLIST $(DEF_COLOR)"
 
 clean:
 ifeq ("$(shell test -d $(OBJS_PATH) && echo $$?)","0")

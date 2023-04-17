@@ -77,34 +77,34 @@ static void	parse_buffer(t_data **d, char *line)
 	int		i;
 
 	i = 0;
-	(*d)->map->file = ft_strtrim(line, " \t\n\v\f\r");
-	if (!(*d)->map->file)
+	(*d)->map_after->file = ft_strtrim(line, " \t\n\v\f\r");
+	if (!(*d)->map_after->file)
 		error_exit(*d, ERR_MALLOC, line);
-	while ((*d)->map->file[i])
+	while ((*d)->map_after->file[i])
 	{
 /* 		if ((*d)->tex->no && (*d)->tex->so && (*d)->tex->ea && (*d)->tex->we && \
 		(*d)->tex->ce && (*d)->tex->flo)
 			break; */
-		while ((*d)->map->file[i] && ft_isspace((*d)->map->file[i]) && ft_isdigit((*d)->map->file[i]))
+		while ((*d)->map_after->file[i] && ft_isspace((*d)->map_after->file[i]) && ft_isdigit((*d)->map_after->file[i]))
 			i++;
-		if ((*d)->map->file[i] && ft_isprint((*d)->map->file[i]) && !ft_isdigit((*d)->map->file[i]))
+		if ((*d)->map_after->file[i] && ft_isprint((*d)->map_after->file[i]) && !ft_isdigit((*d)->map_after->file[i]))
 		{
-			if ((*d)->map->file[i + 1] && ft_isalpha((*d)->map->file[i + 1])
-				&& !ft_isdigit((*d)->map->file[i + 1]))
+			if ((*d)->map_after->file[i + 1] && ft_isalpha((*d)->map_after->file[i + 1])
+				&& !ft_isdigit((*d)->map_after->file[i + 1]))
 			{
-				if (fill_textures((*d)->tex, (*d)->map->file, &i) == 0)
+				if (fill_textures((*d)->tex, (*d)->map_after->file, &i) == 0)
 					error_exit(*d, ERR_TEX_INVALID, line);
 			}
-			else if ((*d)->map->file[i + 1] && ft_isspace((*d)->map->file[i + 1]) 
-				&& !ft_isdigit((*d)->map->file[i + 1]))
+			else if ((*d)->map_after->file[i + 1] && ft_isspace((*d)->map_after->file[i + 1])
+				&& !ft_isdigit((*d)->map_after->file[i + 1]))
 			{
-				if (fill_colors((*d)->tex, (*d)->map->file, &i) == 0)
+				if (fill_colors((*d)->tex, (*d)->map_after->file, &i) == 0)
 					error_exit(*d, ERR_COLOR_INVALID, line);
 			}
 		}
-		else if ((*d)->map->file[i] && ft_isdigit((*d)->map->file[i]))
+		else if ((*d)->map_after->file[i] && ft_isdigit((*d)->map_after->file[i]))
 		{
-			while ((*d)->map->file[i] && ft_isdigit((*d)->map->file[i]))
+			while ((*d)->map_after->file[i] && ft_isdigit((*d)->map_after->file[i]))
 				i++;
 /* 			if (create_map(d, map, i) == 0)
 				return (err_msg(d->mapinfo.path, ERR_INVALID_MAP, FAILURE));
@@ -125,11 +125,11 @@ void	parse_file(t_data **d)
 	buffer = ft_strdup("");
 	if (!buffer)
 		error_exit(*d, ERR_MALLOC, NULL);
-	line = get_next_line((*d)->map->fd);
+	line = 0;
 	while (line)
 	{
 		buffer = string_join(buffer, line, &err_msg);
-		line = get_next_line((*d)->map->fd);
+		line = 0;
 	}
 	if (!buffer || buffer[0] == '\0')
 		error_exit(*d, err_msg, buffer);

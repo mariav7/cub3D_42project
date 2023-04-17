@@ -42,19 +42,19 @@ void	basic_error_message(char *err, void *free_this, int fd)
 
 void	error_exit(t_data *d, char *err, void *free_this)
 {
-	if (d->mlx_ptr)
+	if (d->view->mlx_ptr)
 	{
-		if (d->window)
-			mlx_destroy_window(d->mlx_ptr, d->window);
-		mlx_destroy_display(d->mlx_ptr);
-		free(d->mlx_ptr);
+		if (d->view->win_ptr)
+			mlx_destroy_window(d->view->mlx_ptr, d->view->win_ptr);
+		mlx_destroy_display(d->view->mlx_ptr);
+		free(d->view->mlx_ptr);
 	}
-	if (d->map)
+	if (d->map_after)
 	{
-		if (d->map->fd >= 0)
-			close(d->map->fd);
-		if (d->map->file)
-			free(d->map->file);
+		if (d->map_after->fd >= 0)
+			close(d->map_after->fd);
+		if (d->map_after->file)
+			free(d->map_after->file);
 		free(d->map);
 	}
 	if (d->tex)
@@ -79,19 +79,19 @@ void	error_exit(t_data *d, char *err, void *free_this)
 
 void	free_n_exit_safe(t_data *d)
 {
-	if (d->mlx_ptr)
+	if (d->view->mlx_ptr)
 	{
-		if (d->window)
-			mlx_destroy_window(d->mlx_ptr, d->window);
-		mlx_destroy_display(d->mlx_ptr);
-		free(d->mlx_ptr);
+		if (d->view->win_ptr)
+			mlx_destroy_window(d->view->mlx_ptr, d->view->win_ptr);
+		mlx_destroy_display(d->view->mlx_ptr);
+		free(d->view->mlx_ptr);
 	}
-	if (d->map)
+	if (d->map_after)
 	{
-		if (d->map->fd >= 0)
-			close(d->map->fd);
-		if (d->map->file)
-			free(d->map->file);
+		if (d->map_after->fd >= 0)
+			close(d->map_after->fd);
+		if (d->map_after->file)
+			free(d->map_after->file);
 		free(d->map);
 	}
 	if (d->tex)

@@ -30,13 +30,13 @@
 /*                                                                            */
 /******************************************************************************/
 
-typedef struct s_list	t_list;
+/*typedef struct s_list	t_list;
 
 struct s_list
 {
 	void			*content;
 	t_list			*next;
-};
+};*/
 
 /******************************************************************************/
 /*                                                                            */
@@ -90,56 +90,13 @@ int		ft_isspace(int c);
 /*---------------------------- END BOOLEANS ----------------------------------*/
 
 /*------------------------------ LISTS ---------------------------------------*/
-
 /*
-	Returns the number of nodes in a linked list
-*/
 int		ft_lstsize(t_list *lst);
 
-/*
-	Adds the node at the beginning of the linked list
-*/
 void	ft_lstadd_front(t_list **lst, t_list *new);
 
-/*
-	Adds the node at the end of the linked list
-*/
 void	ft_lstadd_back(t_list **lst, t_list *new);
-
-/*
-	Frees the allocated memory of the node passed as parameter using
-	the functions del() and free()
 */
-void	ft_lstdelone(t_list *lst, void (*del)(void *));
-
-/*
-	Deletes and frees the memory allocated of the node passed as parameter
-	and all the following nodes using ft_lstdelone() and free()
-*/
-void	ft_lstclear(t_list **lst, void (*del)(void *));
-
-/*
-	Iterates over a linked list and applies the function passed as parameter
-	to each node of the linked list
-*/
-void	ft_lstiter(t_list *lst, void (*f)(void *));
-
-/*
-	Allocates memory and returns a new node. On failure returns NULL.
-*/
-t_list	*ft_lstnew(void *content);
-
-/*
-	Returns the last node of the linked list. If empty list, returns NULL.
-*/
-t_list	*ft_lstlast(t_list *lst);
-
-/*
-	Creates and returns a new list resulting from the changes 
-	applied to the contents of each node of the function 'f'
-	On failure, returns NULL.
-*/
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 /*------------------------------ END LISTS --------------------------------*/
 

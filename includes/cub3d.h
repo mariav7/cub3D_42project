@@ -19,8 +19,9 @@
 /*                                                                            */
 /******************************************************************************/
 
-// # include <mlx.h>
+//# include <mlx.h>
 # include "../mlx/mlx.h"
+# include "../list/list.h"
 # include <X11/X.h>
 # include <libft.h>
 # include <ft_printf.h>
@@ -64,6 +65,7 @@
 # define ERR_FILE_EMPTY "File: is empty"
 # define ERR_MLX "Minilibx: initialization failed"
 # define ERR_MLX_WIN "Minilibx: new window failed"
+# define ERR_MLX_IMG "Minilibx: new image failed"
 # define ERR_TEX_INVALID "File: invalid texture(s)"
 # define ERR_COLOR_INVALID "File: invalid floor/ceiling RGB color(s)"
 
@@ -78,6 +80,39 @@
 # define CYAN "\001\e[1;36m\002"
 # define WHITE "\001\e[1;37m\002"
 
+/* VIEW SETTINGS */
+
+# define SCREEN_WIDTH 640
+# define SCREEN_HEIGHT 480
+# define NUM_TEXTURES 2
+# define TILE_SIZE_TEXTURE 64
+# define FOV 90
+
+/* PLAYER SETTINGS */
+# define PLAYER_MOVE 1.0
+
+/* FLOATS */
+# define X 0
+# define Y 1
+# define ANGLE 2
+# define RAY_ANGLE 3
+# define DISTANCE_TO_WALL 4
+# define RAY_DIR_X 5
+# define RAY_DIR_Y 6
+# define STEP_X 7
+# define STEP_Y 8
+# define DELTA_X 9
+# define DELTA_Y 10
+# define X_POS 11
+# define Y_POS 12
+
+/* INTS */
+# define HIT_WALL 0
+# define WALL_HEIGHT 1
+# define WALL_TEXTURE 2
+# define MAP_X 3
+# define MAP_Y 4
+
 /******************************************************************************/
 /*                                                                            */
 /*                              STRUCTURES                                    */
@@ -87,6 +122,14 @@
 typedef struct s_map	t_map;
 typedef struct s_tex	t_tex;
 typedef struct s_data	t_data;
+typedef struct s_player	t_player;
+typedef struct s_view	t_view;
+
+struct s_player
+{
+	float floats[13];
+    int ints[5];
+};
 
 struct s_map
 {
@@ -107,12 +150,27 @@ struct s_tex
 	int				*ce;
 };
 
+struct s_view
+{
+	//t_list	*textures;
+	int 	textures[NUM_TEXTURES][TILE_SIZE_TEXTURE * TILE_SIZE_TEXTURE];
+	void 	*mlx_ptr;
+	void 	*win_ptr;
+	void 	*img_ptr;
+	int 	*buffer[SCREEN_HEIGHT];
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	char 	*addr;
+};
+
 struct s_data
 {
-	void	*mlx_ptr;
-	void	*window;
-	t_map	*map;
-	t_tex	*tex;
+	int			map[10][10];
+	t_view		*view;
+	t_map		*map_after;
+	t_tex		*tex;
+	t_player	*player;
 };
 
 /******************************************************************************/
@@ -120,6 +178,18 @@ struct s_data
 /*                               PROTOTYPES                                   */
 /*                                                                            */
 /******************************************************************************/
+
+/*------------------------------ GAME ----------------------------------------*/
+
+//void	will_hit(t_data *d);
+
+/*------------------------------ END GAME ------------------------------------*/
+
+/*------------------------------ VIEW ----------------------------------------*/
+
+void	view_hooks(t_data *d);
+
+/*------------------------------ END VIEW ------------------------------------*/
 
 /*------------------------------ DEBUG ---------------------------------------*/
 
@@ -136,6 +206,7 @@ int			close_window(t_data *d);
 
 /* init.c */
 void		init_structs(t_data **d, int fd, char *file);
+void 		view_init(t_data *d);
 void		start_game(t_data *d);
 
 /*------------------------------ END INIT ------------------------------------*/
