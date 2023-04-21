@@ -6,38 +6,37 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 13:26:56 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/17 14:27:48 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/21 16:32:57 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	no_digit(char *str)
+static int	only_digits(char *str)
 {
 	int		i;
-	int	found_no_digit;
 
-	i = 0;
-	found_no_digit = 1;
-	while (str[i])
+	i = -1;
+	while (str[++i])
 	{
-		if (ft_isdigit(str[i]) == 1)
-			found_no_digit = 0;
-		i++;
+		if (i == 0 && (str[i] == '+' || str[i] == '-'))
+			i++;
+		if (!ft_isdigit(str[i]))
+			return (0);
 	}
-	return (found_no_digit);
+	return (1);
 }
 
 static int	*copy_into_rgb_array(char **rgb_to_convert, int *rgb)
 {
-	int	    	i;
+	int		i;
 
 	i = -1;
 	while (rgb_to_convert[++i])
 	{
 		rgb[i] = ft_atoll(rgb_to_convert[i]);
-		if (rgb[i] == -1 || no_digit(rgb_to_convert[i]) == 1 
-            || rgb[i] > 255 || rgb[i] < 0)
+		if (rgb[i] == -1 || only_digits(rgb_to_convert[i]) == 0
+			|| rgb[i] > 255 || rgb[i] < 0)
 		{
 			free_tab((void **)rgb_to_convert);
 			free(rgb);
@@ -48,54 +47,67 @@ static int	*copy_into_rgb_array(char **rgb_to_convert, int *rgb)
 	return (rgb);
 }
 
+static char	**get_str_delimiter(char *line, int *j)
+{
+	int		i;
+	char	*str;
+	char	**tab;
+
+	*j = *j + 2;
+	ignore_spaces(line, j);
+	i = *j;
+	while (line[i] && !ft_isspace(line[i]))
+		i++;
+	str = ft_substr(line, *j, (i - *j));
+	if (!str)
+		return (NULL);
+	*j = i;
+	tab = ft_split(str, ',');
+	if (!tab)
+		return (free(str), NULL);
+	free(str);
+	return (tab);
+}
+
 static int	*set_rgb_color(char *line, int *j)
 {
-	char	**rgb_to_convert;
+	int		i;
 	int		*rgb;
-	int		count;
-    char    *str;
-    int     i;
+	char	**rgb_to_convert;
 
-    *j = *j + 2;
-    while (line[*j] && ft_isspace(line[*j]))
-        (*j)++;
-    i = *j;
-    while (line[i] && !ft_isspace(line[i]))
-        i++;
-    str = ft_substr(line, *j, (i - *j));
-    if (!str)
-        return (0);
-    *j = i;
-    rgb_to_convert = ft_split(str, ',');
-    if (!rgb_to_convert)
-        return (free(str), NULL);
-    free(str);
-	count = 0;
-	while (rgb_to_convert[count])
-		count++;
-    if (count != 3)
+	rgb_to_convert = get_str_delimiter(line, j);
+	if (!rgb_to_convert)
+		return (NULL);
+	i = 0;
+	while (rgb_to_convert[i])
+		i++;
+	if (i != 3)
 		return (free_tab((void **)rgb_to_convert), NULL);
 	rgb = malloc(sizeof(int) * 3);
 	if (!rgb)
-		return (0);
-    return (copy_into_rgb_array(rgb_to_convert, rgb));
+		return (NULL);
+	return (copy_into_rgb_array(rgb_to_convert, rgb));
 }
 
 int	fill_colors(t_tex *tex, char *line, int *i)
 {
-	if (!(tex->ce) && line[*i] == 'C')
+	if ((tex->ce) && (tex->flo))
+		return (0);
+	else if (!(tex->ce) && line[*i] == 'C' && (line[*i + 1] == ' '
+			|| line[*i + 1] == '\t'))
 	{
 		tex->ce = set_rgb_color(line, i);
 		if (tex->ce == 0)
 			return (0);
 	}
-	else if (!(tex->flo) && line[*i] == 'F')
+	else if (!(tex->flo) && line[*i] == 'F' && (line[*i + 1] == ' '
+			|| line[*i + 1] == '\t'))
 	{
 		tex->flo = set_rgb_color(line, i);
 		if (tex->flo == 0)
 			return (0);
 	}
-/* 	else
-		return (0); */
+	else
+		return (0);
 	return (1);
 }

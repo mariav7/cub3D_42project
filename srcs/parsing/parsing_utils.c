@@ -6,11 +6,20 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 20:15:26 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/14 20:22:50 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/21 17:45:31 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	ignore_spaces(char *str, int *index)
+{
+	if (str && index)
+	{
+		while (str[*index] && ft_isspace(str[*index]))
+			(*index)++;
+	}
+}
 
 long long	ft_atoll(const char *str)
 {
