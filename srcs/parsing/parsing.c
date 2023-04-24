@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 22:03:10 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/21 18:41:36 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/24 19:57:20 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,21 @@ static char	*string_join(char *s1, char *s2, char **err_msg)
 
 static void	texture_or_color(t_data **d, int *i)
 {
+	char	*err_msg;
+
+	err_msg = ERR_ID_INVALID;
 	if ((*d)->map->file[*i + 1] && ft_isalpha((*d)->map->file[*i + 1])
 		&& !ft_isdigit((*d)->map->file[*i + 1]))
 	{
 		if (fill_textures((*d)->tex, (*d)->map->file, i) == 0)
-			error_exit(*d, ERR_TEX_INVALID, NULL);
+			error_exit(*d, err_msg, NULL);
 	}
 	else if ((*d)->map->file[*i + 1]
 		&& ft_isspace((*d)->map->file[*i + 1])
 		&& !ft_isdigit((*d)->map->file[*i + 1]))
 	{
-		if (fill_colors((*d)->tex, (*d)->map->file, i) == 0)
-			error_exit(*d, ERR_COLOR_INVALID, NULL);
+		if (fill_colors((*d)->tex, (*d)->map->file, i, &err_msg) == 0)
+			error_exit(*d, err_msg, NULL);
 	}
 	else
 		error_exit(*d, ERR_TEXCO_FORMAT, NULL);
@@ -66,29 +69,29 @@ static void	parse_buffer(t_data **d, int *flag)
 				error_exit(*d, ERR_MAP_INVALID, NULL);
 		}
 		else
-			break ;
+			error_exit(*d, ERR_TEXCO_FORMAT, NULL);
 	}
 	return ;
 }
 
-/* static int	file_exists(char *file)
+static void	check_data(t_data **d)
 {
-	int	fd;
+	int		ret;
+	char	*err_msg;
 
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-		return (fd);
-	return (fd);
-} */
-
-static int	is_data_valid(t_data **d, char **err_msg)
-{
-	if (is_file_dir((*d)->tex->we) == 1)
+	err_msg = NULL;
+	ret = check_textures(d, &err_msg);
+	if (ret == 0)
+		error_exit(*d, err_msg, NULL);
+	else if (ret == -1)
 	{
-		*err_msg = ERR_TEX_ISDIR;
-		return (0);
+		ft_putendl_fd(ERR_MSG, 2);
+		perror(err_msg);
+		error_exit(*d, NULL, NULL);
 	}
-	return (1);
+	ret = check_map(d, &err_msg);
+	if (ret == 0)
+		error_exit(*d, err_msg, NULL);
 }
 
 void	parse_file(t_data **d)
@@ -112,9 +115,7 @@ void	parse_file(t_data **d)
 	if (flag == 1 && (*d)->tex->no && (*d)->tex->so && (*d)->tex->ea
 		&& (*d)->tex->we && (*d)->tex->ce && (*d)->tex->flo)
 		error_exit(*d, ERR_MAP_ISFIRST, NULL);
-	if (!(*d)->tex->no || !(*d)->tex->so || !(*d)->tex->ea || !(*d)->tex->we
-		|| !(*d)->tex->ce || !(*d)->tex->flo)
+	if (!(*d)->tex->ce || !(*d)->tex->flo)
 		error_exit(*d, ERR_FILE_INVALID, NULL);
-	if (is_data_valid(d, &err_msg) == 0)
-		error_exit(*d, err_msg, NULL);
+	check_data(d);
 }

@@ -6,19 +6,11 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 14:20:06 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/21 18:29:02 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/24 16:00:05 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-static int	check_filename(char *file)
-{
-	if (ft_strlen(file) < 5 || ft_strncmp(&file
-			[ft_strlen(file) - 4], FILE_TYPE, 4) != 0)
-		return (0);
-	return (1);
-}
 
 static int	file_exists(char *file)
 {
@@ -30,19 +22,26 @@ static int	file_exists(char *file)
 	return (fd);
 }
 
-int	is_file_dir(char *arg)
+int	file_ext(char *file, char *file_ext)
+{
+	if (ft_strlen(file) < 5 || ft_strncmp(&file
+			[ft_strlen(file) - ft_strlen(file_ext)], file_ext, \
+			ft_strlen(file_ext)) != 0)
+		return (0);
+	return (1);
+}
+
+int	is_file_dir(char *file)
 {
 	int		fd;
-	int		ret;
 
-	ret = 0;
-	fd = open(arg, O_DIRECTORY);
+	fd = open(file, O_DIRECTORY);
 	if (fd >= 0)
 	{
 		close (fd);
-		ret = 1;
+		return (1);
 	}
-	return (ret);
+	return (0);
 }
 
 int	check_file(int ac, char **av)
@@ -54,7 +53,7 @@ int	check_file(int ac, char **av)
 		return (basic_error_message(ERR_USAGE, NULL, -1), -1);
 	if (is_file_dir(av[1]))
 		return (basic_error_message(ERR_FILE_ISDIR, NULL, -1), -1);
-	if (check_filename(av[1]) == 0)
+	if (file_ext(av[1], FILE_TYPE) == 0)
 		return (basic_error_message(ERR_FILE, NULL, -1), -1);
 	fd = file_exists(av[1]);
 	if (fd < 0)

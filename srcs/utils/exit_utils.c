@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 23:17:59 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/21 14:57:23 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/24 10:54:29 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,11 @@ void	basic_error_message(char *err, void *free_this, int fd)
 		free(free_this);
 	if (fd >= 0)
 		close(fd);
-	ft_putendl_fd(ERR_MSG, 2);
-	ft_putendl_fd(err, 2);
+	if (err)
+	{
+		ft_putendl_fd(ERR_MSG, 2);
+		ft_putendl_fd(err, 2);
+	}
 	exit(EXIT_FAILURE);
 }
 

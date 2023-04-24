@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fill_colors.c                                      :+:      :+:    :+:   */
+/*   colors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 13:26:56 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/21 16:32:57 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/24 17:42:05 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,12 @@ static int	*set_rgb_color(char *line, int *j)
 	return (copy_into_rgb_array(rgb_to_convert, rgb));
 }
 
-int	fill_colors(t_tex *tex, char *line, int *i)
+int	fill_colors(t_tex *tex, char *line, int *i, char **err_msg)
 {
 	if ((tex->ce) && (tex->flo))
 		return (0);
-	else if (!(tex->ce) && line[*i] == 'C' && (line[*i + 1] == ' '
+	*err_msg = ERR_COLOR_INVALID;
+	if (!(tex->ce) && line[*i] == 'C' && (line[*i + 1] == ' '
 			|| line[*i + 1] == '\t'))
 	{
 		tex->ce = set_rgb_color(line, i);
@@ -108,6 +109,9 @@ int	fill_colors(t_tex *tex, char *line, int *i)
 			return (0);
 	}
 	else
+	{
+		*err_msg = ERR_ID_INVALID;
 		return (0);
+	}
 	return (1);
 }
