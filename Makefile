@@ -6,7 +6,7 @@
 #    By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:00:42 by mflores-          #+#    #+#              #
-#    Updated: 2023/04/14 20:17:03 by mflores-         ###   ########.fr        #
+#    Updated: 2023/04/26 08:26:15 by nmunoz           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,30 +63,19 @@ MLX			= -L$(MLX_PATH) -l$(MLX_NAME) $(MLX_FLAGS)
 
 # List of all .c source files
 ROOT_FILES = main
-INIT_FILES = init
-INIT_FOLDER = init/
-PARSING_FILES = parsing check_file fill_colors parsing_utils
-PARSING_FOLDER = parsing/
-UTILS_FILES = exit_utils
-UTILS_FOLDER = utils/
-DEBUG_FILES = print_structs
-DEBUG_FOLDER = debug/
-VIEW_FILES = key_hooks player_utils view_init
-VIEW_FOLDER = view/
+SCREEN_FOLDER = screen/
+SCREEN_FILES = screen
+GAME_FOLDER = game/
+GAME_FILES = game map map_utils player player_movement player_rotation
 
-SRCS_PATH = srcs/
+SRCS_PATH = src/
 SRCS_FILES 	= $(addsuffix .c, $(ROOT_FILES) \
-							$(addprefix $(PARSING_FOLDER), $(PARSING_FILES)) \
-							$(addprefix $(UTILS_FOLDER), $(UTILS_FILES)) \
-							$(addprefix $(INIT_FOLDER), $(INIT_FILES)) \
-							$(addprefix $(DEBUG_FOLDER), $(DEBUG_FILES)) \
-							$(addprefix $(VIEW_FOLDER), $(VIEW_FILES)))
+							$(addprefix $(SCREEN_FOLDER), $(SCREEN_FILES)) \
+							$(addprefix $(GAME_FOLDER), $(GAME_FILES)))
 
 # All .o files go to objs directory
 OBJS_NAMES	= $(SRCS_FILES:.c=.o)
-OBJS_FOLDER = $(addprefix $(OBJS_PATH), $(PARSING_FOLDER) $(UTILS_FOLDER) \
-										$(VIEW_FOLDER) \
-										$(INIT_FOLDER) $(DEBUG_FOLDER)) 
+OBJS_FOLDER = $(addprefix $(OBJS_PATH), $(SCREEN_FOLDER), $(GAME_FOLDER)) 
 OBJS_PATH 	= objs/
 OBJS		= $(addprefix $(OBJS_PATH), $(OBJS_NAMES))
 
@@ -133,6 +122,8 @@ ifeq ("$(shell test -d $(OBJS_PATH) && echo $$?)","0")
 	@echo "$(YELLOW)\n. . . CLEANING OBJECTS . . .\n$(DEF_COLOR)"
 	@$(MAKE) --no-print-directory clean -C $(LIB_PATH)
 	@$(MAKE) --no-print-directory clean -sC $(MLX_PATH)
+	@$(MAKE) --no-print-directory clean -C $(LIST_PATH)
+	
 	@$(RM) -rd $(OBJS_PATH)
 	@echo "$(GREEN)[ ✔ ]\tOBJECTS CLEANED$(DEF_COLOR)"
 else
