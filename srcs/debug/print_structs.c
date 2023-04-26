@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 12:12:00 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/24 15:17:17 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/26 10:42:04 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	print_struct_map(t_map *m)
 	{
 		printf(BLUE"map:\n"DEFAULT);
 		while (m->map[++i])
-			printf(BLUE"\t[%d]\t%s\n"DEFAULT, i, m->map[i]);
+			printf(BLUE"\t[%d]\t%s"DEFAULT, i, m->map[i]);
 	}
 	printf(BLUE"\n<-----\tEND STRUCT MAP\t----->\n"DEFAULT);
 }
