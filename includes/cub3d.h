@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/27 19:05:19 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/27 20:57:55 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@
 # define ERR_MAP_NOTCLOSED "Map: invalid, needs to be surrounded by walls"
 # define ERR_MAP_CHARS "Map: invalid map characters"
 # define ERR_MAP_SPACES "Map: spaces inside map"
-# define ERR_NB_PLAYER "Map: needs 1 player position [N,S,W,E]"
+# define ERR_MAP_PLAYER "Map: needs 1 player position [N,S,W,E]"
+# define ERR_MAP_PATH "Map: player needs space to move"
 
 /* COLORS */
 # define DEFAULT "\001\e[00;39m\002"

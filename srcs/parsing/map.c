@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 14:31:03 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/27 19:31:01 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/27 21:08:52 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	ft_check_chars(char *str, char const *set)
 	return (1);
 }
 
-static size_t ft_strlend(const char *s)
+static size_t	ft_strlend(const char *s)
 {
 	size_t	len;
 
@@ -68,7 +68,7 @@ static size_t ft_strlend(const char *s)
 
 static void	get_end_map(int *end, int nb_line, t_data **d, int *i)
 {
-	int 	len;
+	int	len;
 
 	len = 0;
 	while (*i < nb_line && (*d)->map->file[*i])
@@ -116,7 +116,7 @@ static char	*transform_line(char *str, int max_width)
 
 static char	*get_map_line(char *str, int max_width)
 {
-	char 	*tmp;
+	char	*tmp;
 	int		str_len;
 
 	str_len = ft_strlend(str);
@@ -138,13 +138,14 @@ void	fill_map(int *i, int nb_line, t_data **d)
 	if (*i == nb_line)
 	{
 		(*d)->map->height = (end - start) + 1;
-		(*d)->map->map = malloc(sizeof(char *) * ((*d)->map->height+ 1));
+		(*d)->map->map = malloc(sizeof(char *) * ((*d)->map->height + 1));
 		if (!(*d)->map->map)
 			error_exit(*d, ERR_MALLOC, NULL);
 		nb_line = 0;
 		while (nb_line < (*d)->map->height)
 		{
-			(*d)->map->map[nb_line] = get_map_line((*d)->map->file[start++] , (*d)->map->width);
+			(*d)->map->map[nb_line] = get_map_line((*d)->map->file[start++], \
+			(*d)->map->width);
 			if (!(*d)->map->map[nb_line])
 				error_exit(*d, ERR_MALLOC, NULL);
 			nb_line++;
@@ -152,51 +153,6 @@ void	fill_map(int *i, int nb_line, t_data **d)
 		(*d)->map->map[nb_line] = 0;
 	}
 }
-
-/* static int	check_position_is_valid(t_data *data, char **map_tab)
-{
-	int	i;
-	int	j;
-
-	i = (int)data->player.pos_y;
-	j = (int)data->player.pos_x;
-	if (ft_strlen(map_tab[i - 1]) < (size_t)j
-		|| ft_strlen(map_tab[i + 1]) < (size_t)j
-		|| ft_isspace(map_tab[i][j - 1]) == 1
-		|| ft_isspace(map_tab[i][j + 1]) == 1
-		|| ft_isspace(map_tab[i - 1][j]) == 1
-		|| ft_isspace(map_tab[i + 1][j]) == 1)
-		return (0);
-	return (1);
-} */
-
-/* static int	check_player_position(t_data *data, char **map_tab)
-{
-	int	i;
-	int	j;
-
-	if (data->player.dir == '0')
-		return (err_msg(data->mapinfo.path, ERR_PLAYER_DIR, 0));
-	i = 0;
-	while (map_tab[i])
-	{
-		j = 0;
-		while (map_tab[i][j])
-		{
-			if (ft_strchr("NSEW", map_tab[i][j]))
-			{
-				data->player.pos_x = (double)j + 0.5;
-				data->player.pos_y = (double)i + 0.5;
-				map_tab[i][j] = '0';
-			}
-			j++;
-		}
-		i++;
-	}
-	if (check_position_is_valid(data, map_tab) == 0)
-		return (err_msg(data->mapinfo.path, ERR_PLAYER_POS, 0));
-	return (1);
-} */
 
 static int	is_special_char(char c, int check_zero)
 {
@@ -207,7 +163,7 @@ static int	is_special_char(char c, int check_zero)
 		if (c == '0')
 			return (1);
 	}
-	return (0);	
+	return (0);
 }
 
 static int	check_top_or_bottom(t_map *map, int i, int j, int top)
@@ -223,7 +179,8 @@ static int	check_top_or_bottom(t_map *map, int i, int j, int top)
 		if (ft_isspace(map->map[i][j]))
 		{
 			if ((map->map[i][j + 1] && is_special_char(map->map[i][j + 1], 1))
-				|| (j != 0 && map->map[i][j - 1] && is_special_char(map->map[i][j - 1], 1)))
+				|| (j != 0 && map->map[i][j - 1]
+				&& is_special_char(map->map[i][j - 1], 1)))
 				return (0);
 			if (top)
 			{
@@ -236,9 +193,11 @@ static int	check_top_or_bottom(t_map *map, int i, int j, int top)
 						break ;
 					else if (ft_isspace(map->map[x][j]))
 					{
-						if ((map->map[x][j + 1] && is_special_char(map->map[x][j + 1], 1))
-							|| (j != 0 && map->map[x][j - 1] && is_special_char(map->map[x][j - 1], 1)))
-						return (0);
+						if ((map->map[x][j + 1]
+							&& is_special_char(map->map[x][j + 1], 1))
+							|| (j != 0 && map->map[x][j - 1]
+							&& is_special_char(map->map[x][j - 1], 1)))
+							return (0);
 					}
 					x++;
 					if (x == map->height)
@@ -256,13 +215,15 @@ static int	check_top_or_bottom(t_map *map, int i, int j, int top)
 						break ;
 					else if (ft_isspace(map->map[x][j]))
 					{
-						if ((map->map[x][j + 1] && is_special_char(map->map[x][j + 1], 1))
-							|| (j != 0 && map->map[x][j - 1] && is_special_char(map->map[x][j - 1], 1)))
-						return (0);
+						if ((map->map[x][j + 1]
+							&& is_special_char(map->map[x][j + 1], 1))
+							|| (j != 0 && map->map[x][j - 1]
+							&& is_special_char(map->map[x][j - 1], 1)))
+							return (0);
 					}
 					x--;
 					if (x < 0)
-						break;
+						break ;
 				}	
 			}
 		}
@@ -280,10 +241,10 @@ static int	check_map_sides(t_map *map, char **err_msg)
 	*err_msg = ERR_MAP_NOTCLOSED;
 	if (check_top_or_bottom(map, 0, 0, 1) == 0)
 		return (0);
-	i = (map->height - 2);
+	i = (map->height - 1);
 	if (check_top_or_bottom(map, i, 0, 0) == 0)
 		return (0);
- 	i = 1;
+	i = 1;
 	while (i < (map->height - 1))
 	{
 		x = 0;
@@ -335,39 +296,37 @@ static int	check_map_elements(t_map *map, char **err_msg)
 			}
 		}
 	}
-	if (pos != 1)
+	if (pos != 1 || !is_special_char(map->dir, 0))
 	{
-		*err_msg = ERR_NB_PLAYER;
+		*err_msg = ERR_MAP_PLAYER;
 		return (0);
 	}
-/* 	i = 0;
-	while (map->map[i])
-	{
-		j = 0;
-		while (map->map[i][j])
-		{
-			while (map->map[i][j] && ft_isspace(map->map[i][j]) && map->map[i][j] == '1')
-				j++;
+	return (1);
+}
 
-			if (ft_strchr("NSEW", map->map[i][j]) && data->player.dir != '0')
-				return (err_msg(data->mapinfo.path, ERR_NUM_PLAYER, 0));
-			if (ft_strchr("NSEW", map->map[i][j]) && data->player.dir == '0')
-				data->player.dir = map->map[i][j];
-			j++;
-		}
-		i++;
-	} */
+static int	check_pos_is_valid(t_map *m, char **err_msg)
+{
+	int	y;
+	int	x;
+
+	y = m->pos_y;
+	x = m->pos_x;
+	if (m->map[y + 1][x] == '1' && m->map[y - 1][x] == '1'
+			&& m->map[y][x + 1] == '1' && m->map[y][x - 1] == '1')
+	{
+		*err_msg = ERR_MAP_PATH;
+		return (0);
+	}
 	return (1);
 }
 
 int	check_map(t_map *m, char **err_msg)
 {
-	printf("Checking map:\nmap_height: %d\nmap_width: %d\n", m->height, m->width);
 	if (check_map_sides(m, err_msg) == 0)
 		return (0);
- 	if (check_map_elements(m, err_msg) == 0)
+	if (check_map_elements(m, err_msg) == 0)
 		return (0);
-/*	if (check_player_position(m, err_msg) == 0)
-		return (0); */
+	if (check_pos_is_valid(m, err_msg) == 0)
+		return (0);
 	return (1);
 }

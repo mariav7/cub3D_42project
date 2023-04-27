@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 22:03:10 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/27 12:39:03 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/27 20:02:02 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,12 +106,10 @@ static void	texture_or_color(t_data **d, int *i, char *row)
 static int	parse_row(t_data **d, char *row)
 {
 	int		i;
-	int		start;
 
 	i = 0;
 	while (row[i])
 	{
-		start = i;
 		while (row[i] && (row[i] == ' ' || row[i] == '\t' || row[i] == '\v'
 				|| row[i] == '\f' || row[i] == '\r'))
 			i++;
