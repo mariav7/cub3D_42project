@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 17:14:54 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/24 18:29:01 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/26 15:45:11 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ static char	*get_texture_path(char *line, int *j)
 int	fill_textures(t_tex *tex, char *line, int *i)
 {
 	if (tex->no && tex->so && tex->ea && tex->we)
-		return (0);
-	if (line[*i + 2] && (line[*i + 2] != ' ' && line[*i + 2] != '\t'))
 		return (0);
 	if (line[*i] == 'N' && line[*i + 1] == 'O' && !(tex->no))
 		tex->no = get_texture_path(line, i);

@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/24 19:39:48 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/27 19:05:19 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@
 # define ERR_FILE_EMPTY "File: is empty"
 # define ERR_FILE_INVALID "File: element(s) missing"
 # define ERR_ID_INVALID "File: invalid identifier(s)"
+# define ERR_ID_DOUBLES "File: double identifier(s)"
 # define ERR_MLX "Minilibx: initialization failed"
 # define ERR_MLX_WIN "Minilibx: new window failed"
 # define ERR_TEX "Texture: invalid texture file type, [.xpm] needed"
@@ -79,8 +80,12 @@
 # define ERR_TEX_NOTFOUND "Texture"
 # define ERR_COLOR_INVALID "File: invalid floor/ceiling RGB color(s)"
 # define ERR_TEXCO_FORMAT "File: invalid format in textures/colors/map"
-# define ERR_MAP_ISFIRST "File: map content always has to be the last"
+# define ERR_MAP_ISFIRST "File: invalid format, map always has to be last"
 # define ERR_MAP_INVALID "File: invalid map"
+# define ERR_MAP_NOTCLOSED "Map: invalid, needs to be surrounded by walls"
+# define ERR_MAP_CHARS "Map: invalid map characters"
+# define ERR_MAP_SPACES "Map: spaces inside map"
+# define ERR_NB_PLAYER "Map: needs 1 player position [N,S,W,E]"
 
 /* COLORS */
 # define DEFAULT "\001\e[00;39m\002"
@@ -109,8 +114,11 @@ struct s_map
 	int		width;
 	int		fd;
 	char	*path;
-	char	*file;
+	char	**file;
 	char	**map;
+	int		pos_x;
+	int		pos_y;
+	char	dir;
 };
 
 struct s_tex
@@ -180,8 +188,8 @@ int				check_textures(t_data **d, char **err_msg);
 int				fill_colors(t_tex *tex, char *line, int *i, char **err_msg);
 
 /* map.c */
-int				fill_map(t_map *m, char *line, int *i);
-int				check_map(t_data **d, char **err_msg);
+void			fill_map(int *i, int nb_line, t_data **d);
+int				check_map(t_map *m, char **err_msg);
 
 /*------------------------------ END PARSING ---------------------------------*/
 

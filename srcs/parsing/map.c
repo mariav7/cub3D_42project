@@ -6,39 +6,27 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 14:31:03 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/25 15:16:45 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/27 19:31:01 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-/* int	fill_map(t_map *m, char *line, int *i)
+static int	has_only_spaces(char *str)
 {
-	int		s;
-	char	*tmp;
+	int		i;
 
-	if (m->map)
+	i = 0;
+	if (!str[i])
 		return (0);
-	s = *i;
-	while (line[*i] && (line[*i] == '0' || line[*i] == '1'
-			|| ft_isspace(line[*i]) || (line[*i] == 'N'
-				&& !ft_isalpha(line[*i + 1])) || (line[*i] == 'S'
-				&& !ft_isalpha(line[*i + 1])) || (line[*i] == 'E'
-				&& !ft_isalpha(line[*i + 1])) || (line[*i] == 'W'
-				&& !ft_isalpha(line[*i + 1]))))
-		(*i)++;
-	tmp = ft_substr((const char *)line, s, *i);
-	if (!tmp)
-		return (0);
-	m->map = ft_split(tmp, '\n');
-	free(tmp);
-	if (!m->map)
-		return (0);
-	return (1);
-} */
-//////////////////////////////////////////////////////
+	while (str[i] && ft_isspace(str[i]))
+		i++;
+	if (str[i] == '\0')
+		return (1);
+	return (0);
+}
 
-/* static	int	ft_char_in_set(char c, char const *set)
+static	int	ft_char_in_set(char c, char const *set)
 {
 	size_t	i;
 
@@ -50,103 +38,336 @@
 		i++;
 	}
 	return (0);
-} */
+}
 
-/* int	fill_map(t_map *m, char *line, int *i)
+static int	ft_check_chars(char *str, char const *set)
 {
-	int		s;
-	char	*tmp;
-	int		x;
+	int		i;
 
-	printf("TOTO\n");
-	if (m->map)
-		return (0);
-	s = *i;
-	while (line[*i] && ft_isspace(line[*i]))
-		(*i)++;
-	if (line[*i] != '1' || !line[*i])
-		return (0);
-	x = *i;
-	while (line[x])
+	i = 0;
+	while (str[i])
 	{
-		if (ft_char_in_set(line[x++], "01NSEW \t\n\v\f\r") == 0)
+		if (ft_char_in_set(str[i], set) == 0)
 			return (0);
+		i++;
 	}
-	while (line[*i] && (line[*i] == '0' || line[*i] == '1'
-			|| ft_isspace(line[*i]) || line[*i] == 'N' || line[*i] == 'S'
-				|| line[*i] == 'E' || line[*i] == 'W'))
-	{
-		if (ft_isdigit(line[*i]))
-		{
-			(*i)++;
-			x = *i;
-			while (line[x] && ft_isspace(line[x]))
-				x++;
-			if (line[x] == '\0')
-				break ;
-			else
-				(*i)++;
-		}
-		else
-			(*i)++;
-	}
-	// if (line[*i] == '\0')
-	// {
-	// 	x = *i;
-	// 	//--(*i);
-	// 	printf("HERE=>%s\n", line + *i);
-	// 	while (line[*i] && ft_isspace(line[*i]))
-	// 		--(*i);
-	// 	printf("HERE 2=>%s\n*i=>%d\n", line + *i, *i);
-	// }
-	tmp = ft_substr((const char *)line, s, *i);
-	if (!tmp)
-		return (0);
-	printf("tmp=>%s-end\n", tmp);
-	// *i = x;
-	m->map = ft_split(tmp, '\n');
-	free(tmp);
-	if (!m->map)
-		return (0);
-	while (line[*i])
-		(*i)++;
-	return (1);
-} */
-
-int	fill_map(t_map *m, char *line, int *i)
-{
-	int		s;
-	char	*tmp;
-
-	if (m->map)
-		return (0);
-	s = *i;
-	while (line[*i] && (line[*i] == '0' || line[*i] == '1'
-			|| ft_isspace(line[*i]) || (line[*i] == 'N'
-				&& !ft_isalpha(line[*i + 1])) || (line[*i] == 'S'
-				&& !ft_isalpha(line[*i + 1])) || (line[*i] == 'E'
-				&& !ft_isalpha(line[*i + 1])) || (line[*i] == 'W'
-				&& !ft_isalpha(line[*i + 1]))))
-		(*i)++;
-	tmp = ft_substr((const char *)line, s, *i);
-	if (!tmp)
-		return (0);
-	m->map = ft_split(tmp, '\n');
-	free(tmp);
-	if (!m->map)
-		return (0);
 	return (1);
 }
 
-int	check_map(t_data **d, char **err_msg)
+static size_t ft_strlend(const char *s)
 {
-	(void)err_msg;
-	(void)d;
-/* 	if (check_map_sides(d, err_msg))
+	size_t	len;
+
+	len = 0;
+	if (!s)
+		return (len);
+	while (s[len] && s[len] != '\n')
+		len++;
+	return (len);
+}
+
+static void	get_end_map(int *end, int nb_line, t_data **d, int *i)
+{
+	int 	len;
+
+	len = 0;
+	while (*i < nb_line && (*d)->map->file[*i])
+	{
+		*end = *i;
+		if (ft_check_chars((*d)->map->file[*i], "01NSEW \t\n\v\f\r") == 0)
+			error_exit(*d, ERR_MAP_CHARS, NULL);
+		else if (has_only_spaces((*d)->map->file[*i]) == 1)
+		{
+			*end = *i - 1;
+			break ;
+		}
+		len = ft_strlend((*d)->map->file[*i]);
+		if (len > (*d)->map->width)
+			(*d)->map->width = len;
+		(*i)++;
+	}
+	while (*i < nb_line && (*d)->map->file[*i])
+	{
+		if (ft_check_chars((*d)->map->file[*i], "01NSEW \t\n\v\f\r") == 0)
+			error_exit(*d, ERR_MAP_CHARS, NULL);
+		else if (has_only_spaces((*d)->map->file[*i]) == 1)
+			(*i)++;
+		else
+			error_exit(*d, ERR_MAP_INVALID, NULL);
+	}
+}
+
+static char	*transform_line(char *str, int max_width)
+{
+	int		i;
+	char	*tmp;
+
+	tmp = malloc(sizeof(char) * (max_width + 1));
+	if (!tmp)
+		return (NULL);
+	i = -1;
+	while (++i < max_width && str[i] && str[i] != '\n')
+		tmp[i] = str[i];
+	while (i < max_width)
+		tmp[i++] = ' ';
+	tmp[i] = '\0';
+	return (tmp);
+}
+
+static char	*get_map_line(char *str, int max_width)
+{
+	char 	*tmp;
+	int		str_len;
+
+	str_len = ft_strlend(str);
+	if (str_len < max_width)
+		tmp = transform_line(str, max_width);
+	else
+		tmp = ft_substr(str, 0, max_width);
+	return (tmp);
+}
+
+void	fill_map(int *i, int nb_line, t_data **d)
+{
+	int		start;
+	int		end;
+
+	start = *i;
+	end = start;
+	get_end_map(&end, nb_line, d, i);
+	if (*i == nb_line)
+	{
+		(*d)->map->height = (end - start) + 1;
+		(*d)->map->map = malloc(sizeof(char *) * ((*d)->map->height+ 1));
+		if (!(*d)->map->map)
+			error_exit(*d, ERR_MALLOC, NULL);
+		nb_line = 0;
+		while (nb_line < (*d)->map->height)
+		{
+			(*d)->map->map[nb_line] = get_map_line((*d)->map->file[start++] , (*d)->map->width);
+			if (!(*d)->map->map[nb_line])
+				error_exit(*d, ERR_MALLOC, NULL);
+			nb_line++;
+		}
+		(*d)->map->map[nb_line] = 0;
+	}
+}
+
+/* static int	check_position_is_valid(t_data *data, char **map_tab)
+{
+	int	i;
+	int	j;
+
+	i = (int)data->player.pos_y;
+	j = (int)data->player.pos_x;
+	if (ft_strlen(map_tab[i - 1]) < (size_t)j
+		|| ft_strlen(map_tab[i + 1]) < (size_t)j
+		|| ft_isspace(map_tab[i][j - 1]) == 1
+		|| ft_isspace(map_tab[i][j + 1]) == 1
+		|| ft_isspace(map_tab[i - 1][j]) == 1
+		|| ft_isspace(map_tab[i + 1][j]) == 1)
 		return (0);
-	if (check_map_elements(d, err_msg))
+	return (1);
+} */
+
+/* static int	check_player_position(t_data *data, char **map_tab)
+{
+	int	i;
+	int	j;
+
+	if (data->player.dir == '0')
+		return (err_msg(data->mapinfo.path, ERR_PLAYER_DIR, 0));
+	i = 0;
+	while (map_tab[i])
+	{
+		j = 0;
+		while (map_tab[i][j])
+		{
+			if (ft_strchr("NSEW", map_tab[i][j]))
+			{
+				data->player.pos_x = (double)j + 0.5;
+				data->player.pos_y = (double)i + 0.5;
+				map_tab[i][j] = '0';
+			}
+			j++;
+		}
+		i++;
+	}
+	if (check_position_is_valid(data, map_tab) == 0)
+		return (err_msg(data->mapinfo.path, ERR_PLAYER_POS, 0));
+	return (1);
+} */
+
+static int	is_special_char(char c, int check_zero)
+{
+	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
+		return (1);
+	if (check_zero)
+	{
+		if (c == '0')
+			return (1);
+	}
+	return (0);	
+}
+
+static int	check_top_or_bottom(t_map *map, int i, int j, int top)
+{
+	int		x;
+
+	if (!map->map || !map->map[i] || !map->map[i][j])
 		return (0);
-	if (check_player_position(d, err_msg))
+	while (map->map[i][j])
+	{
+		if (map->map[i][j] != '1' && !ft_isspace(map->map[i][j]))
+			return (0);
+		if (ft_isspace(map->map[i][j]))
+		{
+			if ((map->map[i][j + 1] && is_special_char(map->map[i][j + 1], 1))
+				|| (j != 0 && map->map[i][j - 1] && is_special_char(map->map[i][j - 1], 1)))
+				return (0);
+			if (top)
+			{
+				x = 1;
+				while (map->map[x][j])
+				{
+					if (map->map[x][j] != '1' && !ft_isspace(map->map[x][j]))
+						return (0);
+					else if (map->map[x][j] == '1')
+						break ;
+					else if (ft_isspace(map->map[x][j]))
+					{
+						if ((map->map[x][j + 1] && is_special_char(map->map[x][j + 1], 1))
+							|| (j != 0 && map->map[x][j - 1] && is_special_char(map->map[x][j - 1], 1)))
+						return (0);
+					}
+					x++;
+					if (x == map->height)
+						break ;
+				}
+			}
+			else
+			{
+				x = i - 1;
+				while (map->map[x][j] && x >= 0)
+				{
+					if (map->map[x][j] != '1' && !ft_isspace(map->map[x][j]))
+						return (0);
+					else if (map->map[x][j] == '1')
+						break ;
+					else if (ft_isspace(map->map[x][j]))
+					{
+						if ((map->map[x][j + 1] && is_special_char(map->map[x][j + 1], 1))
+							|| (j != 0 && map->map[x][j - 1] && is_special_char(map->map[x][j - 1], 1)))
+						return (0);
+					}
+					x--;
+					if (x < 0)
+						break;
+				}	
+			}
+		}
+		j++;
+	}
+	return (1);
+}
+
+static int	check_map_sides(t_map *map, char **err_msg)
+{
+	int	i;
+	int	j;
+	int	x;
+
+	*err_msg = ERR_MAP_NOTCLOSED;
+	if (check_top_or_bottom(map, 0, 0, 1) == 0)
+		return (0);
+	i = (map->height - 2);
+	if (check_top_or_bottom(map, i, 0, 0) == 0)
+		return (0);
+ 	i = 1;
+	while (i < (map->height - 1))
+	{
+		x = 0;
+		j = ft_strlen(map->map[i]) - 1;
+		while (map->map[i][x] && ft_isspace(map->map[i][x]))
+			x++;
+		if (map->map[i][x] != '1')
+			return (0);
+		while (map->map[i][j] && ft_isspace(map->map[i][j]))
+			j--;
+		if (map->map[i][j] != '1')
+			return (0);
+		while (++x < j && map->map[i][x])
+		{
+			if (is_special_char(map->map[i][x], 1))
+			{
+				if ((map->map[i][x + 1] && ft_isspace(map->map[i][x + 1]))
+					|| (x != 0 && ft_isspace(map->map[i][x - 1])))
+				{
+					*err_msg = ERR_MAP_SPACES;
+					return (0);
+				}
+			}
+		}
+		i++;
+	}
+	return (1);
+}
+
+static int	check_map_elements(t_map *map, char **err_msg)
+{
+	int	i;
+	int	j;
+	int	pos;
+
+	i = -1;
+	pos = 0;
+	while (map->map[++i])
+	{
+		j = -1;
+		while (map->map[i][++j])
+		{
+			if (is_special_char(map->map[i][j], 0))
+			{
+				map->pos_x = j;
+				map->pos_y = i;
+				map->dir = map->map[i][j];
+				pos++;
+			}
+		}
+	}
+	if (pos != 1)
+	{
+		*err_msg = ERR_NB_PLAYER;
+		return (0);
+	}
+/* 	i = 0;
+	while (map->map[i])
+	{
+		j = 0;
+		while (map->map[i][j])
+		{
+			while (map->map[i][j] && ft_isspace(map->map[i][j]) && map->map[i][j] == '1')
+				j++;
+
+			if (ft_strchr("NSEW", map->map[i][j]) && data->player.dir != '0')
+				return (err_msg(data->mapinfo.path, ERR_NUM_PLAYER, 0));
+			if (ft_strchr("NSEW", map->map[i][j]) && data->player.dir == '0')
+				data->player.dir = map->map[i][j];
+			j++;
+		}
+		i++;
+	} */
+	return (1);
+}
+
+int	check_map(t_map *m, char **err_msg)
+{
+	printf("Checking map:\nmap_height: %d\nmap_width: %d\n", m->height, m->width);
+	if (check_map_sides(m, err_msg) == 0)
+		return (0);
+ 	if (check_map_elements(m, err_msg) == 0)
+		return (0);
+/*	if (check_player_position(m, err_msg) == 0)
 		return (0); */
 	return (1);
 }

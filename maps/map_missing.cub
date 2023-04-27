@@ -1,0 +1,8 @@
+NO ./sprites/wall.xpm
+SO ./sprites/wall.xpm
+WE ./sprites/wall.xpm
+EA ./sprites/wall.xpm
+
+F 220,100,0
+C 225,30,0
+

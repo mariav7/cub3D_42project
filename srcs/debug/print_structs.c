@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 12:12:00 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/26 10:42:04 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/27 19:07:42 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,25 @@ void	print_struct_map(t_map *m)
 {
 	int		i;
 
-	i = -1;
 	printf(BLUE"\n<-----\tSTRUCT MAP\t----->\n\n"DEFAULT);
 	if (m->file)
-		printf(BLUE"file:%s\n"DEFAULT, m->file);
+	{
+		i = -1;
+		printf(BLUE"file:\n"DEFAULT);
+		while (m->file[++i])
+			printf(BLUE"\t[%d]\t%s"DEFAULT, i, m->file[i]);
+	}
 	if (m->path)
-		printf(BLUE"path:%s\n"DEFAULT, m->path);
+		printf(BLUE"\npath:%s\n"DEFAULT, m->path);
 	if (m->map)
 	{
-		printf(BLUE"map:\n"DEFAULT);
+		i = -1;
+		printf(BLUE"map_height:%d\nmap_width:%d\nmap:\n"DEFAULT,\
+		m->height, m->width);
 		while (m->map[++i])
-			printf(BLUE"\t[%d]\t%s"DEFAULT, i, m->map[i]);
+			printf(BLUE"\t[%d]\t%s\n"DEFAULT, i, m->map[i]);
+		printf(BLUE"player_direction: %c\nplayer_pos_x:%d\nplayer_pos_y:%d\n"\
+		DEFAULT, m->dir, m->pos_x, m->pos_y);
 	}
 	printf(BLUE"\n<-----\tEND STRUCT MAP\t----->\n"DEFAULT);
 }

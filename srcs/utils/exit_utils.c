@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 23:17:59 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/26 11:04:17 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/26 11:40:30 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	error_exit(t_data *d, char *err, void *free_this)
 		if (d->map->fd >= 0)
 			close(d->map->fd);
 		if (d->map->file)
-			free(d->map->file);
+			free_tab((void **)d->map->file);
 		if (d->map->map)
 			free_tab((void **)d->map->map);
 		free(d->map);
@@ -101,7 +101,7 @@ void	free_n_exit_safe(t_data *d)
 		if (d->map->fd >= 0)
 			close(d->map->fd);
 		if (d->map->file)
-			free(d->map->file);
+			free_tab((void **)d->map->file);
 		if (d->map->map)
 			free_tab((void **)d->map->map);
 		free(d->map);
