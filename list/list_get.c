@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   list_get.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmunoz   <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/17 18:03:58 by mflores-          #+#    #+#             */
-/*   Updated: 2023/03/31 10:13:07 by mflores-         ###   ########.fr       */
+/*   Created: 2022/06/07 18:10:59 by nmunoz            #+#    #+#             */
+/*   Updated: 2022/06/07 18:10:59 by nmunoz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "list.h"
 
-/*
-	Adds the node at the end of the linked list
-*/
-
-void	ft_lstadd_back(t_list **lst, t_list *new)
+t_list_elem	*list_get_by_index(t_list *list, int index)
 {
-	t_list	*last;
+	t_list_elem	*elem;
+	int			i;
 
-	if (new)
+	if (!list)
+		return (NULL);
+	elem = list->head;
+	i = 0;
+	while (elem)
 	{
-		if (!*lst)
-		{
-			*lst = new;
-			return ;
-		}
-		last = ft_lstlast(*lst);
-		last->next = new;
+		if (index == i++)
+			return (elem);
+		elem = elem->next;
 	}
+	return (NULL);
 }

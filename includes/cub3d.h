@@ -25,6 +25,8 @@
 
 // # include <mlx.h>
 # include "../mlx/mlx.h"
+# include "../mlx/mlx_int.h"
+# include "../list/list.h"
 # include <X11/X.h>
 # include <libft.h>
 # include <ft_printf.h>
@@ -107,6 +109,79 @@ typedef struct s_map	t_map;
 typedef struct s_tex	t_tex;
 typedef struct s_data	t_data;
 
+# define screenWidth 640
+# define screenHeight 480
+# define mapWidth 24
+# define mapHeight 24
+
+enum double_data {
+	CAMERA_X = 0,
+	RAY_DIR_X,
+	RAY_DIR_Y,
+	SIDE_DIST_X,
+	SIDE_DIST_Y,
+	DELTA_DIST_X,
+	DELTA_DIST_Y,
+	PERP_WALL_DIST
+};
+
+enum int_data {
+	MAP_X,
+	MAP_Y,
+	STEP_X,
+	STEP_Y,
+	HIT,
+	SIDE,
+	LINE_HEIGHT,
+	DRAW_START,
+	DRAW_END,
+	COLOR
+};
+
+typedef struct s_screen_utils {
+    int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	char 	*addr;
+} t_screen_utils;
+
+typedef struct s_image
+{
+	t_img	*holder;
+	char	*addr;
+} t_image;
+
+typedef struct s_window
+{
+    void *holder;
+} t_window;
+
+typedef struct s_screen
+{
+    void 		*holder;
+    t_window	*window;
+    t_image		*img;
+    t_screen_utils	*utils;
+} t_screen;
+
+typedef struct	s_player
+{
+	double	move_speed;
+	double	rot_speed;
+	double	posX;
+	double	posY;
+	double	dirX;
+	double	dirY;
+	double	planeX;
+	double	planeY;
+} t_player;
+
+typedef struct s_game
+{
+	t_screen	*screen;
+	t_player	*player;
+} t_game;
+
 struct s_map
 {
 	int		height;
@@ -118,6 +193,8 @@ struct s_map
 	int		pos_x;
 	int		pos_y;
 	char	dir;
+	double	d_data[8];
+	int		i_data[10];
 };
 
 struct s_tex
@@ -134,8 +211,7 @@ struct s_tex
 
 struct s_data
 {
-	void	*mlx_ptr;
-	void	*window;
+	t_game	*game;
 	t_map	*map;
 	t_tex	*tex;
 };
@@ -145,6 +221,23 @@ struct s_data
 /*                               PROTOTYPES                                   */
 /*                                                                            */
 /******************************************************************************/
+
+/*------------------------------ NICO ---------------------------------------*/
+
+t_screen	*init_screen(int width, int height, char *name);
+t_image		*init_image(t_screen *screen, int width, int height);
+void		image_put_pixel(t_screen *screen, t_image *image, int x, int y, int color);
+void		display_image(t_screen *screen, t_image *image);
+t_game 		*init_game(t_screen *screen, t_player *player);
+t_player	 *init_player(t_data *d);
+int			handle_move(int key_code, t_data *d);
+void		rotate(t_game *game, int right);
+int			exit_game(t_data *d);
+t_image		*draw_map(t_data *d);
+void		refresh(t_data *d);
+t_list		*list_textures_init();
+
+/*----------------------------- END NICO -------------------------------------*/
 
 /* main.c */
 int				key_event(int key_code, t_data *d);
@@ -168,6 +261,8 @@ void			start_game(t_data *d);
 /*------------------------------ END INIT ------------------------------------*/
 
 /*------------------------------ PARSING -------------------------------------*/
+
+void debug_map(t_data *d);
 
 /* check_file.c */
 int				file_ext(char *file, char *file_ext);

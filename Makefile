@@ -38,6 +38,15 @@ LIB			= -L$(LIB_PATH) -l$(LIB_NAME)
 LIB_HEADER_PATH = $(LIB_PATH)includes/
 
 #------------------------------------------------------------------------------#
+#								LIST		           				   	   	   #
+#------------------------------------------------------------------------------#
+
+LIBLIST_NAME 	= ftlist
+LIBLIST_PATH	= list/
+LIBLIST			= -L$(LIBLIST_PATH) -l$(LIBLIST_NAME)
+LIBLIST_HEADER_PATH = $(LIBLIST_PATH)includes/
+
+#------------------------------------------------------------------------------#
 #								MINILIBX	           				   	   	   #
 #------------------------------------------------------------------------------#
 
@@ -57,23 +66,30 @@ ROOT_FILES = main
 INIT_FILES = init
 INIT_FOLDER = init/
 PARSING_FILES = parsing check_file textures colors parsing_utils fill_map \
-				check_map map_utils
+				check_map map_utils map_to_int
 PARSING_FOLDER = parsing/
 UTILS_FILES = exit_utils
 UTILS_FOLDER = utils/
 DEBUG_FILES = print_structs
 DEBUG_FOLDER = debug/
+GAME_FOLDER = game/
+GAME_FILES = game map player_movement player_rotation player
+SCREEN_FOLDER = screen/
+SCREEN_FILES = screen
 
 SRCS_PATH = srcs/
 SRCS_FILES 	= $(addsuffix .c, $(ROOT_FILES) \
 							$(addprefix $(PARSING_FOLDER), $(PARSING_FILES)) \
 							$(addprefix $(UTILS_FOLDER), $(UTILS_FILES)) \
 							$(addprefix $(INIT_FOLDER), $(INIT_FILES)) \
+							$(addprefix $(GAME_FOLDER), $(GAME_FILES)) \
+							$(addprefix $(SCREEN_FOLDER), $(SCREEN_FILES)) \
 							$(addprefix $(DEBUG_FOLDER), $(DEBUG_FILES))) 
 
 # All .o files go to objs directory
 OBJS_NAMES	= $(SRCS_FILES:.c=.o)
 OBJS_FOLDER = $(addprefix $(OBJS_PATH), $(PARSING_FOLDER) $(UTILS_FOLDER) \
+										$(GAME_FOLDER) $(SCREEN_FOLDER) \
 										$(INIT_FOLDER) $(DEBUG_FOLDER)) 
 OBJS_PATH 	= objs/
 OBJS		= $(addprefix $(OBJS_PATH), $(OBJS_NAMES))
@@ -90,7 +106,7 @@ all:	header $(NAME)
 	@echo "\033[1;39m\n▶ TO LAUNCH:\t./$(NAME) map_file.cub\n $(DEF_COLOR)"
 
 # Actual target of the binary - depends on all .o files
-$(NAME): lib $(HEADERS) $(OBJS)
+$(NAME): lib liblist $(HEADERS) $(OBJS)
 # Compile Minilibx
 	@echo "$(YELLOW)\n. . . COMPILING MINILIBX OBJECTS . . . $(WHITE)\n"
 	@$(MAKE) --no-print-directory -sC $(MLX_PATH)
@@ -110,6 +126,10 @@ $(OBJS_PATH)%.o: $(SRCS_PATH)%.c
 
 lib:
 	@$(MAKE) --no-print-directory -C $(LIB_PATH)
+	@echo "\n$(GREEN)[ ✔ ]\tLIBFT $(DEF_COLOR)"
+
+liblist:
+	@$(MAKE) --no-print-directory -C $(LIBLIST_PATH)
 	@echo "\n$(GREEN)[ ✔ ]\tLIBFT $(DEF_COLOR)"
 
 clean:

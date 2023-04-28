@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   list_reverse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmunoz   <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/17 16:26:03 by mflores-          #+#    #+#             */
-/*   Updated: 2023/03/31 10:13:10 by mflores-         ###   ########.fr       */
+/*   Created: 2022/06/09 00:00:10 by nmunoz            #+#    #+#             */
+/*   Updated: 2022/06/09 00:00:10 by nmunoz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "list.h"
 
-/*
-	Adds the node at the beginning of the linked list
-*/
-
-void	ft_lstadd_front(t_list **lst, t_list *new)
+void	list_reverse(t_list *list)
 {
-	if (new)
-	{
-		if (!*lst)
-		{
-			*lst = new;
-			return ;
-		}
-		new->next = *lst;
-		*lst = new;
-	}
+	int	i;
+	int	j;
+
+	if (!list || 2 > list->size)
+		return ;
+	i = 0;
+	j = list->size - 1;
+	while (j > i)
+		list_swap(list, i++, j--);
 }
