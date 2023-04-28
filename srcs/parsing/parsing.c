@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 22:03:10 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/27 20:02:02 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/28 11:09:56 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,26 +59,6 @@ static char	**get_file(int nb_line, int fd)
 	}
 	tab[i] = 0;
 	return (tab);
-}
-
-static void	check_data(t_data **d)
-{
-	int		ret;
-	char	*err_msg;
-
-	err_msg = NULL;
-	ret = check_textures(d, &err_msg);
-	if (ret == 0)
-		error_exit(*d, err_msg, NULL);
-	else if (ret == -1)
-	{
-		ft_putendl_fd(ERR_MSG, 2);
-		perror(err_msg);
-		error_exit(*d, NULL, NULL);
-	}
-	ret = check_map((*d)->map, &err_msg);
-	if (ret == 0)
-		error_exit(*d, err_msg, NULL);
 }
 
 static void	texture_or_color(t_data **d, int *i, char *row)
@@ -151,5 +131,6 @@ void	parse_file(t_data **d)
 	}
 	if (!(*d)->tex->ce || !(*d)->tex->flo || !(*d)->map->map)
 		error_exit(*d, ERR_FILE_INVALID, NULL);
-	check_data(d);
+	(*d)->tex->hex_flo = rgb_to_hex((*d)->tex->flo);
+	(*d)->tex->hex_ce = rgb_to_hex((*d)->tex->ce);
 }

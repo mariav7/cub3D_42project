@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/27 20:57:55 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/28 12:47:23 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,17 +71,15 @@
 # define ERR_FILE_EMPTY "File: is empty"
 # define ERR_FILE_INVALID "File: element(s) missing"
 # define ERR_ID_INVALID "File: invalid identifier(s)"
-# define ERR_ID_DOUBLES "File: double identifier(s)"
 # define ERR_MLX "Minilibx: initialization failed"
 # define ERR_MLX_WIN "Minilibx: new window failed"
-# define ERR_TEX "Texture: invalid texture file type, [.xpm] needed"
-# define ERR_TEX_INVALID "File: invalid texture(s)"
+# define ERR_TEX_FILE "Texture: invalid texture file type, [.xpm] needed"
 # define ERR_TEX_ISDIR "Texture: is a directory"
 # define ERR_TEX_NOTFOUND "Texture"
 # define ERR_COLOR_INVALID "File: invalid floor/ceiling RGB color(s)"
 # define ERR_TEXCO_FORMAT "File: invalid format in textures/colors/map"
-# define ERR_MAP_ISFIRST "File: invalid format, map always has to be last"
-# define ERR_MAP_INVALID "File: invalid map"
+# define ERR_MAP_ISFIRST "Map: invalid format, map always has to be last"
+# define ERR_MAP_INVALID "Map: invalid map"
 # define ERR_MAP_NOTCLOSED "Map: invalid, needs to be surrounded by walls"
 # define ERR_MAP_CHARS "Map: invalid map characters"
 # define ERR_MAP_SPACES "Map: spaces inside map"
@@ -130,6 +128,8 @@ struct s_tex
 	char			*we;
 	int				*flo;
 	int				*ce;
+	unsigned long	hex_flo;
+	unsigned long	hex_ce;
 };
 
 struct s_data
@@ -178,8 +178,11 @@ int				check_file(int ac, char **av);
 void			parse_file(t_data **d);
 
 /* parsing_utils.c */
-void			ignore_spaces(char *str, int *index);
+int				has_only_spaces(char *str);
+int				is_special_char(char c, int check_zero);
+void			ignore_spaces(char *str, int *index, int add);
 long long		ft_atoll(const char *str);
+unsigned long	rgb_to_hex(int *rgb);
 
 /* textures.c */
 int				fill_textures(t_tex *tex, char *line, int *i);
@@ -188,9 +191,15 @@ int				check_textures(t_data **d, char **err_msg);
 /* colors.c */
 int				fill_colors(t_tex *tex, char *line, int *i, char **err_msg);
 
-/* map.c */
+/* fill_map.c */
 void			fill_map(int *i, int nb_line, t_data **d);
+
+/* check_map.c */
 int				check_map(t_map *m, char **err_msg);
+
+/* map_utlis.c */
+int				ft_check_chars(char *str, char const *set);
+size_t			ft_strlend(const char *s);
 
 /*------------------------------ END PARSING ---------------------------------*/
 

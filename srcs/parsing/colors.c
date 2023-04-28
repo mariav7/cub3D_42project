@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 13:26:56 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/24 17:42:05 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/28 12:47:57 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static char	**get_str_delimiter(char *line, int *j)
 	char	**tab;
 
 	*j = *j + 2;
-	ignore_spaces(line, j);
+	ignore_spaces(line, j, 1);
 	i = *j;
 	while (line[i] && !ft_isspace(line[i]))
 		i++;

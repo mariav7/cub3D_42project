@@ -6,11 +6,31 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 14:21:25 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/17 12:13:21 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/28 11:09:59 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static void	check_data(t_data **d)
+{
+	int		ret;
+	char	*err_msg;
+
+	err_msg = NULL;
+	ret = check_textures(d, &err_msg);
+	if (ret == 0)
+		error_exit(*d, err_msg, NULL);
+	else if (ret == -1)
+	{
+		ft_putendl_fd(ERR_MSG, 2);
+		perror(err_msg);
+		error_exit(*d, NULL, NULL);
+	}
+	ret = check_map((*d)->map, &err_msg);
+	if (ret == 0)
+		error_exit(*d, err_msg, NULL);
+}
 
 void	init_structs(t_data **d, int fd, char *file)
 {
@@ -31,6 +51,7 @@ void	init_structs(t_data **d, int fd, char *file)
 	m->fd = fd;
 	m->path = file;
 	parse_file(d);
+	check_data(d);
 }
 
 void	start_game(t_data *d)

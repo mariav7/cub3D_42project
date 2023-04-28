@@ -6,7 +6,7 @@
 #    By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:00:42 by mflores-          #+#    #+#              #
-#    Updated: 2023/04/24 16:49:50 by mflores-         ###   ########.fr        #
+#    Updated: 2023/04/28 11:26:39 by mflores-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,8 @@ MLX			= -L$(MLX_PATH) -l$(MLX_NAME) $(MLX_FLAGS)
 ROOT_FILES = main
 INIT_FILES = init
 INIT_FOLDER = init/
-PARSING_FILES = parsing check_file textures colors parsing_utils map
+PARSING_FILES = parsing check_file textures colors parsing_utils fill_map \
+				check_map map_utils
 PARSING_FOLDER = parsing/
 UTILS_FILES = exit_utils
 UTILS_FOLDER = utils/

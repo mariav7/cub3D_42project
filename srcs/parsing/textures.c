@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 17:14:54 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/26 15:45:11 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/28 11:45:29 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int	fill_textures(t_tex *tex, char *line, int *i)
 
 int	check_textures(t_data **d, char **err_msg)
 {
-	*err_msg = ERR_TEX_INVALID;
 	if (!(*d)->tex->no || !(*d)->tex->so || !(*d)->tex->ea || !(*d)->tex->we)
 		return (0);
 	if (file_exists((*d)->tex->we) == 0 || file_exists((*d)->tex->ea) == 0
@@ -91,7 +90,7 @@ int	check_textures(t_data **d, char **err_msg)
 		|| !file_ext((*d)->tex->so, TEX_TYPE)
 		|| !file_ext((*d)->tex->no, TEX_TYPE))
 	{
-		*err_msg = ERR_TEX;
+		*err_msg = ERR_TEX_FILE;
 		return (0);
 	}
 	return (1);
