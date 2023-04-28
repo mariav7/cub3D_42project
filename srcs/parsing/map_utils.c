@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 11:24:28 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/28 11:28:47 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/28 14:50:40 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,20 @@ static	int	ft_char_in_set(char c, char const *set)
 		i++;
 	}
 	return (0);
+}
+
+int	check_between_walls(t_map *map, int i, int x, int j)
+{
+	while (++x < j && map->map[i][x])
+	{
+		if (is_special_char(map->map[i][x], 1))
+		{
+			if ((map->map[i][x + 1] && ft_isspace(map->map[i][x + 1]))
+				|| (x != 0 && ft_isspace(map->map[i][x - 1])))
+				return (0);
+		}
+	}
+	return (1);
 }
 
 int	ft_check_chars(char *str, char const *set)

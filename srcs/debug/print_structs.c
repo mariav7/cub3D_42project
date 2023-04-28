@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 12:12:00 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/28 10:56:29 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/28 13:15:39 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	print_struct_textures(t_tex *t)
 		t->ce[1], t->ce[2]);
 		printf(YELLOW"FLOOR: [%d][%d][%d]\n"DEFAULT, t->flo[0], \
 		t->flo[1], t->flo[2]);
-		printf(YELLOW"HEX_CEILING:%lu\n"DEFAULT, t->hex_ce);
-		printf(YELLOW"HEX_FLOOR:%lu\n"DEFAULT, t->hex_flo);
+		printf(YELLOW"HEX_CEILING:%lx\n"DEFAULT, t->hex_ce);
+		printf(YELLOW"HEX_FLOOR:%lx\n"DEFAULT, t->hex_flo);
 	}
 	printf(YELLOW"\n<-----\tEND STRUCT TEXTURES\t----->\n"DEFAULT);
 }

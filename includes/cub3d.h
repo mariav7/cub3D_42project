@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/28 12:47:23 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/04/28 14:50:55 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,7 @@ void			fill_map(int *i, int nb_line, t_data **d);
 int				check_map(t_map *m, char **err_msg);
 
 /* map_utlis.c */
+int				check_between_walls(t_map *map, int i, int x, int j);
 int				ft_check_chars(char *str, char const *set);
 size_t			ft_strlend(const char *s);
 
