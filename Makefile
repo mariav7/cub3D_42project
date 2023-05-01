@@ -6,7 +6,7 @@
 #    By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:00:42 by mflores-          #+#    #+#              #
-#    Updated: 2023/05/01 11:45:47 by mflores-         ###   ########.fr        #
+#    Updated: 2023/05/01 16:45:31 by mflores-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,7 @@ ROOT_FILES = main
 INIT_FILES = init
 INIT_FOLDER = init/
 PARSING_FILES = parsing check_file textures colors parsing_utils fill_map \
-				check_map map_utils map_to_int
+				check_map map_utils
 PARSING_FOLDER = parsing/
 UTILS_FILES = exit_utils
 UTILS_FOLDER = utils/
