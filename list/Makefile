@@ -23,28 +23,38 @@ SRCS_DIR = ./
 SRCS = $(addprefix $(SRCS_DIR), $(addsuffix .c, $(FILES)))
 SRCS_B = $(addprefix $(SRCS_DIR), $(addsuffix .c, $(FILES_B)))
 
-OBJS_DIR = ./
+OBJS_DIR = ./objs/
 OBJS = $(addprefix $(OBJS_DIR), $(addsuffix .o, $(FILES)))
 OBJS_B = $(addprefix $(OBJS_DIR), $(addsuffix .o, $(FILES_B)))
 
 
-.c.o: $(SRCS)
-	$(CC) $(CFLAGS) -c -o $@ $<
+$(OBJS_DIR)%.o: $(SRCS_DIR)%.c
+	@mkdir -p $(OBJS_DIR)
+	@$(CC) $(CFLAGS) -o $@ -c $<
+	@printf "$(YELLOW). . . COMPILING LIBLIST OBJECTS . . . $(GREY)%-33.33s\r$(WHITE)" $@
 
 $(NAME): $(OBJS)
-	$(AR) $@ $^
+	@$(AR) $@ $^
 
 bonus: $(OBJS_B)
-	$(AR) $(NAME) $^
+	@$(AR) $(NAME) $^
 
 all: $(NAME)
 
 clean:
-	$(RM) $(OBJS) $(OBJS_B)
+	@$(RM) -rd $(OBJS_DIR)
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re: clean all
 
 .PHONY: bonus all clean fclean re
+
+#Colors
+DEF_COLOR = \033[0;39m
+GREY = \033[0;90m
+RED = \033[0;91m
+GREEN = \033[1;92m
+YELLOW = \033[0;93m
+WHITE = \033[0;97m

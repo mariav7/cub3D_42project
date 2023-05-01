@@ -6,7 +6,7 @@
 #    By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:00:42 by mflores-          #+#    #+#              #
-#    Updated: 2023/04/28 11:26:39 by mflores-         ###   ########.fr        #
+#    Updated: 2023/05/01 11:45:47 by mflores-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -130,13 +130,14 @@ lib:
 
 liblist:
 	@$(MAKE) --no-print-directory -C $(LIBLIST_PATH)
-	@echo "\n$(GREEN)[ ✔ ]\tLIBFT $(DEF_COLOR)"
+	@echo "\n$(GREEN)[ ✔ ]\tLIBLIST $(DEF_COLOR)"
 
 clean:
 ifeq ("$(shell test -d $(OBJS_PATH) && echo $$?)","0")
 	@echo "$(YELLOW)\n. . . CLEANING OBJECTS . . .\n$(DEF_COLOR)"
 	@$(MAKE) --no-print-directory clean -C $(LIB_PATH)
 	@$(MAKE) --no-print-directory clean -sC $(MLX_PATH)
+	@$(MAKE) --no-print-directory clean -C $(LIBLIST_PATH)
 	@$(RM) -rd $(OBJS_PATH)
 	@echo "$(GREEN)[ ✔ ]\tOBJECTS CLEANED$(DEF_COLOR)"
 else
@@ -147,6 +148,7 @@ fclean:	clean
 ifeq ("$(shell test -e $(NAME) && echo $$?)","0")
 	@echo "$(YELLOW)\n. . . CLEANING REST . . .\n$(DEF_COLOR)"
 	@$(MAKE) --no-print-directory fclean -C $(LIB_PATH)
+	@$(MAKE) --no-print-directory fclean -C $(LIBLIST_PATH)
 	@$(RM) $(NAME)
 	@echo "$(GREEN)[ ✔ ]\tALL CLEANED$(DEF_COLOR)"
 else
@@ -158,7 +160,7 @@ re:	fclean all
 # Include all .d files
 -include $(DEPS)
 
-.PHONY:	all clean fclean re header norme check lib
+.PHONY:	all clean fclean re header norme check lib liblist
 
 #------------------------------------------------------------------------------#
 #								CUSTOM RULES    					           #
