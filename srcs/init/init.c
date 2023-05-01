@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 14:21:25 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/01 11:52:52 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/01 12:32:51 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,15 @@ void	initial_position(t_data *d)
 	{
 		player->dirX = 1;
 		player->dirY = 0;
-		player->planeY = -player->planeY;
+		player->planeX = 0;
+		player->planeY = 1;
 	}
 	else if(d->map->dir == 'E')
 	{
 		player->dirX = -1;
 		player->dirY = 0;
+		player->planeX = 0;
+		player->planeY = -1;
 	}
 	else if(d->map->dir == 'N')
 	{
@@ -81,7 +84,6 @@ void	init_structs(t_data **d, int fd, char *file)
 	m->path = file;
 	parse_file(d);
 	check_data(d);
-	//debug_map(*d);
 	(*d)->game = init_game(
 			init_screen(screenWidth, screenHeight, TITLE),
 			init_player(*d)
@@ -99,6 +101,5 @@ void	start_game(t_data *d)
 	mlx_hook(game->screen->window->holder, 2, KeyPressMask, exit_game, d);
 	mlx_hook(game->screen->window->holder, 17, KeyPressMask, exit_game, d);
 	mlx_hook(game->screen->window->holder, 2, 1L << 0, handle_move, d);
-	//exit_game(game);
 	mlx_loop(game->screen->holder);
 }
