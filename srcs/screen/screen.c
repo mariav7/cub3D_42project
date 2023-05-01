@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   screen.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmunoz   <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 03:47:30 by nmunoz            #+#    #+#             */
-/*   Updated: 2023/04/25 03:47:30 by nmunoz           ###   ########.fr       */
+/*   Updated: 2023/05/01 12:01:50 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 void	image_put_pixel(t_screen *screen, t_image *image, int x, int y, int color)
 {

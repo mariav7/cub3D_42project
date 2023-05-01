@@ -1,4 +1,4 @@
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 void	points_color(double d_data[8], int i_data[10])
 {

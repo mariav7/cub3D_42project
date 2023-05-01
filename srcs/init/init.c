@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 14:21:25 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/28 11:09:59 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/01 11:52:52 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,16 +102,3 @@ void	start_game(t_data *d)
 	//exit_game(game);
 	mlx_loop(game->screen->holder);
 }
-
-/*void	start_game(t_data *d)
-{
-	d->mlx_ptr = mlx_init();
-	if (d->mlx_ptr == NULL)
-		error_exit(d, ERR_MLX, NULL);
-	d->window = mlx_new_window(d->mlx_ptr, WIN1_SX, WIN1_SY, TITLE);
-	if (d->window == NULL)
-		error_exit(d, ERR_MLX_WIN, NULL);
-	mlx_hook(d->window, 2, 1L << 0, key_event, d);
-	mlx_hook(d->window, 17, 1L << 17, close_window, d);
-	mlx_loop(d->mlx_ptr);
-}*/

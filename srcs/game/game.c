@@ -1,4 +1,4 @@
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 int	exit_game(t_data *d)
 {
@@ -16,7 +16,7 @@ int	exit_game(t_data *d)
 	free(game->screen);
 	free(game->player);
 	free(game);
-	exit(0);
+	free_n_exit_safe(d);
 	return 0;
 }
 
