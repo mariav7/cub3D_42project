@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/02 12:40:34 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/02 18:40:42 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 // # include <mlx.h>
 # include "../mlx/mlx.h"
 # include "../mlx/mlx_int.h"
-# include "../list/list.h"
+# include <list.h>
 # include <X11/X.h>
 # include <libft.h>
 # include <ft_printf.h>
