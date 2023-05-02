@@ -75,6 +75,19 @@ void	calc(t_game *game, double d_data[8], int i_data[10], int x)
 	i_data[HIT] = 0;
 }
 
+void	vert_line(t_data *d, t_image *image, int x) {
+	int xx;
+
+	for (int y = d->map->i_data[DRAW_START]; y <= d->map->i_data[DRAW_END]; y++)
+	{
+		if(d->map->dir == 'N' || d->map->dir == 'S')
+			xx = x;
+		else
+			xx = screenWidth - x - 1;
+		image_put_pixel(d->game->screen, image, xx, y, d->map->i_data[COLOR]);
+	}
+}
+
 void	handle_loop(t_data *d, t_image *image)
 {
 	t_game	*game;
@@ -82,20 +95,15 @@ void	handle_loop(t_data *d, t_image *image)
 
 	game = d->game;
 	map = d->map;
+
 	for(int x = 0; x < screenWidth; x++)
 	{
 	  calc(game, map->d_data, map->i_data, x);
 	  calc_ray_dir(game, map->d_data, map->i_data);
 	  intersect_wall(map, map->d_data, map->i_data);
 	  points_color(map->d_data, map->i_data);
-	  for (int y = map->i_data[DRAW_START]; y <= map->i_data[DRAW_END]; y++)
-	  {
-		  image_put_pixel(game->screen, image, screenWidth - x - 1, y, map->i_data[COLOR]);
-	  }
-
+	  vert_line(d, image, x);
 	}
-	printf("dirX %f - dirY %f\n", d->game->player->dirX, d->game->player->dirY);
-	printf("planeX %f - planeY %f\n", d->game->player->planeX, d->game->player->planeY);
 }
 
 t_image	*draw_map(t_data *d)

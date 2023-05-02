@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 03:47:30 by nmunoz            #+#    #+#             */
-/*   Updated: 2023/05/01 12:01:50 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/02 10:40:59 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ t_image		*init_image(t_screen *screen, int width, int height)
 	return (image);
 }
 
-t_window	*init_window(t_screen *screen, int width, int height, char *name) {
+t_window	*init_window(t_screen *screen, int width, int height, char *name)
+{
 	t_window *window = calloc(sizeof(t_window), 1);
 	if (!window)
 		return NULL;
@@ -41,7 +42,8 @@ t_window	*init_window(t_screen *screen, int width, int height, char *name) {
 	return window;
 }
 
-t_screen *init_screen(int width, int height, char *name) {
+t_screen *init_screen(int width, int height, char *name)
+{
 	t_screen *screen = calloc(sizeof(t_screen), 1);
 	if(!screen)
 		return NULL;

@@ -8,14 +8,15 @@ int	handle_move(int key_code, t_data *d)
 	t_game	*game;
 
 	game = d->game;
+	printf("keycode %d\n", key_code);
 	if(key_code == 119)
 		go_straight(d);
 	else if(key_code == 115)
 		go_back(d);
 	else if(key_code == 100)
-		rotate(game, 1);
-	else if(key_code == 97)
 		rotate(game, 0);
+	else if(key_code == 97)
+		rotate(game, 1);
 	else if(key_code == 65307)
 		exit_game(d);
 	else

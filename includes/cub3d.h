@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/01 16:45:37 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/02 12:40:34 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,17 @@ typedef struct s_game
 	t_player	*player;
 } t_game;
 
+typedef struct s_minimap
+{
+	char	**map;
+	t_img	*img;
+	int		size;
+	int		offset_x;
+	int		offset_y;
+	int		view_dist;
+	int		tile_size;
+}	t_minimap;
+
 struct s_map
 {
 	int		height;
@@ -214,6 +225,7 @@ struct s_data
 	t_game	*game;
 	t_map	*map;
 	t_tex	*tex;
+	t_minimap	*minimap;
 };
 
 /******************************************************************************/
@@ -302,5 +314,7 @@ void			error_exit(t_data *d, char *err, void *free_this);
 void			free_n_exit_safe(t_data *d);
 
 /*------------------------------ END UTILS -----------------------------------*/
+
+void			render_minimap(t_data *data);
 
 #endif
