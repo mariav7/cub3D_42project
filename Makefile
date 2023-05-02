@@ -6,7 +6,7 @@
 #    By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:00:42 by mflores-          #+#    #+#              #
-#    Updated: 2023/05/02 14:39:17 by mflores-         ###   ########.fr        #
+#    Updated: 2023/05/02 18:29:57 by mflores-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ RM		= rm -f
 HEADER_FILES	= cub3d
 HEADERS_PATH 	= includes/
 HEADERS			= $(addsuffix .h, $(addprefix $(HEADERS_PATH), $(HEADER_FILES)))
-HEADERS_INC		= $(addprefix -I, $(HEADERS_PATH) $(LIB_HEADER_PATH) /usr/include/$(MLX_HEADER_PATH))
+HEADERS_INC		= $(addprefix -I, $(HEADERS_PATH) $(LIB_HEADER_PATH) \
+						$(LIBLIST_HEADER_PATH) /usr/include/$(MLX_HEADER_PATH))
 
 #------------------------------------------------------------------------------#
 #								LIBFT		           				   	   	   #
@@ -44,7 +45,7 @@ LIB_HEADER_PATH = $(LIB_PATH)includes/
 LIBLIST_NAME 	= ftlist
 LIBLIST_PATH	= list/
 LIBLIST			= -L$(LIBLIST_PATH) -l$(LIBLIST_NAME)
-LIBLIST_HEADER_PATH = $(LIBLIST_PATH)includes/
+LIBLIST_HEADER_PATH = $(LIBLIST_PATH)
 
 #------------------------------------------------------------------------------#
 #								MINILIBX	           				   	   	   #
@@ -112,7 +113,7 @@ $(NAME): lib liblist $(HEADERS) $(OBJS)
 	@$(MAKE) --no-print-directory -sC $(MLX_PATH)
 	@echo "$(GREEN)[ ✔ ]\tMINILIBX$(WHITE)"
 # Link all the object files
-	@$(CC) $(FLAGS) $(HEADERS_INC) $(OBJS) $(LIB) $(MLX) -o $(NAME)
+	@$(CC) $(FLAGS) $(HEADERS_INC) $(OBJS) $(LIB) $(LIBLIST) $(MLX) -o $(NAME)
 # Build target for every single object file
 # The potential dependency on header files is covered
 # by calling `-include $(DEPS)`

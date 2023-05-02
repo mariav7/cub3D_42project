@@ -6,7 +6,7 @@
 #    By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/16 19:55:59 by mflores-          #+#    #+#              #
-#    Updated: 2023/05/01 11:27:40 by mflores-         ###   ########.fr        #
+#    Updated: 2023/05/02 18:27:21 by mflores-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ RM		= rm -f
 
 HEADER_FILE = libft gnl ft_printf
 HEADER_PATH = includes/
-HEADER = $(addsuffix .h, $(addprefix $(HEADER_PATH), $(HEADE_FILE)))
+HEADER = $(addsuffix .h, $(addprefix $(HEADER_PATH), $(HEADER_FILE)))
 HEADER_INC = $(addprefix -I,$(HEADER_PATH))
 
 #------------------------------------------------------------------------------#
