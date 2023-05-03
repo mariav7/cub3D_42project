@@ -6,18 +6,18 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:10:35 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/02 12:47:28 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/03 10:09:08 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	set_image_pixel(t_img *image, int x, int y, int color)
+void	set_image_pixel(t_minimap_img *image, int x, int y, int color)
 {
 	int	pixel;
 
 	pixel = y * (image->size_line / 4) + x;
-	image->image->adr[pixel] = color;
+	image->addr[pixel] = color;
 }
 
 static int	get_mmap_offset(t_minimap *minimap, int mapsize, int pos)
@@ -45,10 +45,10 @@ static char	*add_minimap_line(t_data *d, t_minimap *m, int y)
 	if (!line)
 		return (NULL);
 	x = 0;
-	while (x < m->size && x < screenWidth)
+	while (x < m->size && x < d->map->width)
 	{
-		if (!is_valid_map_coord(y + m->offset_y, screenHeight)
-			|| !is_valid_map_coord(x + m->offset_x, screenWidth))
+		if (!is_valid_map_coord(y + m->offset_y, d->map->height)
+			|| !is_valid_map_coord(x + m->offset_x, d->map->width))
 			line[x] = '\0';
 		else if ((int)d->game->player->posX == (x + m->offset_x)
 			&& (int)d->game->player->posY == (y + m->offset_y))
@@ -69,11 +69,11 @@ static char	**generate_minimap(t_data *data, t_minimap *minimap)
 	char	**mmap;
 	int		y;
 
-	mmap = ft_calloc(minimap->size + 1, sizeof * mmap);
+	mmap = ft_calloc(data->map->height, sizeof * mmap);
 	if (!mmap)
 		return (NULL);
 	y = 0;
-	while (y < minimap->size && y < screenHeight)
+	while (y < minimap->size && y < data->map->height)
 	{
 		mmap[y] = add_minimap_line(data, minimap, y);
 		if (!mmap[y])
@@ -106,18 +106,18 @@ static void	set_minimap_tile_pixels(t_minimap *minimap, int x, int y, int color)
 
 static void	draw_minimap_tile(t_minimap *minimap, int x, int y)
 {
-	if (minimap->map[y][x] == 'N' || minimap->map[y][x] == 'S' || minimap->map[y][x] == 'W' || minimap->map[y][x] == 'E')
+	if (minimap->map[y][x] == 'P')
 		set_minimap_tile_pixels(minimap, x * minimap->tile_size,
-			y * minimap->tile_size, 0x00FF00);
+			y * minimap->tile_size, MINIMAP_PLAYER);
 	else if (minimap->map[y][x] == '1')
 		set_minimap_tile_pixels(minimap, x * minimap->tile_size,
-			y * minimap->tile_size, 0x808080);
+			y * minimap->tile_size, MINIMAP_WALL);
 	else if (minimap->map[y][x] == '0')
 		set_minimap_tile_pixels(minimap, x * minimap->tile_size,
-			y * minimap->tile_size, 0xE6E6E6);
+			y * minimap->tile_size, MINIMAP_FLOOR);
 	else if (minimap->map[y][x] == ' ')
 		set_minimap_tile_pixels(minimap, x * minimap->tile_size,
-			y * minimap->tile_size, 0x404040);
+			y * minimap->tile_size, MINIMAP_SPACE);
 }
 
 static void	set_minimap_border_image_pixels(t_minimap *minimap, int color)
@@ -126,7 +126,7 @@ static void	set_minimap_border_image_pixels(t_minimap *minimap, int color)
 	int	x;
 	int	y;
 
-	size = 128 + minimap->tile_size;
+	size = MINIMAP_PIXEL_SIZE + minimap->tile_size;
 	y = 0;
 	while (y < size)
 	{
@@ -163,33 +163,52 @@ static void	draw_minimap(t_minimap *minimap)
 	set_minimap_border_image_pixels(minimap, 0x404040);
 }
 
+static void	init_img_clean(t_minimap_img *img)
+{
+	img->img = NULL;
+	img->addr = NULL;
+	img->pixel_bits = 0;
+	img->size_line = 0;
+	img->endian = 0;
+}
+
+static void	ini_img(t_data *data, t_minimap_img *image, int width, int height)
+{
+	init_img_clean(image);
+	image->img = mlx_new_image(data->game->screen->holder, width, height);
+	if (image->img == NULL)
+		return ;
+	image->addr = (int *)mlx_get_data_addr(image->img, &image->pixel_bits,
+			&image->size_line, &image->endian);
+	return ;
+}
+
 static void	render_minimap_image(t_data *data, t_minimap *minimap)
 {
 	int	img_size;
 
-	img_size = 128 + minimap->tile_size;
-	init_img(data, &data->game->screen->img, img_size, img_size);
+	img_size = MINIMAP_PIXEL_SIZE + minimap->tile_size;
+	ini_img(data, &data->minimap, img_size, img_size);
 	draw_minimap(minimap);
-	mlx_put_image_to_window(data->game->screen->holder, data->game->screen->window, data->game->screen->img->holder,
+	mlx_put_image_to_window(data->game->screen->holder, data->game->screen->window->holder, data->minimap.img,
 		minimap->tile_size, screenHeight
-		- (128 + (minimap->tile_size * 2)));
-	mlx_destroy_image(data->game->screen->holder, data->game->screen->img);
+		- (MINIMAP_PIXEL_SIZE + (minimap->tile_size * 2)));
+	mlx_destroy_image(data->game->screen->holder, data->minimap.img);
 }
 
-void	render_minimap(t_data *data)
+void	display_minimap(t_data *data)
 {
 	t_minimap	minimap;
 
 	minimap.map = NULL;
-	data->minimap = &minimap;
-	minimap.img = &data->game->screen->img;
-	minimap.view_dist = 4;
+	minimap.img = &data->minimap;
+	minimap.view_dist = MINIMAP_VIEW_DIST;
 	minimap.size = (2 * minimap.view_dist) + 1;
-	minimap.tile_size = 128 / (2 * minimap.view_dist);
+	minimap.tile_size = MINIMAP_PIXEL_SIZE / (2 * minimap.view_dist);
 	minimap.offset_x = get_mmap_offset(&minimap,
-			screenWidth, (int)data->game->player->posX);
+			data->map->width, (int)data->game->player->posX);
 	minimap.offset_y = get_mmap_offset(&minimap,
-			screenHeight, (int)data->game->player->posY);
+			data->map->height, (int)data->game->player->posY);
 	minimap.map = generate_minimap(data, &minimap);
 	if (!minimap.map)
 		return ;

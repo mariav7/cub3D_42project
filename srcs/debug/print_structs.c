@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 12:12:00 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/28 13:15:39 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/03 10:23:40 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	debug(t_data *d)
 {
 	printf(PURPLE"<======\tTesting Program\t=====>\n"DEFAULT);
 	printf(WHITE" => Connection to Minilibx...\n"DEFAULT);
-	printf(WHITE" => Window %dx%d "TITLE"\n"DEFAULT, WIN1_SX, WIN1_SY);
+	printf(WHITE" => Window %dx%d "TITLE"\n"DEFAULT, screenWidth, screenHeight);
 	print_struct_map(d->map);
 	print_struct_textures(d->tex);
 }

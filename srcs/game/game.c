@@ -29,6 +29,7 @@ void	refresh(t_data *d)
 	image = draw_map(d);
 	mlx_clear_window(game->screen->holder, game->screen->window->holder);
 	display_image(game->screen, image);
+	display_minimap(d);
 	mlx_destroy_image(game->screen->holder, game->screen->img->holder);
 	free(game->screen->img);
 	game->screen->img = image;

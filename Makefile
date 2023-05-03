@@ -6,7 +6,7 @@
 #    By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:00:42 by mflores-          #+#    #+#              #
-#    Updated: 2023/05/02 18:29:57 by mflores-         ###   ########.fr        #
+#    Updated: 2023/05/02 20:30:31 by mflores-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,7 +76,7 @@ DEBUG_FOLDER = debug/
 GAME_FOLDER = game/
 GAME_FILES = game map player_movement player_rotation player
 SCREEN_FOLDER = screen/
-SCREEN_FILES = screen
+SCREEN_FILES = screen minimap
 
 SRCS_PATH = srcs/
 SRCS_FILES 	= $(addsuffix .c, $(ROOT_FILES) \

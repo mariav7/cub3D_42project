@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/02 18:40:42 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/03 10:38:46 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,21 @@
 /******************************************************************************/
 
 /* GENERAL MACROS */
-# define WIN1_SX 1280
-# define WIN1_SY 720
 # define FILE_TYPE ".cub"
 # define TEX_TYPE ".xpm"
 # define TITLE "Cub3D"
+# define screenWidth 640
+# define screenHeight 480
+# define mapWidth 24
+# define mapHeight 24
+
+/* MINIMAP MACROS */
+# define MINIMAP_PIXEL_SIZE 128
+# define MINIMAP_VIEW_DIST 4
+# define MINIMAP_PLAYER 0x14D7E5
+# define MINIMAP_WALL 0x808080
+# define MINIMAP_FLOOR 0xE6E6E6
+# define MINIMAP_SPACE 0x404040
 
 /* KEYS */
 # define LOOK_LEFT 65361
@@ -105,14 +115,17 @@
 /*                                                                            */
 /******************************************************************************/
 
-typedef struct s_map	t_map;
-typedef struct s_tex	t_tex;
-typedef struct s_data	t_data;
-
-# define screenWidth 640
-# define screenHeight 480
-# define mapWidth 24
-# define mapHeight 24
+typedef struct s_map			t_map;
+typedef struct s_tex			t_tex;
+typedef struct s_data			t_data;
+typedef struct s_game			t_game;
+typedef struct s_screen			t_screen;
+typedef struct s_window			t_window;
+typedef struct s_image			t_image;
+typedef struct s_player			t_player;
+typedef struct s_minimap		t_minimap;
+typedef struct s_screen_utils	t_screen_utils;
+typedef struct s_minimap_img	t_minimap_img;
 
 enum double_data {
 	CAMERA_X = 0,
@@ -138,33 +151,33 @@ enum int_data {
 	COLOR
 };
 
-typedef struct s_screen_utils {
+struct s_screen_utils {
     int		bits_per_pixel;
 	int		line_length;
 	int		endian;
 	char 	*addr;
-} t_screen_utils;
+};
 
-typedef struct s_image
+struct s_image
 {
 	t_img	*holder;
 	char	*addr;
-} t_image;
+};
 
-typedef struct s_window
+struct s_window
 {
     void *holder;
-} t_window;
+};
 
-typedef struct s_screen
+struct s_screen
 {
     void 		*holder;
     t_window	*window;
     t_image		*img;
     t_screen_utils	*utils;
-} t_screen;
+};
 
-typedef struct	s_player
+struct	s_player
 {
 	double	move_speed;
 	double	rot_speed;
@@ -174,24 +187,13 @@ typedef struct	s_player
 	double	dirY;
 	double	planeX;
 	double	planeY;
-} t_player;
+};
 
-typedef struct s_game
+struct s_game
 {
 	t_screen	*screen;
 	t_player	*player;
-} t_game;
-
-typedef struct s_minimap
-{
-	char	**map;
-	t_img	*img;
-	int		size;
-	int		offset_x;
-	int		offset_y;
-	int		view_dist;
-	int		tile_size;
-}	t_minimap;
+};
 
 struct s_map
 {
@@ -220,12 +222,32 @@ struct s_tex
 	unsigned long	hex_ce;
 };
 
+struct s_minimap_img
+{
+	void	*img;
+	int		*addr;
+	int		pixel_bits;
+	int		size_line;
+	int		endian;
+};
+
+struct s_minimap
+{
+	char			**map;
+	t_minimap_img	*img;
+	int				size;
+	int				offset_x;
+	int				offset_y;
+	int				view_dist;
+	int				tile_size;
+};
+
 struct s_data
 {
 	t_game	*game;
 	t_map	*map;
 	t_tex	*tex;
-	t_minimap	*minimap;
+	t_minimap_img	minimap;
 };
 
 /******************************************************************************/
@@ -250,6 +272,13 @@ void		refresh(t_data *d);
 t_list		*list_textures_init();
 
 /*----------------------------- END NICO -------------------------------------*/
+
+/*------------------------------ SCREEN --------------------------------------*/
+
+/* minimap.c */
+void			display_minimap(t_data *data);
+
+/*------------------------------ END SCREEN ----------------------------------*/
 
 /*------------------------------ DEBUG ---------------------------------------*/
 
@@ -314,7 +343,5 @@ void			error_exit(t_data *d, char *err, void *free_this);
 void			free_n_exit_safe(t_data *d);
 
 /*------------------------------ END UTILS -----------------------------------*/
-
-void			render_minimap(t_data *data);
 
 #endif
