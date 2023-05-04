@@ -6,7 +6,7 @@
 #    By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:00:42 by mflores-          #+#    #+#              #
-#    Updated: 2023/05/02 20:30:31 by mflores-         ###   ########.fr        #
+#    Updated: 2023/05/03 11:50:52 by mflores-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,9 @@ NAME	= cub3D
 CC		= cc
 FLAGS	= -Wall -Wextra -Werror -g
 RM		= rm -f
+
+# MODE
+BONUS = 0
 
 #------------------------------------------------------------------------------#
 #								HEADER FILES            				       #
@@ -113,7 +116,7 @@ $(NAME): lib liblist $(HEADERS) $(OBJS)
 	@$(MAKE) --no-print-directory -sC $(MLX_PATH)
 	@echo "$(GREEN)[ ✔ ]\tMINILIBX$(WHITE)"
 # Link all the object files
-	@$(CC) $(FLAGS) $(HEADERS_INC) $(OBJS) $(LIB) $(LIBLIST) $(MLX) -o $(NAME)
+	@$(CC) $(FLAGS) $(HEADERS_INC) -DBONUS=$(BONUS) $(OBJS) $(LIB) $(LIBLIST) $(MLX) -o $(NAME)
 # Build target for every single object file
 # The potential dependency on header files is covered
 # by calling `-include $(DEPS)`
@@ -122,8 +125,11 @@ $(OBJS_PATH)%.o: $(SRCS_PATH)%.c
 	@mkdir -p $(OBJS_FOLDER)
   # The -MMD flags additionaly creates a .d file with
   # the same name as the .o file.
-	@$(CC) $(FLAGS) $(HEADERS_INC) -MMD -MP -o $@ -c $<
+	@$(CC) $(FLAGS) $(HEADERS_INC) -DBONUS=$(BONUS) -MMD -MP -o $@ -c $<
 	@printf "$(YELLOW). . . COMPILING Cub3D OBJECTS . . . $(GREY)%-33.33s\r$(DEF_COLOR)" $@
+
+bonus:
+	@$(MAKE) -s all BONUS=1
 
 lib:
 	@$(MAKE) --no-print-directory -C $(LIB_PATH)
@@ -161,7 +167,7 @@ re:	fclean all
 # Include all .d files
 -include $(DEPS)
 
-.PHONY:	all clean fclean re header norme check lib liblist
+.PHONY:	all clean fclean re header norme check lib liblist bonus
 
 #------------------------------------------------------------------------------#
 #								CUSTOM RULES    					           #

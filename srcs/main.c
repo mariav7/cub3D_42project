@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 01:56:18 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/01 11:52:40 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/03 22:25:16 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int ac, char **av)
 	if (fd != -1)
 	{
 		init_structs(&d, fd, av[1]);
-		debug(d);
+		//debug(d);
 		start_game(d);
 		return (EXIT_SUCCESS);
 	}

@@ -32,9 +32,9 @@ void	go_straight(t_data *data)
 
 	map = data->map;
 	game = data->game;
-	if(map->map[(int) game->player->posY][(int) (game->player->posX + game->player->dirX * game->player->move_speed)] == '0')
+	if(ft_strchr("NSWE0", map->map[(int) game->player->posY][(int) (game->player->posX + game->player->dirX * game->player->move_speed)]))
 		game->player->posX += game->player->dirX * game->player->move_speed;
-	if(map->map[(int) (game->player->posY + game->player->dirY * game->player->move_speed)][(int) game->player->posX] == '0')
+	if(ft_strchr("NSWE0", map->map[(int) (game->player->posY + game->player->dirY * game->player->move_speed)][(int) game->player->posX]))
 		game->player->posY += game->player->dirY * game->player->move_speed;
 	printf("new posX %f new posY %f\n", game->player->posX, game->player->posY);
 }
@@ -46,8 +46,8 @@ void	go_back(t_data *data)
 
 	map = data->map;
 	game = data->game;
-	if(map->map[(int) game->player->posY][(int) (game->player->posX - game->player->dirX * game->player->move_speed)] == '0')
-	game->player->posX -= game->player->dirX * game->player->move_speed;
-	if(map->map[(int) (game->player->posY - game->player->dirY * game->player->move_speed)][(int) game->player->posX] == '0')
-	game->player->posY -= game->player->dirY * game->player->move_speed;
+	if(ft_strchr("NSWE0", map->map[(int) game->player->posY][(int) (game->player->posX - game->player->dirX * game->player->move_speed)]))
+		game->player->posX -= game->player->dirX * game->player->move_speed;
+	if(ft_strchr("NSWE0", map->map[(int) (game->player->posY - game->player->dirY * game->player->move_speed)][(int) game->player->posX]))
+		game->player->posY -= game->player->dirY * game->player->move_speed;
 }

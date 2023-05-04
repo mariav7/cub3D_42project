@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/03 10:38:46 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/03 20:03:20 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 # ifndef O_DIRECTORY
 #  define O_DIRECTORY 00200000
+# endif
+
+# ifndef BONUS
+#  define BONUS 0
 # endif
 
 /******************************************************************************/
@@ -56,8 +60,13 @@
 # define mapHeight 24
 
 /* MINIMAP MACROS */
-# define MINIMAP_PIXEL_SIZE 128
-# define MINIMAP_VIEW_DIST 4
+// # define MINIMAP_PIXEL_SIZE 128
+// # define MINIMAP_VIEW_DIST 4
+
+// # define MINIMAP_PIXEL_SIZE 220
+// # define MINIMAP_VIEW_DIST 5
+# define MINIMAP_PIXEL_SIZE 220
+# define MINIMAP_VIEW_DIST 2
 # define MINIMAP_PLAYER 0x14D7E5
 # define MINIMAP_WALL 0x808080
 # define MINIMAP_FLOOR 0xE6E6E6
