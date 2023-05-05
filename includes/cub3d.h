@@ -109,8 +109,8 @@ typedef struct s_map	t_map;
 typedef struct s_tex	t_tex;
 typedef struct s_data	t_data;
 
-# define screenWidth 640
-# define screenHeight 480
+# define screenWidth 1920
+# define screenHeight 1080
 # define mapWidth 24
 # define mapHeight 24
 # define texWidth 1024
@@ -170,6 +170,7 @@ typedef struct s_screen
     t_window	*window;
     t_image		*img;
     t_screen_utils	*utils;
+    int			*buffer;
 } t_screen;
 
 typedef struct	s_player
