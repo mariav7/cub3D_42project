@@ -46,7 +46,7 @@ MEM_FOLDER = mem/
 
 STRS_FILES = ft_atoi ft_bzero ft_itoa ft_putchar_fd ft_putendl_fd ft_putnbr_fd \
 						ft_putstr_fd ft_split ft_strchr ft_strdup ft_striteri ft_strjoin \
-						ft_strlcat ft_strlcpy ft_strlen ft_strmapi ft_strncmp ft_strnstr \
+						ft_strlcat ft_strlcpy ft_strlen ft_strmapi ft_strncmp ft_strcmp ft_strnstr \
 						ft_strrchr ft_strtrim ft_substr ft_tolower ft_toupper
 STRS_FOLDER = strings/
 

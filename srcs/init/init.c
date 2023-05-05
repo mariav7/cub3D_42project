@@ -87,6 +87,9 @@ void	init_structs(t_data **d, int fd, char *file)
 			init_screen(screenWidth, screenHeight, TITLE),
 			init_player(*d)
 	);
+	(*d)->game->textures = init_load_textures(*d);
+	if (!(*d)->game->textures)
+		basic_error_message(ERR_CALLOC, *d, fd);
 	initial_position(*d);
 }
 

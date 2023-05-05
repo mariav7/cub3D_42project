@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmunoz   <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/14 01:56:18 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/01 11:52:40 by mflores-         ###   ########.fr       */
+/*   Created: 2022/07/21 11:34:59 by nmunoz            #+#    #+#             */
+/*   Updated: 2022/07/21 11:34:59 by nmunoz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+int	ft_strcmp(char *s1, char *s2)
 {
-	t_data	*d;
-	int		fd;
+	int i;
 
-	fd = check_file(ac, av);
-	if (fd != -1)
-	{
-		init_structs(&d, fd, av[1]);
-		start_game(d);
-		return (EXIT_SUCCESS);
-	}
-	else
-		return (EXIT_FAILURE);
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
+		i++;
+	return (s1[i] - s2[i]);
 }

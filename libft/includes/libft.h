@@ -126,6 +126,8 @@ int		ft_toupper(char c);
 */
 int		ft_tolower(char c);
 
+int		ft_strcmp(char *s1, char *s2);
+
 /*
 	Compares the two strings 's1' and 's2' except it compares only the first
 	(at most) 'n' bytes of 's1' and 's2'.

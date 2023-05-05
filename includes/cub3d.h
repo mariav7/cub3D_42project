@@ -26,7 +26,7 @@
 // # include <mlx.h>
 # include "../mlx/mlx.h"
 # include "../mlx/mlx_int.h"
-# include "../list/list.h"
+# include "../srcs/list/list.h"
 # include <X11/X.h>
 # include <libft.h>
 # include <ft_printf.h>
@@ -113,6 +113,8 @@ typedef struct s_data	t_data;
 # define screenHeight 480
 # define mapWidth 24
 # define mapHeight 24
+# define texWidth 1024
+# define texHeight 1024
 
 enum double_data {
 	CAMERA_X = 0,
@@ -122,7 +124,10 @@ enum double_data {
 	SIDE_DIST_Y,
 	DELTA_DIST_X,
 	DELTA_DIST_Y,
-	PERP_WALL_DIST
+	PERP_WALL_DIST,
+	WALL_X,
+	STEP,
+	TEX_POS
 };
 
 enum int_data {
@@ -135,7 +140,10 @@ enum int_data {
 	LINE_HEIGHT,
 	DRAW_START,
 	DRAW_END,
-	COLOR
+	COLOR,
+	PITCH,
+	TEXT_NUM,
+	TEX_X
 };
 
 typedef struct s_screen_utils {
@@ -176,10 +184,21 @@ typedef struct	s_player
 	double	planeY;
 } t_player;
 
+typedef struct t_texture
+{
+	char			*id;
+	t_image			*image;
+	int				width;
+	int				height;
+	t_screen_utils	*utils;
+	int				*buffer;
+} t_texture;
+
 typedef struct s_game
 {
 	t_screen	*screen;
 	t_player	*player;
+	t_list		*textures;
 } t_game;
 
 typedef struct s_minimap
@@ -204,8 +223,8 @@ struct s_map
 	int		pos_x;
 	int		pos_y;
 	char	dir;
-	double	d_data[8];
-	int		i_data[10];
+	double	d_data[11];
+	int		i_data[13];
 };
 
 struct s_tex
@@ -240,14 +259,14 @@ t_screen	*init_screen(int width, int height, char *name);
 t_image		*init_image(t_screen *screen, int width, int height);
 void		image_put_pixel(t_screen *screen, t_image *image, int x, int y, int color);
 void		display_image(t_screen *screen, t_image *image);
-t_game 		*init_game(t_screen *screen, t_player *player);
+t_game		*init_game(t_screen *screen, t_player *player);
 t_player	 *init_player(t_data *d);
 int			handle_move(int key_code, t_data *d);
 void		rotate(t_game *game, int right);
 int			exit_game(t_data *d);
 t_image		*draw_map(t_data *d);
 void		refresh(t_data *d);
-t_list		*list_textures_init();
+t_list		*init_load_textures(t_data *d);
 
 /*----------------------------- END NICO -------------------------------------*/
 
