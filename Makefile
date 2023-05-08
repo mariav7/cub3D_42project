@@ -6,7 +6,7 @@
 #    By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:00:42 by mflores-          #+#    #+#              #
-#    Updated: 2023/05/08 21:15:13 by mflores-         ###   ########.fr        #
+#    Updated: 2023/05/08 21:20:17 by mflores-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,7 +80,7 @@ DEBUG_FOLDER = debug/
 GAME_FOLDER = game/
 GAME_FILES = game map player_movement player_rotation player map_calc
 SCREEN_FOLDER = screen/
-SCREEN_FILES = screen
+SCREEN_FILES = screen minimap
 TEXTURES_FOLDER = textures/
 TEXTURES_FILES = textures
 

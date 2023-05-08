@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/08 20:53:35 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/08 21:34:16 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 // # include <mlx.h>
 # include "../mlx/mlx.h"
 # include "../mlx/mlx_int.h"
-# include "../srcs/list/list.h"
+# include <list.h>
 # include <X11/X.h>
 # include <libft.h>
 # include <ft_printf.h>
@@ -46,6 +46,10 @@
 #  define O_DIRECTORY 00200000
 # endif
 
+# ifndef BONUS
+#  define BONUS 0
+# endif
+
 /* GENERAL MACROS */
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
@@ -54,6 +58,19 @@
 # define FILE_TYPE ".cub"
 # define TEX_TYPE ".xpm"
 # define TITLE "Cub3D"
+
+/* MINIMAP MACROS */
+// # define MINIMAP_PIXEL_SIZE 128
+// # define MINIMAP_VIEW_DIST 4
+
+// # define MINIMAP_PIXEL_SIZE 220
+// # define MINIMAP_VIEW_DIST 5
+# define MINIMAP_PIXEL_SIZE 220
+# define MINIMAP_VIEW_DIST 2
+# define MINIMAP_PLAYER 0x14D7E5
+# define MINIMAP_WALL 0x808080
+# define MINIMAP_FLOOR 0xE6E6E6
+# define MINIMAP_SPACE 0x404040
 
 /* KEYS */
 # define LOOK_LEFT 65361
@@ -117,6 +134,7 @@ typedef struct s_screen			t_screen;
 typedef struct s_player			t_player;
 typedef struct s_texture		t_texture;
 typedef struct s_minimap		t_minimap;
+typedef struct s_minimap_img	t_minimap_img;
 typedef struct s_screen_utils	t_screen_utils;
 
 enum e_double_data {
@@ -204,17 +222,6 @@ struct s_game
 	t_list		*textures;
 };
 
-struct s_minimap
-{
-	char	**map;
-	t_img	*img;
-	int		size;
-	int		offset_x;
-	int		offset_y;
-	int		view_dist;
-	int		tile_size;
-};
-
 struct s_map
 {
 	int		height;
@@ -240,6 +247,28 @@ struct s_tex
 	int				*ce;
 	unsigned long	hex_flo;
 	unsigned long	hex_ce;
+};
+
+struct s_minimap_img
+{
+	void	*img;
+	int		*addr;
+	int		pixel_bits;
+	int		size_line;
+	int		endian;
+};
+
+struct s_minimap
+{
+	int							size;
+	int							offset_x;
+	int							offset_y;
+	int							view_dist;
+	int							tile_size;
+	int							width;
+	int							height;
+	char						**map;
+	t_minimap_img				*img;
 };
 
 struct s_data
@@ -360,7 +389,7 @@ t_screen		*init_screen(int width, int height, char *name);
 void			display_image(t_screen *screen, t_image *image);
 
 /* minimap.c */
-void			render_minimap(t_data *data);
+void			display_minimap(t_data *data);
 
 /*------------------------------ END SCREEN ----------------------------------*/
 

@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:37:35 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/08 20:37:38 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/08 21:22:32 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	refresh(t_data *d)
 	image = draw_map(d);
 	mlx_clear_window(game->screen->holder, game->screen->window->holder);
 	display_image(game->screen, image);
+	if (BONUS)
+		display_minimap(d);
 	mlx_destroy_image(game->screen->holder, game->screen->img->holder);
 	free(game->screen->img);
 	game->screen->img = image;
