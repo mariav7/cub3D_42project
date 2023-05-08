@@ -192,7 +192,6 @@ typedef struct t_texture
 	int				width;
 	int				height;
 	t_screen_utils	*utils;
-	int				*buffer;
 } t_texture;
 
 typedef struct s_game
@@ -268,6 +267,7 @@ int			exit_game(t_data *d);
 t_image		*draw_map(t_data *d);
 void		refresh(t_data *d);
 t_list		*init_load_textures(t_data *d);
+void		map_calc(t_data *d, int x);
 
 /*----------------------------- END NICO -------------------------------------*/
 

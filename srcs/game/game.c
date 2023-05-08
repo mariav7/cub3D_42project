@@ -15,6 +15,7 @@ int	exit_game(t_data *d)
 	free(game->screen->holder);
 	free(game->screen);
 	free(game->player);
+	list_delete(game->textures);
 	free(game);
 	free_n_exit_safe(d);
 	return 0;

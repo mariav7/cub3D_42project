@@ -45,7 +45,7 @@ MLX_FILES	= mlx mlx_init
 MLX_HEADER_PATH	= $(addsuffix .h, $(addprefix $(MLX_PATH), $(MLX_FILES)))
 MLX_NAME	= mlx_Linux
 MLX_PATH 	= mlx/
-MLX_FLAGS	= -L/usr/lib -lXext -lX11 -lm -lz -O3
+MLX_FLAGS	= -L/usr/lib -lXext -lX11 -lm -O3 
 MLX			= -L$(MLX_PATH) -l$(MLX_NAME) $(MLX_FLAGS) 
 
 #------------------------------------------------------------------------------#
@@ -64,7 +64,7 @@ UTILS_FOLDER = utils/
 DEBUG_FILES = print_structs
 DEBUG_FOLDER = debug/
 GAME_FOLDER = game/
-GAME_FILES = game map player_movement player_rotation player
+GAME_FILES = game map player_movement player_rotation player map_calc
 SCREEN_FOLDER = screen/
 SCREEN_FILES = screen
 TEXTURES_FOLDER = textures/

@@ -50,7 +50,6 @@ t_screen *init_screen(int width, int height, char *name)
 	screen->utils = calloc(sizeof(t_screen_utils), 1);
 	screen->holder = mlx_init();
 	screen->window = init_window(screen, width, height, name);
-	screen->buffer = calloc(sizeof(int), width * height);
 	return screen;
 }
 
