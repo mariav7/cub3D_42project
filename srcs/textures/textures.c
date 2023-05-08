@@ -27,7 +27,6 @@ void	list_texture_delete(void *content)
 	free(elem);
 }
 
-
 t_texture *init_texture(t_screen *screen, char *id, char *file)
 {
 	t_texture	*texture;

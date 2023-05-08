@@ -6,12 +6,12 @@
 #    By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:00:42 by mflores-          #+#    #+#              #
-#    Updated: 2023/05/02 14:39:17 by mflores-         ###   ########.fr        #
+#    Updated: 2023/05/08 21:15:13 by mflores-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #------------------------------------------------------------------------------#
-#								GENERAL		               				       #
+#																		GENERAL		               						       #
 #------------------------------------------------------------------------------#
 
 NAME	= cub3D
@@ -19,23 +19,37 @@ CC		= cc
 FLAGS	= -Wall -Wextra -Werror -g
 RM		= rm -f
 
+# MODE
+BONUS = 0
+
 #------------------------------------------------------------------------------#
-#								HEADER FILES            				       #
+#																HEADER FILES            				    				   #
 #------------------------------------------------------------------------------#
 
 HEADER_FILES	= cub3d
 HEADERS_PATH 	= includes/
 HEADERS			= $(addsuffix .h, $(addprefix $(HEADERS_PATH), $(HEADER_FILES)))
-HEADERS_INC		= $(addprefix -I, $(HEADERS_PATH) $(LIB_HEADER_PATH) /usr/include/$(MLX_HEADER_PATH))
+HEADERS_INC		= $(addprefix -I, $(HEADERS_PATH) $(LIB_HEADER_PATH) \
+                                $(LIBLIST_HEADER_PATH) \
+																/usr/include/$(MLX_HEADER_PATH))
 
 #------------------------------------------------------------------------------#
-#								LIBFT		           				   	   	   #
+#																		LIBFT					           				   	   	   #
 #------------------------------------------------------------------------------#
 
 LIB_NAME 	= ft
 LIB_PATH	= libft/
 LIB			= -L$(LIB_PATH) -l$(LIB_NAME)
 LIB_HEADER_PATH = $(LIB_PATH)includes/
+
+#------------------------------------------------------------------------------#
+#                                  	LIBLIST   													       #
+#------------------------------------------------------------------------------#
+
+LIBLIST_NAME   = ftlist
+LIBLIST_PATH   = list/
+LIBLIST				= -L$(LIBLIST_PATH) -l$(LIBLIST_NAME)
+LIBLIST_HEADER_PATH = $(LIBLIST_PATH)
 
 #------------------------------------------------------------------------------#
 #								MINILIBX	           				   	   	   #
@@ -45,7 +59,7 @@ MLX_FILES	= mlx mlx_init
 MLX_HEADER_PATH	= $(addsuffix .h, $(addprefix $(MLX_PATH), $(MLX_FILES)))
 MLX_NAME	= mlx_Linux
 MLX_PATH 	= mlx/
-MLX_FLAGS	= -L/usr/lib -lXext -lX11 -lm -O3 
+MLX_FLAGS	= -L/usr/lib -lXext -lX11 -lm -lz -O3 
 MLX			= -L$(MLX_PATH) -l$(MLX_NAME) $(MLX_FLAGS) 
 
 #------------------------------------------------------------------------------#
@@ -69,10 +83,6 @@ SCREEN_FOLDER = screen/
 SCREEN_FILES = screen
 TEXTURES_FOLDER = textures/
 TEXTURES_FILES = textures
-LIST_FOLDER = list/
-LIST_FILES = list_add list_clone list_contains list_create list_delete \
-				list_equals list_get list_index list_reverse list_sort_asc \
-				list_sort_desc list_sublist list_swap
 
 SRCS_PATH = srcs/
 SRCS_FILES 	= $(addsuffix .c, $(ROOT_FILES) \
@@ -82,15 +92,13 @@ SRCS_FILES 	= $(addsuffix .c, $(ROOT_FILES) \
 							$(addprefix $(GAME_FOLDER), $(GAME_FILES)) \
 							$(addprefix $(SCREEN_FOLDER), $(SCREEN_FILES)) \
 							$(addprefix $(TEXTURES_FOLDER), $(TEXTURES_FILES)) \
-							$(addprefix $(LIST_FOLDER), $(LIST_FILES)) \
 							$(addprefix $(DEBUG_FOLDER), $(DEBUG_FILES))) 
 
 # All .o files go to objs directory
 OBJS_NAMES	= $(SRCS_FILES:.c=.o)
 OBJS_FOLDER = $(addprefix $(OBJS_PATH), $(PARSING_FOLDER) $(UTILS_FOLDER) \
 										$(GAME_FOLDER) $(SCREEN_FOLDER) \
-										$(TEXTURES_FOLDER) $(LIST_FOLDER) \
-										$(INIT_FOLDER) $(DEBUG_FOLDER)) 
+										$(TEXTURES_FOLDER) $(INIT_FOLDER) $(DEBUG_FOLDER)) 
 OBJS_PATH 	= objs/
 OBJS		= $(addprefix $(OBJS_PATH), $(OBJS_NAMES))
 
@@ -106,13 +114,13 @@ all:	header $(NAME)
 	@echo "\033[1;39m\n▶ TO LAUNCH:\t./$(NAME) map_file.cub\n $(DEF_COLOR)"
 
 # Actual target of the binary - depends on all .o files
-$(NAME): lib $(HEADERS) $(OBJS)
+$(NAME): lib liblist $(HEADERS) $(OBJS)
 # Compile Minilibx
 	@echo "$(YELLOW)\n. . . COMPILING MINILIBX OBJECTS . . . $(WHITE)\n"
 	@$(MAKE) --no-print-directory -sC $(MLX_PATH)
 	@echo "$(GREEN)[ ✔ ]\tMINILIBX$(WHITE)"
 # Link all the object files
-	@$(CC) $(FLAGS) $(HEADERS_INC) $(OBJS) $(LIB) $(MLX) -o $(NAME)
+	@$(CC) $(FLAGS) $(HEADERS_INC) -DBONUS=$(BONUS) $(OBJS) $(LIB) $(LIBLIST) $(MLX) -o $(NAME)
 # Build target for every single object file
 # The potential dependency on header files is covered
 # by calling `-include $(DEPS)`
@@ -124,15 +132,23 @@ $(OBJS_PATH)%.o: $(SRCS_PATH)%.c
 	@$(CC) $(FLAGS) $(HEADERS_INC) -MMD -MP -o $@ -c $<
 	@printf "$(YELLOW). . . COMPILING Cub3D OBJECTS . . . $(GREY)%-33.33s\r$(DEF_COLOR)" $@
 
+bonus:
+	@$(MAKE) -s all BONUS=1
+
 lib:
 	@$(MAKE) --no-print-directory -C $(LIB_PATH)
 	@echo "\n$(GREEN)[ ✔ ]\tLIBFT $(DEF_COLOR)"
+
+liblist:
+	@$(MAKE) --no-print-directory -C $(LIBLIST_PATH)
+	@echo "\n$(GREEN)[ ✔ ]\tLIBLIST $(DEF_COLOR)"
 
 clean:
 ifeq ("$(shell test -d $(OBJS_PATH) && echo $$?)","0")
 	@echo "$(YELLOW)\n. . . CLEANING OBJECTS . . .\n$(DEF_COLOR)"
 	@$(MAKE) --no-print-directory clean -C $(LIB_PATH)
 	@$(MAKE) --no-print-directory clean -sC $(MLX_PATH)
+	@$(MAKE) --no-print-directory clean -C $(LIBLIST_PATH)
 	@$(RM) -rd $(OBJS_PATH)
 	@echo "$(GREEN)[ ✔ ]\tOBJECTS CLEANED$(DEF_COLOR)"
 else
@@ -143,6 +159,7 @@ fclean:	clean
 ifeq ("$(shell test -e $(NAME) && echo $$?)","0")
 	@echo "$(YELLOW)\n. . . CLEANING REST . . .\n$(DEF_COLOR)"
 	@$(MAKE) --no-print-directory fclean -C $(LIB_PATH)
+	@$(MAKE) --no-print-directory fclean -C $(LIBLIST_PATH)
 	@$(RM) $(NAME)
 	@echo "$(GREEN)[ ✔ ]\tALL CLEANED$(DEF_COLOR)"
 else
@@ -154,7 +171,7 @@ re:	fclean all
 # Include all .d files
 -include $(DEPS)
 
-.PHONY:	all clean fclean re header norme check lib
+.PHONY:	all clean fclean re header norme check lib liblist bonus
 
 #------------------------------------------------------------------------------#
 #								CUSTOM RULES    					           #
