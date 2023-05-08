@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 14:21:25 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/02 15:16:49 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/08 20:22:36 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,29 +37,29 @@ void	initial_position(t_data *d)
 	t_player	*player;
 
 	player = d->game->player;
-	player->dirX = -1;
-	player->dirY = 0;
-	player->planeX = 0;
-	player->planeY = 0.66;
+	player->dir_x = -1;
+	player->dir_y = 0;
+	player->plane_x = 0;
+	player->plane_y = 0.66;
 	if(d->map->dir == 'E')
 	{
-		player->dirX = 1;
-		player->dirY = 0;
-		player->planeX = 0;
-		player->planeY = -0.66;
+		player->dir_x = 1;
+		player->dir_y = 0;
+		player->plane_x = 0;
+		player->plane_y = -0.66;
 	}
 	else if(d->map->dir == 'N')
 	{
-		player->dirX = 0;
-		player->dirY = -1;
-		player->planeX = 0.66;
-		player->planeY = 0;
+		player->dir_x = 0;
+		player->dir_y = -1;
+		player->plane_x = 0.66;
+		player->plane_y = 0;
 	} else if(d->map->dir == 'S')
 	{
-		player->dirX = 0;
-		player->dirY = 1;
-		player->planeX = -0.66;
-		player->planeY = 0;
+		player->dir_x = 0;
+		player->dir_y = 1;
+		player->plane_x = -0.66;
+		player->plane_y = 0;
 	}
 }
 
@@ -84,7 +84,7 @@ void	init_structs(t_data **d, int fd, char *file)
 	parse_file(d);
 	check_data(d);
 	(*d)->game = init_game(
-			init_screen(screenWidth, screenHeight, TITLE),
+			init_screen(SCREEN_WIDTH, SCREEN_HEIGHT, TITLE),
 			init_player(*d)
 	);
 	(*d)->game->textures = init_load_textures(*d);

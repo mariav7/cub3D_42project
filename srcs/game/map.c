@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/08 20:37:54 by mflores-          #+#    #+#             */
+/*   Updated: 2023/05/08 20:37:57 by mflores-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void texture_calc(t_data *d)
@@ -7,17 +19,17 @@ void texture_calc(t_data *d)
 	map = d->map;
 	map->i_data[TEXT_NUM] = map->map[map->i_data[MAP_X]][map->i_data[MAP_Y]] - 48 - 1; //1 subtracted from it so that texture 0 can be used!
 	if(map->i_data[SIDE] == 0)
-	map->d_data[WALL_X] = d->game->player->posY + map->d_data[PERP_WALL_DIST] * map->d_data[RAY_DIR_Y];
+	map->d_data[WALL_X] = d->game->player->pos_y + map->d_data[PERP_WALL_DIST] * map->d_data[RAY_DIR_Y];
 	else
-	map->d_data[WALL_X] = d->game->player->posX + map->d_data[PERP_WALL_DIST] * map->d_data[RAY_DIR_X];
+	map->d_data[WALL_X] = d->game->player->pos_x + map->d_data[PERP_WALL_DIST] * map->d_data[RAY_DIR_X];
 	map->d_data[WALL_X] -= floor((map->d_data[WALL_X]));
-	map->i_data[TEX_X] = (int) (map->d_data[WALL_X] * (double) (texWidth));
+	map->i_data[TEX_X] = (int) (map->d_data[WALL_X] * (double) (TEX_WIDTH));
 	if(map->i_data[SIDE] == 0 && map->d_data[RAY_DIR_X] > 0)
-	map->i_data[TEX_X] = texWidth - map->i_data[TEX_X] - 1;
+	map->i_data[TEX_X] = TEX_WIDTH - map->i_data[TEX_X] - 1;
 	if(map->i_data[SIDE] == 1 && map->d_data[RAY_DIR_Y] < 0)
-	map->i_data[TEX_X] = texWidth - map->i_data[TEX_X] - 1;
-	map->d_data[STEP] = 1.0 * texHeight / map->i_data[LINE_HEIGHT];
-	map->d_data[TEX_POS] = (map->i_data[DRAW_START] - map->i_data[PITCH] - screenHeight / 2 + map->i_data[LINE_HEIGHT] / 2) * map->d_data[STEP];
+	map->i_data[TEX_X] = TEX_WIDTH - map->i_data[TEX_X] - 1;
+	map->d_data[STEP] = 1.0 * TEX_HEIGHT / map->i_data[LINE_HEIGHT];
+	map->d_data[TEX_POS] = (map->i_data[DRAW_START] - map->i_data[PITCH] - SCREEN_HEIGHT / 2 + map->i_data[LINE_HEIGHT] / 2) * map->d_data[STEP];
 }
 
 int	get_textel_val(t_data *d, t_texture *texture, int texY)
@@ -59,7 +71,7 @@ void	handle_loop(t_data *d, t_image *image)
 	int	x;
 
 	x = -1;
-	while(++x < screenWidth)
+	while(++x < SCREEN_WIDTH)
 	{
 	  map_calc(d, x);
 	  texture_calc(d);
@@ -69,7 +81,7 @@ void	handle_loop(t_data *d, t_image *image)
 
 t_image	*draw_map(t_data *d)
 {
-	t_image *image = init_image(d->game->screen, screenWidth, screenHeight);
+	t_image *image = init_image(d->game->screen, SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (!image)
 		return (NULL);
 	handle_loop(d, image);

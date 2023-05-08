@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:10:35 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/02 12:47:28 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/08 20:15:26 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ static char	*add_minimap_line(t_data *d, t_minimap *m, int y)
 	if (!line)
 		return (NULL);
 	x = 0;
-	while (x < m->size && x < screenWidth)
+	while (x < m->size && x < SCREEN_WIDTH)
 	{
-		if (!is_valid_map_coord(y + m->offset_y, screenHeight)
-			|| !is_valid_map_coord(x + m->offset_x, screenWidth))
+		if (!is_valid_map_coord(y + m->offset_y, SCREEN_HEIGHT)
+			|| !is_valid_map_coord(x + m->offset_x, SCREEN_WIDTH))
 			line[x] = '\0';
-		else if ((int)d->game->player->posX == (x + m->offset_x)
-			&& (int)d->game->player->posY == (y + m->offset_y))
+		else if ((int)d->game->player->pos_x == (x + m->offset_x)
+			&& (int)d->game->player->pos_y == (y + m->offset_y))
 			line[x] = 'P';
 		else if (d->map->map[y + m->offset_y][x + m->offset_x] == '1')
 			line[x] = '1';
@@ -73,7 +73,7 @@ static char	**generate_minimap(t_data *data, t_minimap *minimap)
 	if (!mmap)
 		return (NULL);
 	y = 0;
-	while (y < minimap->size && y < screenHeight)
+	while (y < minimap->size && y < SCREEN_HEIGHT)
 	{
 		mmap[y] = add_minimap_line(data, minimap, y);
 		if (!mmap[y])
@@ -171,7 +171,7 @@ static void	render_minimap_image(t_data *data, t_minimap *minimap)
 	init_img(data, &data->game->screen->img, img_size, img_size);
 	draw_minimap(minimap);
 	mlx_put_image_to_window(data->game->screen->holder, data->game->screen->window, data->game->screen->img->holder,
-		minimap->tile_size, screenHeight
+		minimap->tile_size, SCREEN_HEIGHT
 		- (128 + (minimap->tile_size * 2)));
 	mlx_destroy_image(data->game->screen->holder, data->game->screen->img);
 }
@@ -187,9 +187,9 @@ void	render_minimap(t_data *data)
 	minimap.size = (2 * minimap.view_dist) + 1;
 	minimap.tile_size = 128 / (2 * minimap.view_dist);
 	minimap.offset_x = get_mmap_offset(&minimap,
-			screenWidth, (int)data->game->player->posX);
+			SCREEN_WIDTH, (int)data->game->player->pos_x);
 	minimap.offset_y = get_mmap_offset(&minimap,
-			screenHeight, (int)data->game->player->posY);
+			SCREEN_HEIGHT, (int)data->game->player->pos_y);
 	minimap.map = generate_minimap(data, &minimap);
 	if (!minimap.map)
 		return ;
