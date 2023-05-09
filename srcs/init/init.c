@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 14:21:25 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/09 14:44:02 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/09 15:06:21 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,37 +32,6 @@ static void	check_data(t_data **d)
 		error_exit(*d, err_msg, NULL);
 }
 
-void	initial_position(t_data *d)
-{
-	t_player	*player;
-
-	player = d->game->player;
-	player->dir_x = -1;
-	player->dir_y = 0;
-	player->plane_x = 0;
-	player->plane_y = -0.66;
-	if(d->map->dir == 'S')
-	{
-		player->dir_x = 1;
-		player->dir_y = 0;
-		player->plane_x = 0;
-		player->plane_y = 0.66;
-	}
-	else if(d->map->dir == 'E')
-	{
-		player->dir_x = 0;
-		player->dir_y = 1;
-		player->plane_x = -0.66;
-		player->plane_y = 0;
-	} else if(d->map->dir == 'W')
-	{
-		player->dir_x = 0;
-		player->dir_y = -1;
-		player->plane_x = 0.66;
-		player->plane_y = 0;
-	}
-}
-
 void	init_structs(t_data **d, int fd, char *file)
 {
 	t_map	*m;
@@ -83,10 +52,8 @@ void	init_structs(t_data **d, int fd, char *file)
 	m->path = file;
 	parse_file(d);
 	check_data(d);
-	(*d)->game = init_game(
-			init_screen(SCREEN_WIDTH, SCREEN_HEIGHT, TITLE),
-			init_player(*d)
-	);
+	(*d)->game = init_game(init_screen(SCREEN_WIDTH, SCREEN_HEIGHT, TITLE), \
+	init_player(*d));
 	(*d)->game->textures = init_load_textures(*d);
 	if (!(*d)->game->textures)
 		basic_error_message(ERR_CALLOC, *d, fd);

@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/09 14:55:57 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/09 15:07:02 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,7 +300,6 @@ void			debug(t_data *d);
 /*------------------------------ INIT ----------------------------------------*/
 
 /* init.c */
-void			initial_position(t_data *d);
 void			init_structs(t_data **d, int fd, char *file);
 void			start_game(t_data *d);
 
@@ -381,6 +380,7 @@ void			rotate_left(t_game *game);
 
 /* player.c */
 t_player		*init_player(t_data *d);
+void			initial_position(t_data *d);
 
 /*------------------------------ END GAME ------------------------------------*/
 

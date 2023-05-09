@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:38:29 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/08 20:38:31 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/09 15:09:49 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,42 @@ t_player *init_player(t_data *d)
 	player->dir_x = -1;
 	player->dir_y = 0;
 	return (player);
+}
+
+static void	check_init_pos(char dir, t_player *p)
+{
+	if (dir == 'E')
+	{
+		p->dir_x = 0;
+		p->dir_y = 1;
+		p->plane_x = -0.66;
+		p->plane_y = 0;
+	}
+	else if (dir == 'W')
+	{
+		p->dir_x = 0;
+		p->dir_y = -1;
+		p->plane_x = 0.66;
+		p->plane_y = 0;
+	}	
+}
+
+void	initial_position(t_data *d)
+{
+	t_player	*player;
+
+	player = d->game->player;
+	player->dir_x = -1;
+	player->dir_y = 0;
+	player->plane_x = 0;
+	player->plane_y = -0.66;
+	if (d->map->dir == 'S')
+	{
+		player->dir_x = 1;
+		player->dir_y = 0;
+		player->plane_x = 0;
+		player->plane_y = 0.66;
+	}
+	else 
+		check_init_pos(d->map->dir, player);
 }
