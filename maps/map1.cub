@@ -1,7 +1,7 @@
-NO ./sprites/1.xpm
-SO ./sprites/2.xpm
-WE ./sprites/3.xpm
-EA ./sprites/wall.xpm
+NO ./textures/1.xpm
+SO ./textures/2.xpm
+WE ./textures/3.xpm
+EA ./textures/wall.xpm
 
 F 220,100,0
 C 225,30,0

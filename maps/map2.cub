@@ -1,4 +1,4 @@
-                    EA                                    ./sprites/wall.xpm
+                    EA                                    ./textures/wall.xpm
 
 
 
@@ -9,15 +9,15 @@
 
 
 
-SO     ./sprites/wall.xpm
+SO     ./textures/wall.xpm
                                     
-                                    NO                   ./sprites/wall.xpm                    
+                                    NO                   ./textures/wall.xpm                    
 
 
 
 
 
- WE         ./sprites/wall.xpm
+ WE         ./textures/wall.xpm
 
 F 174,30,30
 C 30,49,174
