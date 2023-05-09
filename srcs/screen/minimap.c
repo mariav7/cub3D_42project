@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:10:35 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/09 09:52:06 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/09 11:47:37 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,16 +310,16 @@ static void	draw_player(t_minimap *minimap, int x, int y, int color)
 	int     j;
 
 	r = 3;
-  for (i = x - r; i <= x + r; i++)
-  {
-    for (j = y - r; j <= y + r; j++)
-    {
-      if ((i-x)*(i-x) + (j-y)*(j-y) <= r*r)
-      {
+	for (i = x - r; i <= x + r; i++)
+	{
+		for (j = y - r; j <= y + r; j++)
+		{
+			if ((i-x)*(i-x) + (j-y)*(j-y) <= r*r)
+			{
 				set_image_pixel(minimap->img, j, i, color);
-      }
-    }
-  }
+			}
+		}
+	}
 }
 
 static void	draw_minimap(t_data *d, t_minimap *minimap)
@@ -329,20 +329,22 @@ static void	draw_minimap(t_data *d, t_minimap *minimap)
 	int	player_y;
 
 	// Draw the map
-	for (int y = 0; y < d->map->height; y++) {
-			for (int x = 0; x < d->map->width; x++) {
-					// Calculate the pixel coordinates
-					int py = y * minimap->tile_size;
-					int px = x * minimap->tile_size;
+	for (int y = 0; y < d->map->height; y++)
+	{
+		for (int x = 0; x < d->map->width; x++)
+		{
+			// Calculate the pixel coordinates
+			int py = y * minimap->tile_size;
+			int px = x * minimap->tile_size;
 
-					// Get the tile color
-					if (d->map->map[y][x] == ' ' || d->map->map[y][x] == '1')
-						color = MINIMAP_WALL;
-					else
-						color = MINIMAP_FLOOR;
-					// Draw the pixel
-					set_minimap_tile_pixels(minimap, px, py, color);
-			}
+			// Get the tile color
+			if (d->map->map[y][x] == ' ' || d->map->map[y][x] == '1')
+				color = MINIMAP_WALL;
+			else
+				color = MINIMAP_FLOOR;
+			// Draw the pixel
+			set_minimap_tile_pixels(minimap, px, py, color);
+		}
 	}
 
 	// Draw the player
