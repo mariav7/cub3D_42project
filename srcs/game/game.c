@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:37:35 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/09 11:24:27 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/09 16:05:56 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	destroy_texture_imgs(t_screen *mlx, t_list *list)
 
 int	exit_game(t_data *d)
 {
-	t_game *game;
+	t_game	*game;
 
 	game = d->game;
 	destroy_texture_imgs(game->screen, game->textures);
@@ -48,12 +48,12 @@ int	exit_game(t_data *d)
 	list_delete(game->textures);
 	free(game);
 	free_n_exit_safe(d);
-	return 0;
+	return (0);
 }
 
 void	refresh(t_data *d)
 {
-	t_game *game;
+	t_game	*game;
 	t_image	*image;
 
 	game = d->game;
@@ -67,11 +67,13 @@ void	refresh(t_data *d)
 	game->screen->img = image;
 }
 
-t_game *init_game(t_screen *screen, t_player *player)
+t_game	*init_game(t_screen *screen, t_player *player)
 {
+	t_game	*game;
+
 	if (!screen || !player)
 		return (NULL);
-	t_game *game = calloc(sizeof(t_game), 1);
+	game = calloc(sizeof(t_game), 1);
 	if (!game)
 		return (NULL);
 	game->screen = screen;
