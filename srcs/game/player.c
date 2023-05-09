@@ -6,18 +6,20 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:38:29 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/09 15:09:49 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/09 15:16:26 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_player *init_player(t_data *d)
+t_player	*init_player(t_data *d)
 {
-	t_player *player = calloc(sizeof(t_player), 1);
+	t_player	*player;
+
+	player = ft_calloc(sizeof(t_player), 1);
 	if (!player)
 		return (NULL);
-	player->plane_x =  0;
+	player->plane_x = 0;
 	player->plane_y = 0.66;
 	player->pos_x = d->map->pos_y + 0.5;
 	player->pos_y = d->map->pos_x + 0.5;
@@ -62,6 +64,6 @@ void	initial_position(t_data *d)
 		player->plane_x = 0;
 		player->plane_y = 0.66;
 	}
-	else 
+	else
 		check_init_pos(d->map->dir, player);
 }
