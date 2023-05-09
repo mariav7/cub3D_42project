@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/09 15:50:14 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/09 16:18:58 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -392,9 +392,6 @@ t_window		*init_window(t_screen *screen, int width, int height, \
 char *name);
 t_screen		*init_screen(int width, int height, char *name);
 void			display_image(t_screen *screen, t_image *image);
-
-/* minimap.c */
-void			display_minimap(t_data *data);
 
 /*------------------------------ END SCREEN ----------------------------------*/
 

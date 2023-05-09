@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 14:44:26 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/09 14:44:29 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/09 16:16:53 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,10 @@ int	list_texture_compare(void *value1, void *value2)
 {
 	t_texture	*elem_1;
 	t_texture	*elem_2;
-	int 	result;
+	int			result;
 
 	elem_1 = (t_texture *) value1;
 	elem_2 = (t_texture *) value2;
-
 	result = ft_strcmp(elem_1->id, elem_2->id);
 	if (result > 0)
 		return (1);
@@ -40,7 +39,7 @@ void	list_texture_delete(void *content)
 	free(elem);
 }
 
-t_texture *init_texture(t_screen *screen, char *id, char *file)
+t_texture	*init_texture(t_screen *screen, char *id, char *file)
 {
 	t_texture	*texture;
 
@@ -61,8 +60,11 @@ t_texture *init_texture(t_screen *screen, char *id, char *file)
 		free(texture);
 		return (NULL);
 	}
-	texture->image->holder = mlx_xpm_file_to_image(screen->holder, file, &texture->width, &texture->height);
-	texture->image->addr = mlx_get_data_addr(texture->image->holder, &texture->utils->bits_per_pixel, &texture->utils->line_length, &texture->utils->endian);
+	texture->image->holder = mlx_xpm_file_to_image(screen->holder, \
+	file, &texture->width, &texture->height);
+	texture->image->addr = mlx_get_data_addr(texture->image->holder, \
+	&texture->utils->bits_per_pixel, &texture->utils->line_length, \
+	&texture->utils->endian);
 	return (texture);
 }
 
@@ -75,10 +77,14 @@ t_list	*init_load_textures(t_data *d)
 		return (NULL);
 	textures->compare_func = list_texture_compare;
 	textures->del_elem_func = list_texture_delete;
-	if (!list_add_value(textures, list_create_elem(init_texture(d->game->screen, ft_strdup("NO") ,d->tex->no)), -1) ||
-		!list_add_value(textures, list_create_elem(init_texture(d->game->screen, ft_strdup("SO"), d->tex->so)), -1) ||
-		!list_add_value(textures, list_create_elem(init_texture(d->game->screen, ft_strdup("EA"), d->tex->ea)), -1) ||
-		!list_add_value(textures, list_create_elem(init_texture(d->game->screen, ft_strdup("WE"), d->tex->we)), -1)
+	if (!list_add_value(textures, list_create_elem(init_texture \
+	(d->game->screen, ft_strdup("NO"), d->tex->no)), -1) \
+	|| !list_add_value(textures, list_create_elem(init_texture \
+		(d->game->screen, ft_strdup("SO"), d->tex->so)), -1) \
+	|| !list_add_value(textures, list_create_elem(init_texture \
+		(d->game->screen, ft_strdup("EA"), d->tex->ea)), -1) \
+	|| !list_add_value(textures, list_create_elem(init_texture \
+		(d->game->screen, ft_strdup("WE"), d->tex->we)), -1)
 	)
 	{
 		list_delete(textures);
