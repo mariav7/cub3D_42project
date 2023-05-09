@@ -6,7 +6,7 @@
 #    By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:00:42 by mflores-          #+#    #+#              #
-#    Updated: 2023/05/08 21:20:17 by mflores-         ###   ########.fr        #
+#    Updated: 2023/05/09 09:39:10 by mflores-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -129,7 +129,7 @@ $(OBJS_PATH)%.o: $(SRCS_PATH)%.c
 	@mkdir -p $(OBJS_FOLDER)
   # The -MMD flags additionaly creates a .d file with
   # the same name as the .o file.
-	@$(CC) $(FLAGS) $(HEADERS_INC) -MMD -MP -o $@ -c $<
+	@$(CC) $(FLAGS) $(HEADERS_INC) -DBONUS=$(BONUS) -MMD -MP -o $@ -c $<
 	@printf "$(YELLOW). . . COMPILING Cub3D OBJECTS . . . $(GREY)%-33.33s\r$(DEF_COLOR)" $@
 
 bonus:

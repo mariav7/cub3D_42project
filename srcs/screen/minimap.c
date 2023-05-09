@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:10:35 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/08 21:35:00 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/09 09:52:06 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,7 +316,7 @@ static void	draw_player(t_minimap *minimap, int x, int y, int color)
     {
       if ((i-x)*(i-x) + (j-y)*(j-y) <= r*r)
       {
-				set_image_pixel(minimap->img, i, j, color);
+				set_image_pixel(minimap->img, j, i, color);
       }
     }
   }

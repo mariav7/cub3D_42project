@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/08 21:34:16 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/09 09:45:27 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,10 +252,10 @@ struct s_tex
 struct s_minimap_img
 {
 	void	*img;
-	int		*addr;
 	int		pixel_bits;
 	int		size_line;
 	int		endian;
+	unsigned int		*addr;
 };
 
 struct s_minimap
@@ -276,7 +276,7 @@ struct s_data
 	t_map		*map;
 	t_tex		*tex;
 	t_game		*game;
-	t_minimap	*minimap;
+	t_minimap_img	minimap;
 };
 
 /******************************************************************************/
