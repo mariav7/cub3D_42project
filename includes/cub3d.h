@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/09 14:35:58 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/09 14:48:36 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -360,11 +360,14 @@ void			calc(t_game *game, double d_data[8], int i_data[10], int x);
 void			map_calc(t_data *d, int x);
 
 /* map.c */
-void			texture_calc(t_data *d);
-int				get_textel_val(t_data *d, t_texture *texture, int texY);
-void			draw_texture(t_data *d, t_image *image, int x);
-void			handle_loop(t_data *d, t_image *image);
+void 			texture_calc(t_data *d, t_texture *tex);
+int				get_texture(t_data *d, t_texture *texture, int texY);
+void			draw_texture(t_data *d, t_image *image, int x, t_texture *tex);
+void			draw_floor(t_data *d, t_image *image);
 t_image			*draw_map(t_data *d);
+
+/* map_utils.c */
+t_texture		*get_texture_side(t_data *d);
 
 /* player_movement.c */
 int				handle_move(int key_code, t_data *d);
