@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/09 16:18:58 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/09 16:23:24 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,6 @@
 
 # ifndef O_DIRECTORY
 #  define O_DIRECTORY 00200000
-# endif
-
-# ifndef BONUS
-#  define BONUS 0
 # endif
 
 /* GENERAL MACROS */

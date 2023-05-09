@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 14:21:25 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/09 15:06:21 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/09 16:22:18 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ void	start_game(t_data *d)
 	game = d->game;
 	game->screen->img = draw_map(d);
 	display_image(game->screen, game->screen->img);
-	if (BONUS)
-		display_minimap(d);
 	mlx_hook(game->screen->window->holder, 2, KeyPressMask, exit_game, d);
 	mlx_hook(game->screen->window->holder, 17, KeyPressMask, exit_game, d);
 	mlx_hook(game->screen->window->holder, 2, 1L << 0, handle_move, d);
