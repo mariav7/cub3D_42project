@@ -1,7 +1,7 @@
-NO ./sprites/wall.xpm
-SO ./sprites/wall.xpm
-WE ./sprites/wall.xpm
-EA ./sprites/wall.xpm
+NO ./sprites/tile1.xpm
+SO ./sprites/tile2.xpm
+WE ./sprites/brickskin.xpm
+EA ./sprites/doorwall.xpm
 
 F 220,100,0
 C 225,30,0
