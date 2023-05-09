@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/09 16:23:24 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/09 16:57:12 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -368,6 +368,8 @@ t_texture		*get_texture_side(t_data *d);
 int				handle_move(int key_code, t_data *d);
 void			go_straight(t_data *d);
 void			go_back(t_data *d);
+void			go_left(t_data *data);
+void			go_right(t_data *data);
 
 /* player_rotation.c */
 void			rotate(t_game *game, int right);

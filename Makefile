@@ -6,7 +6,7 @@
 #    By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:00:42 by mflores-          #+#    #+#              #
-#    Updated: 2023/05/09 16:23:21 by mflores-         ###   ########.fr        #
+#    Updated: 2023/05/09 16:33:48 by mflores-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,8 +72,6 @@ PARSING_FILES = parsing check_file textures colors parsing_utils fill_map \
 PARSING_FOLDER = parsing/
 UTILS_FILES = exit_utils
 UTILS_FOLDER = utils/
-DEBUG_FILES = print_structs
-DEBUG_FOLDER = debug/
 GAME_FOLDER = game/
 GAME_FILES = game map player_movement player_rotation player map_calc map_utils
 SCREEN_FOLDER = screen/
@@ -88,14 +86,13 @@ SRCS_FILES 	= $(addsuffix .c, $(ROOT_FILES) \
 							$(addprefix $(INIT_FOLDER), $(INIT_FILES)) \
 							$(addprefix $(GAME_FOLDER), $(GAME_FILES)) \
 							$(addprefix $(SCREEN_FOLDER), $(SCREEN_FILES)) \
-							$(addprefix $(TEXTURES_FOLDER), $(TEXTURES_FILES)) \
-							$(addprefix $(DEBUG_FOLDER), $(DEBUG_FILES))) 
+							$(addprefix $(TEXTURES_FOLDER), $(TEXTURES_FILES))) 
 
 # All .o files go to objs directory
 OBJS_NAMES	= $(SRCS_FILES:.c=.o)
 OBJS_FOLDER = $(addprefix $(OBJS_PATH), $(PARSING_FOLDER) $(UTILS_FOLDER) \
 										$(GAME_FOLDER) $(SCREEN_FOLDER) \
-										$(TEXTURES_FOLDER) $(INIT_FOLDER) $(DEBUG_FOLDER)) 
+										$(TEXTURES_FOLDER) $(INIT_FOLDER)) 
 OBJS_PATH 	= objs/
 OBJS		= $(addprefix $(OBJS_PATH), $(OBJS_NAMES))
 
