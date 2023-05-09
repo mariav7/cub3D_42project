@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/09 14:48:36 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/09 14:55:57 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,11 +254,11 @@ struct s_tex
 
 struct s_minimap_img
 {
-	void	*img;
-	int		pixel_bits;
-	int		size_line;
-	int		endian;
-	unsigned int		*addr;
+	void			*img;
+	int				pixel_bits;
+	int				size_line;
+	int				endian;
+	unsigned int	*addr;
 };
 
 struct s_minimap
@@ -276,10 +276,10 @@ struct s_minimap
 
 struct s_data
 {
-	t_map		*map;
-	t_tex		*tex;
-	t_game		*game;
-	t_minimap_img	minimap;
+	t_map				*map;
+	t_tex				*tex;
+	t_game				*game;
+	t_minimap_img		minimap;
 };
 
 /******************************************************************************/
@@ -360,7 +360,7 @@ void			calc(t_game *game, double d_data[8], int i_data[10], int x);
 void			map_calc(t_data *d, int x);
 
 /* map.c */
-void 			texture_calc(t_data *d, t_texture *tex);
+void			texture_calc(t_data *d, t_texture *tex);
 int				get_texture(t_data *d, t_texture *texture, int texY);
 void			draw_texture(t_data *d, t_image *image, int x, t_texture *tex);
 void			draw_floor(t_data *d, t_image *image);
