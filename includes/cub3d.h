@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/09 15:07:02 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/09 15:50:14 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -387,8 +387,6 @@ void			initial_position(t_data *d);
 /*------------------------------ SCREEN --------------------------------------*/
 
 /* screen.c */
-void			image_put_pixel(t_screen *screen, t_image *image, int x, int y, \
-int color);
 t_image			*init_image(t_screen *screen, int width, int height);
 t_window		*init_window(t_screen *screen, int width, int height, \
 char *name);

@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:37:54 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/09 14:40:20 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/09 15:49:59 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,21 +68,27 @@ void	draw_texture(t_data *d, t_image *image, int x, t_texture *tex)
 
 void	draw_floor(t_data *d, t_image *image)
 {
+	char	*dst;
+
 	for(int y = 0; y < SCREEN_HEIGHT; y++)
 	{
 	  for(int x = 0; x < SCREEN_WIDTH; ++x)
 	  {
-		image_put_pixel(d->game->screen, image, x, y, FLOOR_COLOR);
-		image_put_pixel(d->game->screen, image, x, SCREEN_HEIGHT - y - 1, CEIL_COLOR);
+		dst = image->addr + (y * d->game->screen->utils->line_length + x * \
+		(d->game->screen->utils->bits_per_pixel / 8));
+		*(unsigned int *)dst = d->tex->hex_flo;
+		dst = image->addr + ((SCREEN_HEIGHT - y - 1) * d->game->screen->utils->line_length + x * \
+		(d->game->screen->utils->bits_per_pixel / 8));
+		*(unsigned int *)dst = d->tex->hex_ce;
 	  }
 	}
 }
 
 t_image	*draw_map(t_data *d)
 {
-	t_image *image;
+	int			x;
+	t_image 	*image;
 	t_texture	*tex;
-	int	x;
 
 	image = init_image(d->game->screen, SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (!image)
