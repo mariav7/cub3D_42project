@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:37:35 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/09 16:22:42 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/09 16:29:25 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_game	*init_game(t_screen *screen, t_player *player)
 
 	if (!screen || !player)
 		return (NULL);
-	game = calloc(sizeof(t_game), 1);
+	game = ft_calloc(sizeof(t_game), 1);
 	if (!game)
 		return (NULL);
 	game->screen = screen;
