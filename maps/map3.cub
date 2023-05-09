@@ -1,10 +1,10 @@
-NO ./sprites/tile1009.xpm
-SO ./sprites/door101.xpm
-WE ./sprites/tile160.xpm
-EA ./sprites/wall.xpm
+NO ./sprites/tile1.xpm
+SO ./sprites/5.xpm
+WE ./sprites/tile2.xpm
+EA ./sprites/brickskin.xpm
 
-F 220,100,0
-C 225,30,0
+F 50,168,82
+C 126,227,247
 
 111111111111111111111111
 100000000000000000000001
