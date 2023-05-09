@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/09 09:45:27 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/09 11:24:43 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,6 +343,7 @@ size_t			ft_strlend(const char *s);
 /*------------------------------ GAME ----------------------------------------*/
 
 /* game.c */
+void			destroy_texture_imgs(t_screen *mlx, t_list *list);
 int				exit_game(t_data *d);
 void			refresh(t_data *d);
 t_game			*init_game(t_screen *screen, t_player *player);

@@ -22,6 +22,7 @@ void	list_texture_delete(void *content)
 	t_texture	*elem;
 
 	elem = (t_texture *) content;
+	free(elem->id);
 	free(elem->image);
 	free(elem->utils);
 	free(elem);

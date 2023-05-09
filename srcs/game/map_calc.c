@@ -26,7 +26,7 @@ void	points_color(t_player *player, double d_data[8], int i_data[10])
 	i_data[DRAW_START] = -(i_data[LINE_HEIGHT]) / 2 + SCREEN_HEIGHT / 2 + i_data[PITCH];
 	if(i_data[DRAW_START] < 0)
 		i_data[DRAW_START] = 0;
-	i_data[DRAW_END] = i_data[LINE_HEIGHT] / 2 + SCREEN_HEIGHT / 2 + i_data[PITCH];;
+	i_data[DRAW_END] = i_data[LINE_HEIGHT] / 2 + SCREEN_HEIGHT / 2 + i_data[PITCH];
 	if(i_data[DRAW_END] >= SCREEN_HEIGHT)
 		i_data[DRAW_END] = SCREEN_HEIGHT - 1;
 }
