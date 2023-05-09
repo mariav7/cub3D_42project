@@ -1,7 +1,16 @@
-#include "cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player_movement.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/08 20:37:04 by mflores-          #+#    #+#             */
+/*   Updated: 2023/05/09 14:41:59 by mflores-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	go_straight(t_data *d);
-void	go_back(t_data *d);
+#include "cub3d.h"
 
 int	handle_move(int key_code, t_data *d)
 {
@@ -31,10 +40,10 @@ void	go_straight(t_data *data)
 
 	map = data->map;
 	game = data->game;
-	if(ft_strchr("0NESW", map->map[(int) (game->player->posX + game->player->dirX * game->player->move_speed)][(int) game->player->posY]) != 0)
-		game->player->posX += game->player->dirX * game->player->move_speed;
-	if(ft_strchr("0NESW", map->map[(int) game->player->posX][(int) (game->player->posY + game->player->dirY * game->player->move_speed)]) != 0)
-		game->player->posY += game->player->dirY * game->player->move_speed;
+	if(ft_strchr("0NESW", map->map[(int) (game->player->pos_x + game->player->dir_x * game->player->move_speed)][(int) game->player->pos_y]) != 0)
+		game->player->pos_x += game->player->dir_x * game->player->move_speed;
+	if(ft_strchr("0NESW", map->map[(int) game->player->pos_x][(int) (game->player->pos_y + game->player->dir_y * game->player->move_speed)]) != 0)
+		game->player->pos_y += game->player->dir_y * game->player->move_speed;
 }
 
 void	go_back(t_data *data)
@@ -44,8 +53,8 @@ void	go_back(t_data *data)
 
 	map = data->map;
 	game = data->game;
-	if(ft_strchr("0NESW", map->map[(int) (game->player->posX - game->player->dirX * game->player->move_speed)][(int) game->player->posY]) != 0)
-		game->player->posX -= game->player->dirX * game->player->move_speed;
-	if(ft_strchr("0NESW", map->map[(int) game->player->posX][(int) (game->player->posY - game->player->dirY * game->player->move_speed)]) != 0)
-		game->player->posY -= game->player->dirY * game->player->move_speed;
+	if(ft_strchr("0NESW", map->map[(int) (game->player->pos_x - game->player->dir_x * game->player->move_speed)][(int) game->player->pos_y]) != 0)
+		game->player->pos_x -= game->player->dir_x * game->player->move_speed;
+	if(ft_strchr("0NESW", map->map[(int) game->player->pos_x][(int) (game->player->pos_y - game->player->dir_y * game->player->move_speed)]) != 0)
+		game->player->pos_y -= game->player->dir_y * game->player->move_speed;
 }

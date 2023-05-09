@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   textures.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/09 14:44:26 by mflores-          #+#    #+#             */
+/*   Updated: 2023/05/09 14:44:29 by mflores-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int	list_texture_compare(void *value1, void *value2)
@@ -22,11 +34,11 @@ void	list_texture_delete(void *content)
 	t_texture	*elem;
 
 	elem = (t_texture *) content;
+	free(elem->id);
 	free(elem->image);
 	free(elem->utils);
 	free(elem);
 }
-
 
 t_texture *init_texture(t_screen *screen, char *id, char *file)
 {

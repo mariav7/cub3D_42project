@@ -6,16 +6,12 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:41:46 by mflores-          #+#    #+#             */
-/*   Updated: 2023/05/02 12:40:34 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/09 14:35:58 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
-
-# ifndef O_DIRECTORY
-#  define O_DIRECTORY 00200000
-# endif
 
 /******************************************************************************/
 /*                                                                            */
@@ -26,7 +22,7 @@
 // # include <mlx.h>
 # include "../mlx/mlx.h"
 # include "../mlx/mlx_int.h"
-# include "../srcs/list/list.h"
+# include <list.h>
 # include <X11/X.h>
 # include <libft.h>
 # include <ft_printf.h>
@@ -46,12 +42,35 @@
 /*                                                                            */
 /******************************************************************************/
 
+# ifndef O_DIRECTORY
+#  define O_DIRECTORY 00200000
+# endif
+
+# ifndef BONUS
+#  define BONUS 0
+# endif
+
 /* GENERAL MACROS */
-# define WIN1_SX 1280
-# define WIN1_SY 720
+# define SCREEN_WIDTH 1920
+# define SCREEN_HEIGHT 1080
+# define TEX_WIDTH 1024
+# define TEX_HEIGHT 1024
 # define FILE_TYPE ".cub"
 # define TEX_TYPE ".xpm"
 # define TITLE "Cub3D"
+
+/* MINIMAP MACROS */
+// # define MINIMAP_PIXEL_SIZE 128
+// # define MINIMAP_VIEW_DIST 4
+
+// # define MINIMAP_PIXEL_SIZE 220
+// # define MINIMAP_VIEW_DIST 5
+# define MINIMAP_PIXEL_SIZE 220
+# define MINIMAP_VIEW_DIST 2
+# define MINIMAP_PLAYER 0x14D7E5
+# define MINIMAP_WALL 0x808080
+# define MINIMAP_FLOOR 0xE6E6E6
+# define MINIMAP_SPACE 0x404040
 
 /* KEYS */
 # define LOOK_LEFT 65361
@@ -108,16 +127,20 @@
 /*                                                                            */
 /******************************************************************************/
 
-typedef struct s_map	t_map;
-typedef struct s_tex	t_tex;
-typedef struct s_data	t_data;
+typedef struct s_map			t_map;
+typedef struct s_tex			t_tex;
+typedef struct s_data			t_data;
+typedef struct s_game			t_game;
+typedef struct s_image			t_image;
+typedef struct s_window			t_window;
+typedef struct s_screen			t_screen;
+typedef struct s_player			t_player;
+typedef struct s_texture		t_texture;
+typedef struct s_minimap		t_minimap;
+typedef struct s_minimap_img	t_minimap_img;
+typedef struct s_screen_utils	t_screen_utils;
 
-# define screenWidth 1920
-# define screenHeight 1080
-# define mapWidth 24
-# define mapHeight 24
-
-enum double_data {
+enum e_double_data {
 	CAMERA_X = 0,
 	RAY_DIR_X,
 	RAY_DIR_Y,
@@ -131,7 +154,7 @@ enum double_data {
 	TEX_POS
 };
 
-enum int_data {
+enum e_int_data {
 	MAP_X,
 	MAP_Y,
 	STEP_X,
@@ -147,71 +170,60 @@ enum int_data {
 	TEX_X
 };
 
-typedef struct s_screen_utils {
-    int		bits_per_pixel;
+struct s_screen_utils {
+	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-	char 	*addr;
-} t_screen_utils;
+	char	*addr;
+};
 
-typedef struct s_image
+struct s_image
 {
 	t_img	*holder;
 	char	*addr;
-} t_image;
+};
 
-typedef struct s_window
+struct s_window
 {
-    void *holder;
-} t_window;
+	void	*holder;
+};
 
-typedef struct s_screen
+struct s_screen
 {
-    void 		*holder;
-    t_window	*window;
-    t_image		*img;
-    t_screen_utils	*utils;
-    int			*buffer;
-} t_screen;
+	int						*buffer;
+	void					*holder;
+	t_window				*window;
+	t_image					*img;
+	t_screen_utils			*utils;
+};
 
-typedef struct	s_player
+struct	s_player
 {
 	double	move_speed;
 	double	rot_speed;
-	double	posX;
-	double	posY;
-	double	dirX;
-	double	dirY;
-	double	planeX;
-	double	planeY;
-} t_player;
+	double	pos_x;
+	double	pos_y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+};
 
-typedef struct t_texture
+struct s_texture
 {
 	char			*id;
 	t_image			*image;
 	int				width;
 	int				height;
 	t_screen_utils	*utils;
-} t_texture;
+};
 
-typedef struct s_game
+struct s_game
 {
 	t_screen	*screen;
 	t_player	*player;
 	t_list		*textures;
-} t_game;
-
-typedef struct s_minimap
-{
-	char	**map;
-	t_img	*img;
-	int		size;
-	int		offset_x;
-	int		offset_y;
-	int		view_dist;
-	int		tile_size;
-}	t_minimap;
+};
 
 struct s_map
 {
@@ -240,12 +252,34 @@ struct s_tex
 	unsigned long	hex_ce;
 };
 
+struct s_minimap_img
+{
+	void	*img;
+	int		pixel_bits;
+	int		size_line;
+	int		endian;
+	unsigned int		*addr;
+};
+
+struct s_minimap
+{
+	int							size;
+	int							offset_x;
+	int							offset_y;
+	int							view_dist;
+	int							tile_size;
+	int							width;
+	int							height;
+	char						**map;
+	t_minimap_img				*img;
+};
+
 struct s_data
 {
-	t_game	*game;
-	t_map	*map;
-	t_tex	*tex;
-	t_minimap	*minimap;
+	t_map		*map;
+	t_tex		*tex;
+	t_game		*game;
+	t_minimap_img	minimap;
 };
 
 /******************************************************************************/
@@ -253,25 +287,6 @@ struct s_data
 /*                               PROTOTYPES                                   */
 /*                                                                            */
 /******************************************************************************/
-
-/*------------------------------ NICO ---------------------------------------*/
-
-t_screen	*init_screen(int width, int height, char *name);
-t_image		*init_image(t_screen *screen, int width, int height);
-void		image_put_pixel(t_screen *screen, t_image *image, int x, int y, int color);
-void		display_image(t_screen *screen, t_image *image);
-t_game		*init_game(t_screen *screen, t_player *player);
-t_player	 *init_player(t_data *d);
-int			handle_move(int key_code, t_data *d);
-void		rotate(t_game *game, int right);
-int			exit_game(t_data *d);
-t_image		*draw_map(t_data *d);
-void		refresh(t_data *d);
-t_list		*init_load_textures(t_data *d);
-void		map_calc(t_data *d, int x);
-t_texture	*get_texture_side(t_data *d);
-
-/*----------------------------- END NICO -------------------------------------*/
 
 /*------------------------------ DEBUG ---------------------------------------*/
 
@@ -285,6 +300,7 @@ void			debug(t_data *d);
 /*------------------------------ INIT ----------------------------------------*/
 
 /* init.c */
+void			initial_position(t_data *d);
 void			init_structs(t_data **d, int fd, char *file);
 void			start_game(t_data *d);
 
@@ -327,6 +343,70 @@ size_t			ft_strlend(const char *s);
 
 /*------------------------------ END PARSING ---------------------------------*/
 
+/*------------------------------ GAME ----------------------------------------*/
+
+/* game.c */
+void			destroy_texture_imgs(t_screen *mlx, t_list *list);
+int				exit_game(t_data *d);
+void			refresh(t_data *d);
+t_game			*init_game(t_screen *screen, t_player *player);
+
+/* map_calc.c */
+void			points_color(t_player *player, double d_data[8], \
+int i_data[10]);
+void			intersect_wall(t_map *map, double d_data[8], int i_data[10]);
+void			calc_ray_dir(t_game *game, double d_data[8], int i_data[10]);
+void			calc(t_game *game, double d_data[8], int i_data[10], int x);
+void			map_calc(t_data *d, int x);
+
+/* map.c */
+void			texture_calc(t_data *d);
+int				get_textel_val(t_data *d, t_texture *texture, int texY);
+void			draw_texture(t_data *d, t_image *image, int x);
+void			handle_loop(t_data *d, t_image *image);
+t_image			*draw_map(t_data *d);
+
+/* player_movement.c */
+int				handle_move(int key_code, t_data *d);
+void			go_straight(t_data *d);
+void			go_back(t_data *d);
+
+/* player_rotation.c */
+void			rotate(t_game *game, int right);
+void			rotate_right(t_game *game);
+void			rotate_left(t_game *game);
+
+/* player.c */
+t_player		*init_player(t_data *d);
+
+/*------------------------------ END GAME ------------------------------------*/
+
+/*------------------------------ SCREEN --------------------------------------*/
+
+/* screen.c */
+void			image_put_pixel(t_screen *screen, t_image *image, int x, int y, \
+int color);
+t_image			*init_image(t_screen *screen, int width, int height);
+t_window		*init_window(t_screen *screen, int width, int height, \
+char *name);
+t_screen		*init_screen(int width, int height, char *name);
+void			display_image(t_screen *screen, t_image *image);
+
+/* minimap.c */
+void			display_minimap(t_data *data);
+
+/*------------------------------ END SCREEN ----------------------------------*/
+
+/*------------------------------ TEXTURES ------------------------------------*/
+
+/* textures.c */
+int				list_texture_compare(void *value1, void *value2);
+void			list_texture_delete(void *content);
+t_texture		*init_texture(t_screen *screen, char *id, char *file);
+t_list			*init_load_textures(t_data *d);
+
+/*------------------------------ END TEXTURES --------------------------------*/
+
 /*------------------------------ UTILS ---------------------------------------*/
 
 /* exit_utils.c */
@@ -336,7 +416,5 @@ void			error_exit(t_data *d, char *err, void *free_this);
 void			free_n_exit_safe(t_data *d);
 
 /*------------------------------ END UTILS -----------------------------------*/
-
-void			render_minimap(t_data *data);
 
 #endif

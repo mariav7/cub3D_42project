@@ -1,7 +1,16 @@
-#include "cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player_rotation.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/08 20:38:21 by mflores-          #+#    #+#             */
+/*   Updated: 2023/05/09 14:42:52 by mflores-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	rotate_right(t_game *game);
-void	rotate_left(t_game *game);
+#include "cub3d.h"
 
 void	rotate(t_game *game, int right)
 {
@@ -13,23 +22,21 @@ void	rotate(t_game *game, int right)
 
 void	rotate_right(t_game *game)
 {
-	double oldDirX = game->player->dirX;
-	game->player->dirX = game->player->dirX * cos(-game->player->rot_speed) - game->player->dirY * sin(-game->player->rot_speed);
-	game->player->dirY = oldDirX * sin(-game->player->rot_speed) + game->player->dirY * cos(-game->player->rot_speed);
-	double oldPlaneX = game->player->planeX;
-	game->player->planeX = game->player->planeX * cos(-game->player->rot_speed) - game->player->planeY * sin(-game->player->rot_speed);
-	game->player->planeY = oldPlaneX * sin(-game->player->rot_speed) + game->player->planeY * cos(-game->player->rot_speed);
-	printf("posX %f posY %f dirX %f dirY %f\n", game->player->posX, game->player->posY, game->player->dirX, game->player->dirY);
+	double oldDirX = game->player->dir_x;
+	game->player->dir_x = game->player->dir_x * cos(-game->player->rot_speed) - game->player->dir_y * sin(-game->player->rot_speed);
+	game->player->dir_y = oldDirX * sin(-game->player->rot_speed) + game->player->dir_y * cos(-game->player->rot_speed);
+	double oldPlaneX = game->player->plane_x;
+	game->player->plane_x = game->player->plane_x * cos(-game->player->rot_speed) - game->player->plane_y * sin(-game->player->rot_speed);
+	game->player->plane_y = oldPlaneX * sin(-game->player->rot_speed) + game->player->plane_y * cos(-game->player->rot_speed);
 }
 
 void	rotate_left(t_game *game)
 {
-	double oldDirX = game->player->dirX;
-	game->player->dirX = game->player->dirX * cos(game->player->rot_speed) - game->player->dirY * sin(game->player->rot_speed);
-	game->player->dirY = oldDirX * sin(game->player->rot_speed) + game->player->dirY * cos(game->player->rot_speed);
-	double oldPlaneX = game->player->planeX;
-	game->player->planeX = game->player->planeX * cos(game->player->rot_speed) - game->player->planeY * sin(game->player->rot_speed);
-	game->player->planeY = oldPlaneX * sin(game->player->rot_speed) + game->player->planeY * cos(game->player->rot_speed);
-	printf("planeX %f planeY %f dirX %f dirY %f\n", game->player->planeX, game->player->planeY, game->player->dirX, game->player->dirY);
+	double oldDirX = game->player->dir_x;
+	game->player->dir_x = game->player->dir_x * cos(game->player->rot_speed) - game->player->dir_y * sin(game->player->rot_speed);
+	game->player->dir_y = oldDirX * sin(game->player->rot_speed) + game->player->dir_y * cos(game->player->rot_speed);
+	double oldPlaneX = game->player->plane_x;
+	game->player->plane_x = game->player->plane_x * cos(game->player->rot_speed) - game->player->plane_y * sin(game->player->rot_speed);
+	game->player->plane_y = oldPlaneX * sin(game->player->rot_speed) + game->player->plane_y * cos(game->player->rot_speed);
 }
 

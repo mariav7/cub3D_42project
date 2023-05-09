@@ -1,7 +1,7 @@
 NO ./sprites/tile1.xpm
-SO ./sprites/5.xpm
-WE ./sprites/tile2.xpm
-EA ./sprites/brickskin.xpm
+SO ./sprites/tile2.xpm
+WE ./sprites/brickskin.xpm
+EA ./sprites/doorwall.xpm
 
 F 50,168,82
 C 126,227,247
