@@ -8,15 +8,14 @@ int	handle_move(int key_code, t_data *d)
 	t_game	*game;
 
 	game = d->game;
-	printf("keycode %d\n", key_code);
 	if(key_code == 119)
 		go_straight(d);
 	else if(key_code == 115)
 		go_back(d);
 	else if(key_code == 100)
-		rotate(game, 0);
-	else if(key_code == 97)
 		rotate(game, 1);
+	else if(key_code == 97)
+		rotate(game, 0);
 	else if(key_code == 65307)
 		exit_game(d);
 	else
@@ -36,7 +35,6 @@ void	go_straight(t_data *data)
 		game->player->posX += game->player->dirX * game->player->move_speed;
 	if(ft_strchr("0NESW", map->map[(int) game->player->posX][(int) (game->player->posY + game->player->dirY * game->player->move_speed)]) != 0)
 		game->player->posY += game->player->dirY * game->player->move_speed;
-	printf("new posX %f new posY %f\n", game->player->posX, game->player->posY);
 }
 
 void	go_back(t_data *data)

@@ -99,6 +99,9 @@
 # define CYAN "\001\e[1;36m\002"
 # define WHITE "\001\e[1;37m\002"
 
+# define FLOOR_COLOR 0x404040
+# define CEIL_COLOR 0x808080
+
 /******************************************************************************/
 /*                                                                            */
 /*                              STRUCTURES                                    */
@@ -113,8 +116,6 @@ typedef struct s_data	t_data;
 # define screenHeight 1080
 # define mapWidth 24
 # define mapHeight 24
-# define texWidth 1024
-# define texHeight 1024
 
 enum double_data {
 	CAMERA_X = 0,
@@ -268,6 +269,7 @@ t_image		*draw_map(t_data *d);
 void		refresh(t_data *d);
 t_list		*init_load_textures(t_data *d);
 void		map_calc(t_data *d, int x);
+t_texture	*get_texture_side(t_data *d);
 
 /*----------------------------- END NICO -------------------------------------*/
 

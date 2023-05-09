@@ -40,25 +40,25 @@ void	initial_position(t_data *d)
 	player->dirX = -1;
 	player->dirY = 0;
 	player->planeX = 0;
-	player->planeY = 0.66;
-	if(d->map->dir == 'E')
+	player->planeY = -0.66;
+	if(d->map->dir == 'S')
 	{
 		player->dirX = 1;
 		player->dirY = 0;
 		player->planeX = 0;
-		player->planeY = -0.66;
+		player->planeY = 0.66;
 	}
-	else if(d->map->dir == 'N')
-	{
-		player->dirX = 0;
-		player->dirY = -1;
-		player->planeX = 0.66;
-		player->planeY = 0;
-	} else if(d->map->dir == 'S')
+	else if(d->map->dir == 'E')
 	{
 		player->dirX = 0;
 		player->dirY = 1;
 		player->planeX = -0.66;
+		player->planeY = 0;
+	} else if(d->map->dir == 'W')
+	{
+		player->dirX = 0;
+		player->dirY = -1;
+		player->planeX = 0.66;
 		player->planeY = 0;
 	}
 }

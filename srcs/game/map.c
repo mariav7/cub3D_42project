@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void texture_calc(t_data *d)
+void texture_calc(t_data *d, t_texture *tex)
 {
 	t_map	*map;
 
@@ -11,16 +11,16 @@ void texture_calc(t_data *d)
 	else
 	map->d_data[WALL_X] = d->game->player->posX + map->d_data[PERP_WALL_DIST] * map->d_data[RAY_DIR_X];
 	map->d_data[WALL_X] -= floor((map->d_data[WALL_X]));
-	map->i_data[TEX_X] = (int) (map->d_data[WALL_X] * (double) (texWidth));
+	map->i_data[TEX_X] = (int) (map->d_data[WALL_X] * (double) (tex->image->holder->width));
 	if(map->i_data[SIDE] == 0 && map->d_data[RAY_DIR_X] > 0)
-	map->i_data[TEX_X] = texWidth - map->i_data[TEX_X] - 1;
+	map->i_data[TEX_X] = tex->image->holder->width - map->i_data[TEX_X] - 1;
 	if(map->i_data[SIDE] == 1 && map->d_data[RAY_DIR_Y] < 0)
-	map->i_data[TEX_X] = texWidth - map->i_data[TEX_X] - 1;
-	map->d_data[STEP] = 1.0 * texHeight / map->i_data[LINE_HEIGHT];
+	map->i_data[TEX_X] = tex->image->holder->width - map->i_data[TEX_X] - 1;
+	map->d_data[STEP] = 1.0 * tex->image->holder->height / map->i_data[LINE_HEIGHT];
 	map->d_data[TEX_POS] = (map->i_data[DRAW_START] - map->i_data[PITCH] - screenHeight / 2 + map->i_data[LINE_HEIGHT] / 2) * map->d_data[STEP];
 }
 
-int	get_textel_val(t_data *d, t_texture *texture, int texY)
+int	get_texture(t_data *d, t_texture *texture, int texY)
 {
 	int				res;
 	int				tex_i;
@@ -37,41 +37,53 @@ int	get_textel_val(t_data *d, t_texture *texture, int texY)
 	return (res);
 }
 
-void	draw_texture(t_data *d, t_image *image, int x)
+void	draw_texture(t_data *d, t_image *image, int x, t_texture *tex)
 {
 	int	y;
 
 	y = d->map->i_data[DRAW_START] - 1;
 	while(++y < d->map->i_data[DRAW_END])
 	{
-		int texY = (int) d->map->d_data[TEX_POS] & (((t_texture *) d->game->textures->head->content)->image->holder->height - 1);
+		int texY = (int) d->map->d_data[TEX_POS] & (tex->image->holder->height - 1);
 		d->map->d_data[TEX_POS] += d->map->d_data[STEP];
-		int color = get_textel_val(d, (t_texture *) d->game->textures->head->content, texY);
-		int index = (y * d->game->screen->utils->line_length + x * \
+		int color = get_texture(d, tex, texY);
+		int index = (y * d->game->screen->utils->line_length + (screenWidth - x - 1) * \
 				(d->game->screen->utils->bits_per_pixel / 8));
 		char *dst = image->addr + index;
 		*(int *)dst = color;
 	}
 }
 
-void	handle_loop(t_data *d, t_image *image)
+void	draw_floor(t_data *d, t_image *image)
 {
-	int	x;
-
-	x = -1;
-	while(++x < screenWidth)
+	for(int y = 0; y < screenHeight; y++)
 	{
-	  map_calc(d, x);
-	  texture_calc(d);
-	  draw_texture(d, image, x);
+	  for(int x = 0; x < screenWidth; ++x)
+	  {
+		image_put_pixel(d->game->screen, image, x, y, FLOOR_COLOR);
+		image_put_pixel(d->game->screen, image, x, screenHeight - y - 1, CEIL_COLOR);
+	  }
 	}
 }
 
 t_image	*draw_map(t_data *d)
 {
-	t_image *image = init_image(d->game->screen, screenWidth, screenHeight);
+	t_image *image;
+	t_texture	*tex;
+	int	x;
+
+	image = init_image(d->game->screen, screenWidth, screenHeight);
 	if (!image)
 		return (NULL);
-	handle_loop(d, image);
+	x = -1;
+	draw_floor(d, image);
+	while(++x < screenWidth)
+	{
+	  map_calc(d, x);
+	  tex = get_texture_side(d);
+	  texture_calc(d, tex);
+	  draw_texture(d, image, x, tex);
+	}
+	printf("%d\n", ((t_texture *) d->game->textures->head->content)->image->holder->width);
 	return (image);
 }
