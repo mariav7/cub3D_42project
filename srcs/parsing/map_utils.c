@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 11:24:28 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/28 14:50:40 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/10 12:59:52 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,29 @@ size_t	ft_strlend(const char *s)
 	while (s[len] && s[len] != '\n')
 		len++;
 	return (len);
+}
+
+int	check_lines(t_map *m, char **err_msg, int height)
+{
+	int	x;
+	int	i;
+
+	*err_msg = ERR_MAP_NOTCLOSED;
+	i = 1;
+	while (i < height)
+	{
+		x = 0;
+		while (m->map[i][x])
+		{
+			if (is_special_char(m->map[i][x], 1))
+			{
+				if (i > 1 && i < height && (ft_isspace(m->map[i + 1][x])
+					|| ft_isspace(m->map[i - 1][x])))
+					return (0);
+			}
+			x++;
+		}
+		i++;
+	}
+	return (1);
 }

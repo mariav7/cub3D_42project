@@ -6,7 +6,7 @@
 /*   By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 11:15:44 by mflores-          #+#    #+#             */
-/*   Updated: 2023/04/28 14:51:06 by mflores-         ###   ########.fr       */
+/*   Updated: 2023/05/10 12:58:49 by mflores-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,8 @@ int	check_map(t_map *m, char **err_msg)
 	int	x;
 
 	if (check_map_sides(m, err_msg) == 0)
+		return (0);
+	if (check_lines(m, err_msg, (m->height - 1)) == 0)
 		return (0);
 	if (check_map_elements(m, err_msg) == 0)
 		return (0);

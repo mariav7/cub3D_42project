@@ -6,7 +6,7 @@
 #    By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:00:42 by mflores-          #+#    #+#              #
-#    Updated: 2023/05/09 16:33:48 by mflores-         ###   ########.fr        #
+#    Updated: 2023/05/10 12:43:40 by mflores-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -197,7 +197,7 @@ check:
 	echo "$(GREEN)[ ✔ ]\tNorme$(DEF_COLOR)"
 
 norme:
-	@if norminette $(HEADERS) $(SRCS_PATH) $(LIB_PATH); then \
+	@if norminette $(HEADERS) $(SRCS_PATH) $(LIB_PATH) $(LIBLIST_PATH); then \
 	echo "$(GREEN)[ ✔ ]\tNORME$(DEF_COLOR)"; \
 	else \
 	echo "$(RED)[ ✗ ]\tNORME$(DEF_COLOR)"; \
