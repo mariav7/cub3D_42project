@@ -31,7 +31,7 @@ OBJS_B = $(addprefix $(OBJS_DIR), $(addsuffix .o, $(FILES_B)))
 $(OBJS_DIR)%.o: $(SRCS_DIR)%.c
 	@mkdir -p $(OBJS_DIR)
 	@$(CC) $(CFLAGS) -o $@ -c $<
-	@printf "$(YELLOW). . . COMPILING LIBLIST OBJECTS . . . $(GREY)%-33.33s\r$(WHITE)" $@
+	@printf "$(YELLOW). . . compiling $(NAME) objects . . . => $(GREY)%-33.33s\r$(WHITE)" $@
 
 $(NAME): $(OBJS)
 	@$(AR) $@ $^

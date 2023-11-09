@@ -6,12 +6,12 @@
 #    By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/16 19:55:59 by mflores-          #+#    #+#              #
-#    Updated: 2023/05/01 11:27:40 by mflores-         ###   ########.fr        #
+#    Updated: 2023/11/09 23:48:53 by mflores-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #------------------------------------------------------------------------------#
-#									GENERAL               				       #
+#	GENERAL																	   #
 #------------------------------------------------------------------------------#
 
 NAME	= libft.a
@@ -20,7 +20,7 @@ FLAGS	= -Wall -Wextra -Werror
 RM		= rm -f
 
 #------------------------------------------------------------------------------#
-#								HEADER FILES            				       #
+#	HEADER FILES															   #
 #------------------------------------------------------------------------------#
 
 HEADER_FILE = libft gnl ft_printf
@@ -29,7 +29,7 @@ HEADER = $(addsuffix .h, $(addprefix $(HEADER_PATH), $(HEADE_FILE)))
 HEADER_INC = $(addprefix -I,$(HEADER_PATH))
 
 #------------------------------------------------------------------------------#
-#															LIBFT FILES           				   		   		 			#
+#	LIBFT FILES																   #
 #------------------------------------------------------------------------------#
 BOOL_FILES = ft_isalnum ft_isalpha ft_isascii ft_isdigit ft_islower ft_isprint \
 						ft_isspace ft_isupper
@@ -68,7 +68,7 @@ OBJS = $(addprefix $(OBJS_PATH), $(OBJS_NAMES))
 DEPS		= $(addprefix $(OBJS_PATH), $(SRCS_NAMES:.c=.d))
 
 #------------------------------------------------------------------------------#
-#								BASCIC RULES	        				       #
+#	BASCIC RULES															   #
 #------------------------------------------------------------------------------#
 all:	$(NAME)
 
@@ -78,7 +78,7 @@ $(NAME):	$(HEADER) $(OBJS)
 $(OBJS_PATH)%.o: $(SRCS_PATH)%.c
 	@mkdir -p $(OBJS_FOLDERS)
 	@$(CC) $(FLAGS) $(HEADER_INC) -MMD -o $@ -c $<
-	@printf "$(YELLOW). . . COMPILING LIBFT OBJECTS . . . $(GREY)%-33.33s\r$(WHITE)" $@
+	@printf "$(YELLOW). . . compiling $(NAME) objects . . . => $(GREY)%-33.33s\r$(WHITE)" $@
 
 clean:
 	@$(RM) -rd $(OBJS_PATH)
@@ -93,7 +93,7 @@ re:	fclean all
 .PHONY:	all clean fclean re norme
 
 #------------------------------------------------------------------------------#
-#								CUSTOM RULES    					           #
+#	CUSTOM RULES															   #
 #------------------------------------------------------------------------------#
 
 norme:

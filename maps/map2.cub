@@ -19,8 +19,8 @@ SO     ./textures/wall.xpm
 
  WE         ./textures/wall.xpm
 
-F 174,30,30
-C 30,49,174
+F 10,124,52
+C 73,88,79
 
 111
  101

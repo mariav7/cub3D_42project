@@ -3,8 +3,8 @@ SO ./textures/tile2.xpm
 WE ./textures/brickskin.xpm
 EA ./textures/doorwall.xpm
 
-F 50,168,82
-C 126,227,247
+F 119,122,120
+C 66,78,70
 
 111111111111111111111111
 100000000000000000000001
