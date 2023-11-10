@@ -11,7 +11,7 @@ Coded with 💗 by: [mflores-](https://github.com/mariav7) and [nmunoz](https://
 
 [**Subject PDF**](misc/en.subject.pdf)
 
-The purpose of cub3D is to render a 3D maze in [C](https://en.cppreference.com/w/c/language) using the graphic library [miniLibX](https://github.com/42Paris/minilibx-linux) and [raycasting](https://en.wikipedia.org/wiki/Ray_casting) inspired by the iconic game [Wolfenstein3D](https://www.snokido.fr/jeu/wolfenstein-3d).
+The purpose of cub3D is to render a 3D maze in [C](https://en.cppreference.com/w/c/language) using the graphic library [miniLibX](https://github.com/42Paris/minilibx-linux) and using [raycasting](https://en.wikipedia.org/wiki/Ray_casting), inspired by the iconic game [Wolfenstein3D](https://www.snokido.fr/jeu/wolfenstein-3d).
 
 The project encourages a deep understanding of graphics programming and serves as a hands-on exploration of classic video game rendering techniques.
 
@@ -52,7 +52,7 @@ cd cub3D_42project && make
 ./cub3D maps/map1.ber
 ```
 
-**To run program with valgrind to test for leaks:**
+**Run the program with valgrind to test for leaks:**
 ```bash
 chmod +xr leak_test.sh && ./leak_test.sh
 ```
