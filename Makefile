@@ -6,17 +6,17 @@
 #    By: mflores- <mflores-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:00:42 by mflores-          #+#    #+#              #
-#    Updated: 2023/11/09 23:46:25 by mflores-         ###   ########.fr        #
+#    Updated: 2023/11/10 17:07:40 by mflores-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #------------------------------------------------------------------------------#
 #	GENERAL																	   #
 #------------------------------------------------------------------------------#
-NAME	= cub3D
-CC		= cc
-FLAGS	= -Wall -Wextra -Werror -g
-RM		= rm -f
+NAME = cub3D
+CC = cc
+FLAGS = -Wall -Wextra -Werror -g
+RM = rm -f
 
 #------------------------------------------------------------------------------#
 #	HEADER FILES															   #
@@ -92,17 +92,17 @@ OBJS_NAMES	= $(SRCS_FILES:.c=.o)
 OBJS_FOLDER = $(addprefix $(OBJS_PATH), $(PARSING_FOLDER) $(UTILS_FOLDER) \
 										$(GAME_FOLDER) $(SCREEN_FOLDER) \
 										$(TEXTURES_FOLDER) $(INIT_FOLDER)) 
-OBJS_PATH 	= objs/
-OBJS		= $(addprefix $(OBJS_PATH), $(OBJS_NAMES))
+OBJS_PATH = objs/
+OBJS = $(addprefix $(OBJS_PATH), $(OBJS_NAMES))
 
 # Gcc/Clang will create these .d files containing dependencies
-DEPS 		= $(OBJS:.o=.d)
+DEPS = $(OBJS:.o=.d)
 
 #------------------------------------------------------------------------------#
 #	BASCIC RULES															   #
 #------------------------------------------------------------------------------#
 all: header $(NAME)
-	@echo "\n$(GREEN)[ ✔ ]\tCUB3D$(RESET)"
+	@echo "\n$(BOLD)$(GREEN)[ ✔ ]\tCUB3D$(RESET)"
 	@echo "$(BOLD)\n▶ TO LAUNCH:\t./$(NAME) map_file.cub\n$(RESET)"
 
 # Actual target of the binary - depends on all .o files
@@ -122,11 +122,11 @@ $(OBJS_PATH)%.o: $(SRCS_PATH)%.c
 
 lib:
 	@$(MAKE) --no-print-directory -C $(LIB_PATH)
-	@echo "\n$(GREEN)[ ✔ ]\tLIBFT$(RESET)"
+	@echo "\n$(BOLD)$(GREEN)[ ✔ ]\tLIBFT$(RESET)"
 
 liblist:
 	@$(MAKE) --no-print-directory -C $(LIBLIST_PATH)
-	@echo "\n$(GREEN)[ ✔ ]\tLIBLIST$(RESET)"
+	@echo "\n$(BOLD)$(GREEN)[ ✔ ]\tLIBLIST$(RESET)"
 
 mlx: $(MLX_PATH)
 	@if [ ! -e "$(MLX_PATH)lib$(MLX_NAME).a" ]; then \
@@ -134,7 +134,7 @@ mlx: $(MLX_PATH)
 		chmod +rx $(MLX_PATH)configure ; \
 		$(MAKE) --no-print-directory -sC $(MLX_PATH); \
 	fi
-	@echo "$(GREEN)[ ✔ ]\tMINILIBX$(RESET)"
+	@echo "$(BOLD)$(GREEN)[ ✔ ]\tMINILIBX$(RESET)"
 
 clean:
 	@if [ -d "$(OBJS_PATH)" ]; then \
@@ -144,7 +144,7 @@ clean:
 		$(MAKE) --no-print-directory clean -C $(LIBLIST_PATH); \
 		$(RM) -rd $(OBJS_PATH); \
 	fi
-	@echo "$(GREEN)[ ✔ ]\tOBJECTS CLEANED$(RESET)"
+	@echo "$(BOLD)$(GREEN)[ ✔ ]\tOBJECTS CLEANED$(RESET)"
 
 fclean:	clean
 	@if [ -e $(NAME) ]; then \
@@ -153,7 +153,7 @@ fclean:	clean
 		$(MAKE) --no-print-directory fclean -C $(LIBLIST_PATH); \
 		$(RM) $(NAME); \
 	fi
-	@echo "$(GREEN)[ ✔ ]\tALL CLEANED$(RESET)"
+	@echo "$(BOLD)$(GREEN)[ ✔ ]\tALL CLEANED$(RESET)"
 
 re:	fclean all
 

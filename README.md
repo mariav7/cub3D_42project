@@ -41,7 +41,7 @@ The project's requirements:
 
 ## Installation
 
-**Clone repo and compile program:**
+**Clone repository and compile program:**
 ```bash
 git clone git@github.com:mariav7/cub3D_42project.git
 cd cub3D_42project && make
